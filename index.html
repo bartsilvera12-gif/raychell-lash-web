@@ -764,12 +764,14 @@ class Component extends DCLogic {
       apiGet('about_blocks?select=*' + activo),
       apiGet('about_images?select=*' + activo),
       apiGet('gallery_images?select=*' + activo),
+      apiGet('price_groups?select=*' + activo),
+      apiGet('price_items?select=*' + activo),
       apiGet('settings?select=*&id=eq.1')
     ]).then((r) => {
       this.setState({
         db: {
           services: r[0], about: r[1], aboutImgs: r[2], gallery: r[3],
-          settings: r[4] && r[4][0]
+          priceGroups: r[4], priceItems: r[5], settings: r[6] && r[6][0]
         }
       });
     });
@@ -820,12 +822,27 @@ class Component extends DCLogic {
     const tira = aboutImgs.filter((x) => x.slot === 'tira')
       .map((x) => ({ src: x.image_url || '', alt: x.alt || '' }));
 
+    // Tabla de precios: los grupos con sus renglones ya colgados.
+    const precios = con(db.priceGroups)
+      ? con(db.priceGroups).map((g) => ({
+          title: g.title || '',
+          ask: g.ask || '',
+          items: (db.priceItems || [])
+            .filter((i) => i.group_id === g.id)
+            .map((i) => ({ label: i.label || '', price: i.price || '' }))
+        }))
+      : PRICE_GROUPS.map((g) => ({
+          title: g.title,
+          ask: g.ask,
+          items: g.items.map((it) => ({ label: it[0], price: it[1] }))
+        }));
+
     const settings = db.settings || {};
     const portada = settings.cover_image_url || HERO_PHOTOS[0];
     const destacadas = gallery.filter((g) => g.featured);
 
     return {
-      services, gallery, aboutBlocks, retrato, tira, settings,
+      services, gallery, aboutBlocks, retrato, tira, precios, settings,
       heroPhotos: [portada].concat(destacadas.map((g) => g.full)),
       heroThumbs: [portada].concat(destacadas.map((g) => g.mini))
     };
@@ -1200,9 +1217,9 @@ class Component extends DCLogic {
       })),
       toggleSrv: () => this.setState({ srvOpen: !s.srvOpen }),
       serviceNames: C.services.map((x) => x.name).concat(['Retoque', 'Diseño especial', 'Retiro de pestañas', 'Limpieza facial + pestañas']),
-      priceGroups: PRICE_GROUPS.map((g) => ({
+      priceGroups: C.precios.map((g) => ({
         title: g.title,
-        items: g.items.map((it) => ({ label: it[0], price: it[1] })),
+        items: g.items,
         wa: hasWa
           ? 'https://wa.me/' + phoneRaw + '?text=' + encodeURIComponent('¡Hola Reychell! Me interesa ' + g.ask + '. ¿Tenés disponibilidad?')
           : ig

@@ -31,6 +31,10 @@ sin tocar el código.
 
 ### Puesta en marcha (una sola vez)
 
+Si ya corriste el SQL antes y después se agregaron tablas nuevas (por ejemplo
+la tabla de precios), volvé a correr `supabase/schema.sql` entero: crea lo que
+falte y no toca lo que ya está cargado.
+
 1. **Crear las tablas.** Pegar `supabase/schema.sql` entero en el SQL Editor de
    Supabase y ejecutar. Crea el schema `raychelllashweb` con su contenido
    inicial —el mismo que ya tiene la página— y el bucket de imágenes. Termina
@@ -49,7 +53,7 @@ sin tocar el código.
 
 | Sección | Qué permite |
 |---|---|
-| Servicios | Agregar, editar, ordenar y borrar servicios, con foto, detalle, nombre y precio |
+| Servicios | Agregar, editar, ordenar y borrar servicios, con foto, detalle, nombre y precio. Incluye la tabla de precios de abajo: los grupos (Retoque, Diseños especiales, Extras) y sus renglones |
 | Sobre Reychell | Los bloques de texto y las fotos (la principal y la tira del final) |
 | Galería | Agregar fotos, marcar cuáles son destacadas para el carrusel del inicio |
 | Configuración | Foto de portada, WhatsApp, ubicación, horarios y redes sociales |

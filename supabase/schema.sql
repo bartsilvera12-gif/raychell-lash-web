@@ -127,6 +127,30 @@ create table if not exists raychelllashweb.gallery_images (
   updated_at  timestamptz not null default now()
 );
 
+-- Tabla de precios: los grupos (Retoque, Disenos especiales, Extras) y sus
+-- renglones. El campo ask es como se nombra el grupo en el mensaje de
+-- WhatsApp: "Me interesa " || ask.
+create table if not exists raychelllashweb.price_groups (
+  id         uuid primary key default gen_random_uuid(),
+  title      text not null,
+  ask        text not null default '',
+  position   integer not null default 0,
+  is_active  boolean not null default true,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists raychelllashweb.price_items (
+  id         uuid primary key default gen_random_uuid(),
+  group_id   uuid not null references raychelllashweb.price_groups (id) on delete cascade,
+  label      text not null,
+  price      text not null default '',
+  position   integer not null default 0,
+  is_active  boolean not null default true,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 -- Configuracion general. Una sola fila, siempre id = 1.
 create table if not exists raychelllashweb.settings (
   id              integer primary key default 1,
@@ -145,7 +169,8 @@ do $$
 declare t text;
 begin
   foreach t in array array['services', 'about_blocks', 'about_images',
-                           'gallery_images', 'settings']
+                           'gallery_images', 'price_groups', 'price_items',
+                           'settings']
   loop
     execute format('drop trigger if exists touch_updated_at on raychelllashweb.%I', t);
     execute format(
@@ -158,6 +183,8 @@ create index if not exists services_position_idx       on raychelllashweb.servic
 create index if not exists about_blocks_position_idx   on raychelllashweb.about_blocks (position);
 create index if not exists about_images_slot_idx       on raychelllashweb.about_images (slot, position);
 create index if not exists gallery_images_position_idx on raychelllashweb.gallery_images (position);
+create index if not exists price_groups_position_idx  on raychelllashweb.price_groups (position);
+create index if not exists price_items_group_idx      on raychelllashweb.price_items (group_id, position);
 
 -- ---------------------------------------------------------------------
 -- 3. Permisos y RLS
@@ -169,12 +196,14 @@ grant execute on function raychelllashweb.is_admin() to anon, authenticated;
 
 grant select on raychelllashweb.services, raychelllashweb.about_blocks,
                 raychelllashweb.about_images, raychelllashweb.gallery_images,
+                raychelllashweb.price_groups, raychelllashweb.price_items,
                 raychelllashweb.settings
   to anon, authenticated;
 
 grant insert, update, delete on raychelllashweb.services,
                 raychelllashweb.about_blocks, raychelllashweb.about_images,
-                raychelllashweb.gallery_images, raychelllashweb.settings
+                raychelllashweb.gallery_images, raychelllashweb.price_groups,
+                raychelllashweb.price_items, raychelllashweb.settings
   to authenticated;
 
 grant select on raychelllashweb.admins to authenticated;
@@ -184,6 +213,8 @@ alter table raychelllashweb.services       enable row level security;
 alter table raychelllashweb.about_blocks   enable row level security;
 alter table raychelllashweb.about_images   enable row level security;
 alter table raychelllashweb.gallery_images enable row level security;
+alter table raychelllashweb.price_groups   enable row level security;
+alter table raychelllashweb.price_items    enable row level security;
 alter table raychelllashweb.settings       enable row level security;
 
 do $$
@@ -191,7 +222,8 @@ declare t text;
 begin
   -- Contenido: lo lee cualquiera, lo edita solo un admin.
   foreach t in array array['services', 'about_blocks', 'about_images',
-                           'gallery_images', 'settings']
+                           'gallery_images', 'price_groups', 'price_items',
+                           'settings']
   loop
     execute format('drop policy if exists lectura_publica on raychelllashweb.%I', t);
     execute format('drop policy if exists escritura_admin on raychelllashweb.%I', t);
@@ -260,6 +292,32 @@ select * from (values
   ('assets/foto-5-lg.webp', 'assets/foto-5-md.webp', '',                      'Cuidado durante la sesión',      false, false, '3/4',   6)
 ) as v
 where not exists (select 1 from raychelllashweb.gallery_images);
+
+-- Los renglones se cuelgan de su grupo por el titulo. Si los grupos ya
+-- existen, el with no devuelve filas y no se inserta ningun renglon.
+with g as (
+  insert into raychelllashweb.price_groups (title, ask, position)
+  select * from (values
+    ('Retoque',             'un retoque',          0),
+    ('Diseños especiales',  'un diseño especial',  1),
+    ('Extras',              'uno de los extras',   2)
+  ) as v
+  where not exists (select 1 from raychelllashweb.price_groups)
+  returning id, title
+)
+insert into raychelllashweb.price_items (group_id, label, price, position)
+select g.id, i.label, i.price, i.position
+from g
+join (values
+  ('Retoque',            '15 días',                    'Gs. 60.000',  0),
+  ('Retoque',            '21 días',                    'Gs. 80.000',  1),
+  ('Retoque',            '30 días',                    'Gs. 100.000', 2),
+  ('Diseños especiales', 'Efecto wispy',               'Gs. 180.000', 0),
+  ('Diseños especiales', 'Kim Kardashian',             'Gs. 180.000', 1),
+  ('Diseños especiales', 'Fox eyes',                   'Gs. 180.000', 2),
+  ('Extras',             'Retiro de pestañas',         'Gs. 40.000',  0),
+  ('Extras',             'Limpieza facial + pestañas', 'Gs. 120.000', 1)
+) as i (title, label, price, position) on i.title = g.title;
 
 insert into raychelllashweb.settings (id, cover_image_url, whatsapp, address, hours, instagram_url, facebook_url)
 select 1, 'assets/portada-lg.webp', '595984053323',

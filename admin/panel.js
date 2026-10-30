@@ -30,6 +30,33 @@
           { k: 'is_active', et: 'Visible en la página', tipo: 'check' }
         ],
         nuevo: { name: '', description: '', price: '', image_url: '', image_position: 'center', is_active: true }
+      },
+      {
+        tabla: 'price_groups', etiqueta: 'grupo', articulo: 'el', titulo_grupo: 'Tabla de precios · grupos',
+        titulo: function (f) { return f.title || 'Grupo sin nombre'; },
+        subtitulo: function (f) { return f.ask ? 'WhatsApp: «Me interesa ' + f.ask + '»' : ''; },
+        campos: [
+          { k: 'title', et: 'Nombre del grupo', tipo: 'texto', req: true, nota: 'Por ejemplo: Retoque' },
+          { k: 'ask', et: 'Cómo se nombra en el WhatsApp', tipo: 'texto', nota: 'El mensaje dice «Me interesa …». Escribí por ejemplo: un retoque' },
+          { k: 'is_active', et: 'Visible en la página', tipo: 'check' }
+        ],
+        nuevo: { title: '', ask: '', is_active: true },
+        aviso: 'Al borrar un grupo se borran también sus renglones.'
+      },
+      {
+        tabla: 'price_items', etiqueta: 'renglón', articulo: 'el', titulo_grupo: 'Tabla de precios · renglones',
+        titulo: function (f) { return f.label || 'Renglón sin nombre'; },
+        subtitulo: function (f) { return [nombreDe('price_groups', f.group_id), f.price].filter(Boolean).join(' · '); },
+        campos: [
+          { k: 'group_id', et: 'Grupo', tipo: 'select', opciones_de: 'price_groups' },
+          { k: 'label', et: 'Nombre', tipo: 'texto', req: true, nota: 'Por ejemplo: 15 días' },
+          { k: 'price', et: 'Precio', tipo: 'texto', nota: 'Se muestra tal cual está escrito. Por ejemplo: Gs. 60.000' },
+          { k: 'is_active', et: 'Visible en la página', tipo: 'check' }
+        ],
+        nuevo: function () {
+          var primero = (catalogos.price_groups || [])[0];
+          return { group_id: primero ? primero[0] : null, label: '', price: '', is_active: true };
+        }
       }]
     },
     {
@@ -275,6 +302,14 @@
   //  Navegacion
   // ------------------------------------------------------------------
   var actual = null;
+  // Opciones de desplegable que salen de otra tabla, por ejemplo los grupos
+  // de la tabla de precios.
+  var catalogos = {};
+
+  function nombreDe(tabla, id) {
+    var par = (catalogos[tabla] || []).filter(function (o) { return o[0] === id; })[0];
+    return par ? par[1] : '';
+  }
 
   function armarPestanas() {
     var cont = $('#pestanas');
@@ -301,12 +336,31 @@
     cont.appendChild(zona);
     zona.appendChild(el('div', { class: 'cargando', text: 'Cargando…' }));
 
-    Promise.all(sec.grupos.map(function (g) {
-      var q = sb.from(g.tabla).select('*');
-      q = g.unico ? q.eq('id', 1) : q.order('position', { ascending: true });
-      return q;
-    })).then(function (res) {
+    var tablasCatalogo = [];
+    sec.grupos.forEach(function (g) {
+      (g.campos || []).forEach(function (c) {
+        if (c.opciones_de && tablasCatalogo.indexOf(c.opciones_de) < 0) tablasCatalogo.push(c.opciones_de);
+      });
+    });
+
+    Promise.all([
+      Promise.all(sec.grupos.map(function (g) {
+        var q = sb.from(g.tabla).select('*');
+        q = g.unico ? q.eq('id', 1) : q.order('position', { ascending: true });
+        return q;
+      })),
+      Promise.all(tablasCatalogo.map(function (t) {
+        return sb.from(t).select('*').order('position', { ascending: true });
+      }))
+    ]).then(function (todo) {
       if (actual !== id) return;
+      var res = todo[0];
+      tablasCatalogo.forEach(function (t, i) {
+        var r = todo[1][i];
+        catalogos[t] = ((r && !r.error && r.data) || []).map(function (f) {
+          return [f.id, f.title || f.name || f.label || String(f.id)];
+        });
+      });
       zona.innerHTML = '';
       res.forEach(function (r, i) {
         var g = sec.grupos[i];
@@ -329,7 +383,10 @@
     var caja = el('section', { style: 'margin-bottom:46px' });
 
     if (g.titulo_grupo) {
-      caja.appendChild(el('h3', { text: g.titulo_grupo, style: 'font-size:26px;margin-bottom:14px' }));
+      caja.appendChild(el('h3', { text: g.titulo_grupo, style: 'font-size:26px;margin-bottom:6px' }));
+    }
+    if (g.aviso) {
+      caja.appendChild(el('p', { text: g.aviso, style: 'margin:0 0 14px;font-size:13px;color:var(--suave)' }));
     }
 
     var lista = el('div');
@@ -346,7 +403,13 @@
         agregar.disabled = true;
         // La fila nueva entra primera, debajo del boton, y las que ya estaban
         // corren un lugar. Asi no hay que bajar hasta el final para cargarla.
-        var nueva = JSON.parse(JSON.stringify(g.nuevo));
+        var nueva = typeof g.nuevo === 'function'
+          ? g.nuevo()
+          : JSON.parse(JSON.stringify(g.nuevo));
+        if (g.tabla === 'price_items' && !nueva.group_id) {
+          agregar.disabled = false;
+          return avisar('error', 'Primero creá un grupo en «Tabla de precios · grupos».');
+        }
         nueva.position = 0;
         sb.from(g.tabla).insert(nueva).select().then(function (r) {
           if (r.error) {
@@ -589,13 +652,14 @@
 
   function campoSelect(c, valor) {
     var campo = el('div', { class: 'campo' }, [el('span', { class: 'et', text: c.et })]);
+    var opciones = c.opciones || catalogos[c.opciones_de] || [];
 
     var oculto = el('input', { type: 'hidden', name: c.k });
-    oculto.value = valor || (c.opciones[0] ? c.opciones[0][0] : '');
+    oculto.value = valor || (opciones[0] ? opciones[0][0] : '');
 
     var textoDe = function (v) {
-      var o = c.opciones.filter(function (x) { return x[0] === v; })[0];
-      return o ? o[1] : v;
+      var o = opciones.filter(function (x) { return x[0] === v; })[0];
+      return o ? o[1] : (v ? v : 'Sin grupo');
     };
 
     var texto = el('span', { text: textoDe(oculto.value) });
@@ -612,7 +676,7 @@
       });
     }
 
-    c.opciones.forEach(function (o) {
+    opciones.forEach(function (o) {
       var op = el('button', {
         type: 'button', class: 'select-opcion', role: 'option',
         onclick: function () {
