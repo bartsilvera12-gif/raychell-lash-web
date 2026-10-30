@@ -319,6 +319,7 @@
                   </sc-for>
                   <div style="border-top:1px solid rgba(72,57,54,0.12)"></div>
                 </div>
+                <a href="{{ g.wa }}" target="_blank" rel="noopener" style="display:inline-block;margin-top:18px;padding:0 0 4px;font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:#483936;border-bottom:1px solid rgba(72,57,54,0.4)">Consultar por WhatsApp</a>
               </div>
             </sc-for>
           </div>
@@ -473,6 +474,7 @@
                   </sc-for>
                   <div style="border-top:1px solid rgba(72,57,54,0.12)"></div>
                 </div>
+                <a href="{{ g.wa }}" target="_blank" rel="noopener" style="display:inline-block;margin-top:18px;padding:0 0 4px;font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:#483936;border-bottom:1px solid rgba(72,57,54,0.4)">Consultar por WhatsApp</a>
               </div>
             </sc-for>
           </div>
@@ -626,9 +628,9 @@ const SERVICE_SLOTS = [
 ];
 
 const PRICE_GROUPS = [
-  { title: 'Retoque', items: [['15 días', 'Gs. 60.000'], ['21 días', 'Gs. 80.000'], ['30 días', 'Gs. 100.000']] },
-  { title: 'Diseños especiales', items: [['Efecto wispy', 'Gs. 180.000'], ['Kim Kardashian', 'Gs. 180.000'], ['Fox eyes', 'Gs. 180.000']] },
-  { title: 'Extras', items: [['Retiro de pestañas', 'Gs. 40.000'], ['Limpieza facial + pestañas', 'Gs. 120.000']] }
+  { title: 'Retoque', ask: 'un retoque', items: [['15 días', 'Gs. 60.000'], ['21 días', 'Gs. 80.000'], ['30 días', 'Gs. 100.000']] },
+  { title: 'Diseños especiales', ask: 'un diseño especial', items: [['Efecto wispy', 'Gs. 180.000'], ['Kim Kardashian', 'Gs. 180.000'], ['Fox eyes', 'Gs. 180.000']] },
+  { title: 'Extras', ask: 'uno de los extras', items: [['Retiro de pestañas', 'Gs. 40.000'], ['Limpieza facial + pestañas', 'Gs. 120.000']] }
 ];
 
 const GALLERY = [
@@ -810,7 +812,13 @@ class Component extends DCLogic {
       })),
       toggleSrv: () => this.setState({ srvOpen: !s.srvOpen }),
       serviceNames: SERVICE_SLOTS.map((x) => x.name).concat(['Retoque', 'Diseño especial', 'Retiro de pestañas', 'Limpieza facial + pestañas']),
-      priceGroups: PRICE_GROUPS.map((g) => ({ title: g.title, items: g.items.map((it) => ({ label: it[0], price: it[1] })) })),
+      priceGroups: PRICE_GROUPS.map((g) => ({
+        title: g.title,
+        items: g.items.map((it) => ({ label: it[0], price: it[1] })),
+        wa: hasWa
+          ? 'https://wa.me/' + phoneRaw + '?text=' + encodeURIComponent('¡Hola Reychell! Me interesa ' + g.ask + '. ¿Tenés disponibilidad?')
+          : 'https://www.instagram.com/reychell_lash/'
+      })),
 
       gallery: GALLERY.map((g, i) => ({
         label: g.label,
