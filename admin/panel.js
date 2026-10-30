@@ -152,6 +152,33 @@
     setTimeout(function () { caja.remove(); }, tipo === 'error' ? 8000 : 3500);
   }
 
+  // Reemplaza al confirm() del navegador, que sale con el estilo del sistema
+  // y el nombre del dominio arriba.
+  function confirmar(texto, alAceptar) {
+    var si = el('button', { type: 'button', class: 'boton peligro', text: 'Eliminar' });
+    var no = el('button', { type: 'button', class: 'boton claro', text: 'Cancelar' });
+    var fondo = el('div', { class: 'modal-fondo' }, [
+      el('div', { class: 'modal-caja', role: 'alertdialog', 'aria-modal': 'true' }, [
+        el('p', { class: 'modal-texto', text: texto }),
+        el('div', { class: 'modal-acciones' }, [no, si])
+      ])
+    ]);
+
+    function cerrar() {
+      fondo.remove();
+      document.removeEventListener('keydown', tecla);
+    }
+    function tecla(e) { if (e.key === 'Escape') cerrar(); }
+
+    no.addEventListener('click', cerrar);
+    si.addEventListener('click', function () { cerrar(); alAceptar(); });
+    fondo.addEventListener('click', function (e) { if (e.target === fondo) cerrar(); });
+    document.addEventListener('keydown', tecla);
+
+    document.body.appendChild(fondo);
+    no.focus();
+  }
+
   // Traduce los errores mas comunes de Supabase a algo legible.
   function explicar(error) {
     if (!error) return 'Error desconocido.';
@@ -401,7 +428,11 @@
     var foto = g.foto ? g.foto(fila) : null;
 
     var resumen = el('summary', {}, [
-      g.foto ? el('img', { class: 'miniatura', src: urlVista(foto) || '', alt: '' }) : null,
+      g.foto ? el('div', {
+        class: 'miniatura' + (foto ? '' : ' sin-foto'),
+        'aria-hidden': 'true',
+        style: foto ? 'background-image:url("' + urlVista(foto) + '")' : ''
+      }) : null,
       el('div', { class: 'titulo' }, [
         el('strong', { text: g.titulo(fila) }),
         el('span', { text: g.subtitulo ? g.subtitulo(fila) : '' })
@@ -427,18 +458,19 @@
       el('button', {
         type: 'button', class: 'boton peligro', text: 'Eliminar',
         onclick: function () {
-          if (!confirm('¿Eliminar ' + g.articulo + ' ' + g.etiqueta + ' "' + g.titulo(fila) + '"? No se puede deshacer.')) return;
-          var fotos = g.campos.filter(function (c) { return c.tipo === 'imagen' || c.tipo === 'imagen-doble'; })
-            .reduce(function (acc, c) {
-              acc.push(fila[c.k]);
-              (c.tamanos || []).forEach(function (t) { acc.push(fila[t.k]); });
-              return acc;
-            }, []);
-          sb.from(g.tabla).delete().eq('id', fila.id).then(function (r) {
-            if (r.error) return avisar('error', explicar(r.error));
-            Promise.all(fotos.map(borrarDelBucket)).then(function () {
-              avisar('ok', 'Eliminado.');
-              recargar();
+          confirmar('¿Eliminar ' + g.articulo + ' ' + g.etiqueta + ' "' + g.titulo(fila) + '"? No se puede deshacer.', function () {
+            var fotos = g.campos.filter(function (c) { return c.tipo === 'imagen' || c.tipo === 'imagen-doble'; })
+              .reduce(function (acc, c) {
+                acc.push(fila[c.k]);
+                (c.tamanos || []).forEach(function (t) { acc.push(fila[t.k]); });
+                return acc;
+              }, []);
+            sb.from(g.tabla).delete().eq('id', fila.id).then(function (r) {
+              if (r.error) return avisar('error', explicar(r.error));
+              Promise.all(fotos.map(borrarDelBucket)).then(function () {
+                avisar('ok', 'Eliminado.');
+                recargar();
+              });
             });
           });
         }
@@ -632,7 +664,14 @@
       ocultos[t.k] = h;
     });
 
-    var vista = el('img', { src: urlVista(ocultos[c.k].value) || '', alt: '' });
+    // Caja con background-image en vez de <img>: sin foto cargada, un <img>
+    // con src vacio muestra el icono de imagen rota.
+    var vista = el('div', { class: 'vista-foto', 'aria-hidden': 'true' });
+    function pintarVista(url) {
+      vista.style.backgroundImage = url ? 'url("' + urlVista(url) + '")' : 'none';
+      vista.textContent = url ? '' : 'Sin foto';
+    }
+    pintarVista(ocultos[c.k].value);
     var estado = el('span', { class: 'nota', text: c.nota || '' });
 
     // El input de archivo nativo se esconde y se dispara desde un label con
@@ -655,7 +694,7 @@
           .then(function (b) { return subir(b, c.carpeta); })
           .then(function (url) {
             ocultos[t.k].value = url;
-            if (t.k === c.k) vista.src = url;
+            if (t.k === c.k) pintarVista(url);
           });
       }, Promise.resolve())
         .then(function () {
