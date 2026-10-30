@@ -63,9 +63,9 @@
   .ficha .cuerpo { padding: 4px 18px 20px; border-top: 1px solid var(--linea); }
   .oculto-pill { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--tenue); border: 1px solid var(--linea); padding: 3px 8px; border-radius: 999px; }
 
-  label.campo { display: block; margin-top: 18px; }
-  label.campo > span.et { display: block; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--tenue); margin-bottom: 7px; }
-  label.campo > span.nota { display: block; font-size: 12px; color: var(--suave); margin-top: 6px; line-height: 1.6; }
+  .campo { display: block; margin-top: 18px; }
+  .campo > span.et { display: block; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--tenue); margin-bottom: 7px; }
+  .campo > span.nota { display: block; font-size: 12px; color: var(--suave); margin-top: 6px; line-height: 1.6; }
   input[type=text], input[type=email], input[type=password], textarea, select {
     width: 100%; padding: 11px 13px; border: 1px solid var(--linea); background: var(--fondo);
     font-size: 14.5px; color: var(--tinta); border-radius: 2px;
@@ -83,10 +83,50 @@
   .acciones .espacio { flex: 1 1 auto; }
   .mini { min-height: 36px; padding: 7px 12px; font-size: 11px; border: 1px solid var(--linea); background: var(--papel); color: var(--suave); border-radius: 2px; }
 
+  /* ---- barra de cada grupo: buscar y agregar, arriba de la lista ---- */
+  .barra-grupo { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .barra-grupo .boton { flex: none; }
+  input.buscador {
+    flex: 1 1 240px; min-width: 0; padding: 12px 14px; border: 1px solid var(--linea);
+    background: var(--papel); font-size: 14.5px; color: var(--tinta); border-radius: 2px;
+  }
+  input.buscador::-webkit-search-cancel-button { cursor: pointer; }
+  /* Mientras se filtra, las flechas de orden se esconden: los vecinos en
+     pantalla no son los vecinos reales de la lista. */
+  .filtrando .mini { display: none; }
+
+  /* ---- desplegable propio, en lugar del <select> del sistema ---- */
+  .select { position: relative; }
+  .select-boton {
+    width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 11px 13px; border: 1px solid var(--linea); background: var(--fondo);
+    font-size: 14.5px; font-weight: 300; color: var(--tinta); text-align: left; border-radius: 2px;
+  }
+  .select-boton:hover { border-color: var(--acento); }
+  .select-boton[aria-expanded="true"] { border-color: var(--acento); }
+  .select-flecha { color: var(--tenue); font-size: 11px; flex: none; }
+  .select-lista {
+    position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 4px);
+    background: var(--papel); border: 1px solid var(--linea); border-radius: 2px;
+    box-shadow: 0 14px 34px rgba(72,57,54,0.16); overflow: hidden;
+  }
+  .select-opcion {
+    display: block; width: 100%; text-align: left; padding: 12px 14px; border: 0;
+    border-bottom: 1px solid var(--linea); background: transparent;
+    font-size: 14.5px; font-weight: 300; color: var(--tinta);
+  }
+  .select-opcion:last-child { border-bottom: 0; }
+  .select-opcion:hover { background: var(--rosa); }
+  .select-opcion[aria-selected="true"] { background: var(--rosa); color: var(--acento); }
+
+  /* ---- selector de archivo ---- */
+  .archivo-real { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  .archivo-boton { display: inline-block; cursor: pointer; }
+  .archivo-boton.inactivo { opacity: .5; pointer-events: none; }
+
   .vista-imagen { display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
   .vista-imagen img { width: 128px; height: 128px; object-fit: cover; border: 1px solid var(--linea); background: var(--rosa); }
   .vista-imagen .controles { flex: 1 1 220px; min-width: 0; }
-  .vista-imagen input[type=file] { font-size: 13px; width: 100%; }
 
   .aviso { padding: 13px 16px; border-radius: 2px; font-size: 13.5px; line-height: 1.6; margin-bottom: 18px; }
   .aviso.error { background: #FBE9E6; color: #8E3124; border: 1px solid #E9C3BC; }

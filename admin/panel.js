@@ -138,6 +138,14 @@
     return n;
   }
 
+  var contador = 0;
+  function idUnico() { contador += 1; return 'rl-' + contador; }
+
+  // Sin acentos y en minuscula, para que buscar "clasico" encuentre "clásico".
+  function normalizar(t) {
+    return String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
   function avisar(tipo, texto) {
     var caja = el('div', { class: 'aviso ' + tipo, text: texto });
     $('#mensajes').appendChild(caja);
@@ -267,7 +275,7 @@
     });
   }
 
-  function abrir(id) {
+  function abrir(id, destacada) {
     actual = id;
     Array.prototype.forEach.call($('#pestanas').children, function (b) {
       b.setAttribute('aria-current', b.getAttribute('data-id') === id ? 'true' : 'false');
@@ -295,48 +303,94 @@
           return;
         }
         zona.appendChild(g.unico ? pintarUnico(g, r.data[0] || { id: 1 })
-                                 : pintarLista(sec, g, r.data || []));
+                                 : pintarLista(sec, g, r.data || [], destacada));
       });
     });
   }
 
-  function recargar() { abrir(actual); }
+  function recargar(destacada) { abrir(actual, destacada); }
 
   // ------------------------------------------------------------------
   //  Listas
   // ------------------------------------------------------------------
-  function pintarLista(sec, g, filas) {
+  function pintarLista(sec, g, filas, destacada) {
     var caja = el('section', { style: 'margin-bottom:46px' });
 
     if (g.titulo_grupo) {
       caja.appendChild(el('h3', { text: g.titulo_grupo, style: 'font-size:26px;margin-bottom:14px' }));
     }
 
+    var lista = el('div');
+    var sinResultados = el('div', { class: 'vacio', text: 'Ningún resultado para esa búsqueda.', hidden: 'hidden' });
+
+    var buscador = el('input', {
+      type: 'search', class: 'buscador', placeholder: 'Buscar ' + g.etiqueta + '…',
+      'aria-label': 'Buscar ' + g.etiqueta
+    });
+
+    var agregar = el('button', {
+      type: 'button', class: 'boton', text: 'Agregar ' + g.etiqueta,
+      onclick: function () {
+        agregar.disabled = true;
+        var nueva = JSON.parse(JSON.stringify(g.nuevo));
+        nueva.position = filas.length;
+        sb.from(g.tabla).insert(nueva).select().then(function (r) {
+          agregar.disabled = false;
+          if (r.error) return avisar('error', explicar(r.error));
+          avisar('ok', 'Se agregó. Completá los datos y guardá.');
+          // Se abre y se baja hasta la ficha nueva, que queda al final de la
+          // lista y con el boton arriba podria no verse.
+          recargar(r.data && r.data[0] && r.data[0].id);
+        });
+      }
+    });
+
+    caja.appendChild(el('div', { class: 'barra-grupo' }, [buscador, agregar]));
+
     if (!filas.length) {
       caja.appendChild(el('div', { class: 'vacio', text: 'Todavía no hay nada cargado acá.' }));
     }
 
+    caja.appendChild(sinResultados);
+    caja.appendChild(lista);
+
     filas.forEach(function (fila, idx) {
-      caja.appendChild(pintarFicha(g, fila, idx, filas));
+      lista.appendChild(pintarFicha(g, fila, idx, filas, destacada));
     });
 
-    caja.appendChild(el('button', {
-      type: 'button', class: 'boton', text: 'Agregar ' + g.etiqueta,
-      onclick: function () {
-        var nueva = JSON.parse(JSON.stringify(g.nuevo));
-        nueva.position = filas.length;
-        sb.from(g.tabla).insert(nueva).select().then(function (r) {
-          if (r.error) return avisar('error', explicar(r.error));
-          avisar('ok', 'Se agregó. Completá los datos y guardá.');
-          recargar();
-        });
-      }
-    }));
+    buscador.addEventListener('input', function () {
+      var q = normalizar(buscador.value).trim();
+      var visibles = 0;
+      Array.prototype.forEach.call(lista.children, function (ficha) {
+        var entra = !q || (ficha.dataset.busca || '').indexOf(q) >= 0;
+        ficha.hidden = !entra;
+        if (entra) visibles += 1;
+      });
+      sinResultados.hidden = !(q && visibles === 0);
+      // Mientras se filtra, mover de orden confunde: los vecinos de la
+      // pantalla no son los vecinos reales.
+      lista.classList.toggle('filtrando', !!q);
+    });
+
     return caja;
   }
 
-  function pintarFicha(g, fila, idx, filas) {
+  function pintarFicha(g, fila, idx, filas, destacada) {
     var ficha = el('details', { class: 'ficha' });
+
+    // Lo que mira el buscador: titulo, subtitulo y el contenido de los campos
+    // de texto de esta fila.
+    ficha.dataset.busca = normalizar([
+      g.titulo(fila),
+      g.subtitulo ? g.subtitulo(fila) : '',
+      g.campos.filter(function (c) { return c.tipo === 'texto' || c.tipo === 'area'; })
+        .map(function (c) { return fila[c.k]; }).join(' ')
+    ].join(' '));
+
+    if (destacada && fila.id === destacada) {
+      ficha.open = true;
+      setTimeout(function () { ficha.scrollIntoView({ block: 'center' }); }, 60);
+    }
     var foto = g.foto ? g.foto(fila) : null;
 
     var resumen = el('summary', {}, [
@@ -469,21 +523,17 @@
       return el('label', { class: 'fila-check' }, [chk, el('span', { text: c.et })]);
     }
 
+    // Estos dos traen su propio control, armado a mano para que no quede el
+    // widget gris del sistema operativo en medio del panel.
+    if (c.tipo === 'imagen' || c.tipo === 'imagen-doble') return campoImagen(c, fila);
+    if (c.tipo === 'select') return campoSelect(c, valor);
+
     var campo = el('label', { class: 'campo' }, [el('span', { class: 'et', text: c.et })]);
     var entrada;
 
     if (c.tipo === 'area') {
       entrada = el('textarea', { name: c.k });
       entrada.value = valor;
-    } else if (c.tipo === 'select') {
-      entrada = el('select', { name: c.k });
-      c.opciones.forEach(function (o) {
-        var op = el('option', { value: o[0], text: o[1] });
-        if (o[0] === valor) op.selected = true;
-        entrada.appendChild(op);
-      });
-    } else if (c.tipo === 'imagen' || c.tipo === 'imagen-doble') {
-      return campoImagen(c, fila, campo);
     } else {
       entrada = el('input', { type: 'text', name: c.k });
       entrada.value = valor;
@@ -494,7 +544,77 @@
     return campo;
   }
 
-  function campoImagen(c, fila, campo) {
+  // Cierra cualquier desplegable abierto. Va una sola vez sobre el documento
+  // en lugar de un listener por campo, porque el panel se redibuja seguido.
+  function cerrarDesplegables() {
+    Array.prototype.forEach.call(document.querySelectorAll('.select-lista'), function (l) {
+      l.hidden = true;
+      if (l.previousSibling && l.previousSibling.setAttribute) {
+        l.previousSibling.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+  document.addEventListener('click', cerrarDesplegables);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') cerrarDesplegables();
+  });
+
+  function campoSelect(c, valor) {
+    var campo = el('div', { class: 'campo' }, [el('span', { class: 'et', text: c.et })]);
+
+    var oculto = el('input', { type: 'hidden', name: c.k });
+    oculto.value = valor || (c.opciones[0] ? c.opciones[0][0] : '');
+
+    var textoDe = function (v) {
+      var o = c.opciones.filter(function (x) { return x[0] === v; })[0];
+      return o ? o[1] : v;
+    };
+
+    var texto = el('span', { text: textoDe(oculto.value) });
+    var boton = el('button', {
+      type: 'button', class: 'select-boton',
+      'aria-haspopup': 'listbox', 'aria-expanded': 'false'
+    }, [texto, el('span', { class: 'select-flecha', text: '▾' })]);
+
+    var lista = el('div', { class: 'select-lista', role: 'listbox', hidden: 'hidden' });
+
+    function marcar() {
+      Array.prototype.forEach.call(lista.children, function (op) {
+        op.setAttribute('aria-selected', op.dataset.valor === oculto.value ? 'true' : 'false');
+      });
+    }
+
+    c.opciones.forEach(function (o) {
+      var op = el('button', {
+        type: 'button', class: 'select-opcion', role: 'option',
+        onclick: function () {
+          oculto.value = o[0];
+          texto.textContent = o[1];
+          marcar();
+        }
+      }, [el('span', { text: o[1] })]);
+      op.dataset.valor = o[0];
+      lista.appendChild(op);
+    });
+
+    boton.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      var abierto = !lista.hidden;
+      cerrarDesplegables();
+      if (!abierto) {
+        lista.hidden = false;
+        boton.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    marcar();
+    campo.appendChild(el('div', { class: 'select' }, [boton, lista, oculto]));
+    if (c.nota) campo.appendChild(el('span', { class: 'nota', text: c.nota }));
+    return campo;
+  }
+
+  function campoImagen(c, fila) {
+    var campo = el('div', { class: 'campo' }, [el('span', { class: 'et', text: c.et })]);
     // Una foto puede guardarse en varios tamanos: el principal mas los que
     // pida c.tamanos. Cada uno tiene su campo oculto con la URL del bucket.
     var partes = [{ k: c.k, ancho: c.ancho }].concat(c.tamanos || []);
@@ -507,13 +627,19 @@
 
     var vista = el('img', { src: urlVista(ocultos[c.k].value) || '', alt: '' });
     var estado = el('span', { class: 'nota', text: c.nota || '' });
-    var archivo = el('input', { type: 'file', accept: 'image/*' });
+
+    // El input de archivo nativo se esconde y se dispara desde un label con
+    // el mismo estilo que el resto de los botones.
+    var idArchivo = idUnico();
+    var archivo = el('input', { type: 'file', accept: 'image/*', id: idArchivo, class: 'archivo-real' });
+    var elegir = el('label', { class: 'boton claro archivo-boton', 'for': idArchivo, text: 'Elegir foto' });
 
     archivo.addEventListener('change', function () {
       var f = archivo.files && archivo.files[0];
       if (!f) return;
       var previas = partes.map(function (t) { return ocultos[t.k].value; });
       archivo.disabled = true;
+      elegir.classList.add('inactivo');
       estado.textContent = 'Procesando y subiendo…';
 
       partes.reduce(function (cadena, t) {
@@ -527,6 +653,7 @@
       }, Promise.resolve())
         .then(function () {
           archivo.disabled = false;
+          elegir.classList.remove('inactivo');
           archivo.value = '';
           estado.textContent = 'Foto subida. Acordate de guardar.';
           // Si la fila ya existe, se guarda sola: asi no queda una foto
@@ -538,6 +665,7 @@
         })
         .catch(function (e) {
           archivo.disabled = false;
+          elegir.classList.remove('inactivo');
           estado.textContent = '';
           avisar('error', explicar(e));
         });
@@ -545,7 +673,7 @@
 
     campo.appendChild(el('div', { class: 'vista-imagen' }, [
       vista,
-      el('div', { class: 'controles' }, [archivo, estado].concat(partes.map(function (t) { return ocultos[t.k]; })))
+      el('div', { class: 'controles' }, [elegir, archivo, estado].concat(partes.map(function (t) { return ocultos[t.k]; })))
     ]));
     return campo;
   }
