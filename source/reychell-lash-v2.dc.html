@@ -35,6 +35,7 @@
   @keyframes gz-lid { 0%,86%,100% { transform: scaleY(1) } 90.5% { transform: scaleY(0.78) } 94.5% { transform: scaleY(1) } }
   @keyframes gz-blink { 0%,86%,100% { transform: scaleY(1) } 91% { transform: scaleY(0.07) } 95.5% { transform: scaleY(1) } }
   @keyframes gz-lash { 0%,86%,100% { transform: translateY(0) scaleY(1) } 91% { transform: translateY(24px) scaleY(0.72) } 95.5% { transform: translateY(0) scaleY(1) } }
+  section img, section span[role="img"] { max-height: 78vh; }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important } }
 </style>
 </helmet>
@@ -116,7 +117,7 @@
               </div>
             </div>
 
-            <div style="position:relative;z-index:2;min-height:clamp(420px,56vw,760px);align-self:stretch">
+            <div style="position:relative;z-index:2;min-height:min(clamp(420px,56vw,760px),calc(100vh - 250px));align-self:stretch">
               <div style="position:absolute;inset:0;overflow:hidden;animation:gz-mask .65s cubic-bezier(.4,0,.2,1) both">
                 <div key="{{ heroKey }}" role="img" aria-label="Trabajo de extensión de pestañas realizado por Reychell Lash" style="width:100%;height:100%;background-image:{{ heroBg }};background-size:cover;background-position:center;animation:gz-fade .55s ease both"></div>
               </div>
@@ -180,7 +181,7 @@
               <div style="border-top:1px solid rgba(72,57,54,0.14)"></div>
             </div>
           </div>
-          <div style="position:relative;min-height:clamp(380px,46vw,680px)">
+          <div style="position:relative;align-self:start;height:min(clamp(380px,46vw,680px),72vh)">
             <img src="assets/foto-7-lg.webp" loading="lazy" decoding="async" alt="Extensiones de pestañas en plano cerrado" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;animation:gz-mask .9s cubic-bezier(.4,0,.2,1) both">
           </div>
         </div>
@@ -333,7 +334,7 @@
       </section>
       <section style="background:#FFFFFF">
         <div style="max-width:1200px;margin:0 auto;padding:0 clamp(22px,4vw,56px) clamp(56px,8vw,120px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(270px,100%),1fr));gap:clamp(28px,4vw,72px);align-items:start">
-          <img src="{{ aboutPortrait }}" loading="lazy" decoding="async" alt="{{ aboutPortraitAlt }}" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block;animation:gz-mask .9s cubic-bezier(.4,0,.2,1) .15s both">
+          <img src="{{ aboutPortrait }}" loading="lazy" decoding="async" alt="{{ aboutPortraitAlt }}" style="width:100%;aspect-ratio:4/5;max-height:72vh;object-fit:cover;display:block;animation:gz-mask .9s cubic-bezier(.4,0,.2,1) .15s both">
           <div style="padding-top:clamp(0px,3vw,48px)">
             <p style="margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(21px,2.4vw,32px);line-height:1.35;color:#483936">Belleza en cada mirada.</p>
             <div style="margin-top:32px;display:flex;flex-direction:column;gap:30px">
@@ -493,7 +494,7 @@
             </div>
 
             <figure style="margin:0;position:relative;border-radius:18px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,0.45);animation:gz-mask .9s cubic-bezier(.4,0,.2,1) .2s both">
-              <img src="{{ contactoFoto }}" alt="{{ contactoFotoAlt }}" loading="lazy" decoding="async" style="display:block;width:100%;aspect-ratio:{{ contactoFotoRatio }};object-fit:cover">
+              <img src="{{ contactoFoto }}" alt="{{ contactoFotoAlt }}" loading="lazy" decoding="async" style="display:block;width:100%;aspect-ratio:{{ contactoFotoRatio }};max-height:70vh;object-fit:cover">
             </figure>
 
           </div>
