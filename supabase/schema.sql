@@ -321,3 +321,18 @@ create policy raychelllash_actualizar on storage.objects
 create policy raychelllash_borrar on storage.objects
   for delete to authenticated
   using (bucket_id = 'raychelllash' and raychelllashweb.is_admin());
+
+-- ---------------------------------------------------------------------
+-- 6. Avisarle a PostgREST
+--
+--    PostgREST guarda en memoria la estructura de la base. Sin este aviso
+--    sigue sin ver las tablas recien creadas y responde 404 (PGRST205)
+--    aunque esten ahi.
+--
+--    'reload config' es para cuando se acaba de agregar raychelllashweb a
+--    la lista de schemas expuestos. Si esa lista viene de una variable de
+--    entorno, igual hace falta reiniciar el servicio rest.
+-- ---------------------------------------------------------------------
+
+notify pgrst, 'reload config';
+notify pgrst, 'reload schema';

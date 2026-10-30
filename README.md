@@ -33,8 +33,9 @@ sin tocar el código.
 
 1. **Crear las tablas.** Pegar `supabase/schema.sql` entero en el SQL Editor de
    Supabase y ejecutar. Crea el schema `raychelllashweb` con su contenido
-   inicial —el mismo que ya tiene la página— y el bucket de imágenes. Se puede
-   correr más de una vez sin duplicar nada.
+   inicial —el mismo que ya tiene la página— y el bucket de imágenes. Termina
+   avisándole a PostgREST que recargue, así ve las tablas nuevas sin reiniciar
+   nada. Se puede correr más de una vez sin duplicar nada.
 2. **Exponer el schema en la API.** En el Supabase self-hosted, agregar
    `raychelllashweb` a la variable `PGRST_DB_SCHEMAS` del servicio `rest`
    (queda, por ejemplo, `public,storage,graphql_public,raychelllashweb`) y
