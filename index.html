@@ -524,10 +524,6 @@
               </div>
             </div>
 
-            <figure style="margin:0;position:relative;border-radius:18px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,0.45);animation:gz-mask .9s cubic-bezier(.4,0,.2,1) .2s both">
-              <img src="{{ contactoFoto }}" alt="{{ contactoFotoAlt }}" loading="lazy" decoding="async" style="display:block;width:100%;aspect-ratio:{{ contactoFotoRatio }};max-height:70vh;object-fit:cover">
-            </figure>
-
           </div>
         </div>
       </section>
@@ -1244,12 +1240,7 @@ class Component extends DCLogic {
       aboutStrip: C.tira,
       igLink: ig,
       fbLink: fb,
-      contactoCols: s.desktop ? 'minmax(0,1.5fr) minmax(0,0.8fr)' : 'minmax(0,1fr)',
-      contactoFotoRatio: s.desktop ? '4/5' : '16/11',
-      // Una foto de la galeria, enmarcada. Es un retrato y no un fondo a toda
-      // pantalla: estirar un primer plano de ojo a ese tamano queda mal.
-      contactoFoto: (C.gallery[0] && C.gallery[0].src) || C.heroPhotos[0],
-      contactoFotoAlt: (C.gallery[0] && C.gallery[0].label) || 'Trabajo de Reychell Lash',
+      contactoCols: 'minmax(0,1fr)',
       faqs: FAQS.map((x, i) => ({
         q: x.q,
         a: x.a,

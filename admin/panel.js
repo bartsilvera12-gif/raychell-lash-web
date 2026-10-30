@@ -24,7 +24,7 @@
         foto: function (f) { return f.image_url; },
         campos: [
           { k: 'name', et: 'Nombre', tipo: 'texto', req: true },
-          { k: 'price', et: 'Precio', tipo: 'texto', nota: 'Se muestra tal cual está escrito. Por ejemplo: Gs. 120.000' },
+          { k: 'price', et: 'Precio', tipo: 'precio', nota: 'Escribí solo los números y se completa solo: 120000 queda como Gs. 120.000' },
           { k: 'description', et: 'Detalle', tipo: 'area', nota: 'El texto que acompaña al servicio en la página de Servicios.' },
           { k: 'image_url', et: 'Foto', tipo: 'imagen', carpeta: 'servicios', ancho: 1000 },
           { k: 'is_active', et: 'Visible en la página', tipo: 'check' }
@@ -50,7 +50,7 @@
         campos: [
           { k: 'group_id', et: 'Grupo', tipo: 'select', opciones_de: 'price_groups' },
           { k: 'label', et: 'Nombre', tipo: 'texto', req: true, nota: 'Por ejemplo: 15 días' },
-          { k: 'price', et: 'Precio', tipo: 'texto', nota: 'Se muestra tal cual está escrito. Por ejemplo: Gs. 60.000' },
+          { k: 'price', et: 'Precio', tipo: 'precio', nota: 'Escribí solo los números y se completa solo: 60000 queda como Gs. 60.000' },
           { k: 'is_active', et: 'Visible en la página', tipo: 'check' }
         ],
         nuevo: function () {
@@ -187,6 +187,17 @@
 
     document.body.appendChild(fondo);
     no.focus();
+  }
+
+  // 250000 -> Gs. 250.000. Si lo escrito no es solo numeros, por ejemplo
+  // "Desde 250000", se le ponen los puntos y se respeta el resto.
+  function formatearPrecio(valor) {
+    var t = String(valor == null ? '' : valor).trim();
+    if (!t) return '';
+    var conPuntos = t.replace(/\d{4,}/g, function (n) {
+      return n.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    });
+    return /^[\d.]+$/.test(conPuntos) ? 'Gs. ' + conPuntos : conPuntos;
   }
 
   // Traduce los errores mas comunes de Supabase a algo legible.
@@ -575,6 +586,7 @@
       var n = form.querySelector('[name="' + c.k + '"]');
       if (!n) return;
       out[c.k] = c.tipo === 'check' ? n.checked : n.value;
+      if (c.tipo === 'precio') out[c.k] = formatearPrecio(out[c.k]);
       (c.tamanos || []).forEach(function (t) {
         var m = form.querySelector('[name="' + t.k + '"]');
         if (m) out[t.k] = m.value;
@@ -625,6 +637,12 @@
     if (c.tipo === 'area') {
       entrada = el('textarea', { name: c.k });
       entrada.value = valor;
+    } else if (c.tipo === 'precio') {
+      entrada = el('input', { type: 'text', name: c.k, inputmode: 'numeric', autocomplete: 'off' });
+      entrada.value = valor;
+      // Se formatea al salir del campo y no en cada tecla, para no mover el
+      // cursor mientras se escribe.
+      entrada.addEventListener('blur', function () { entrada.value = formatearPrecio(entrada.value); });
     } else {
       entrada = el('input', { type: 'text', name: c.k });
       entrada.value = valor;
