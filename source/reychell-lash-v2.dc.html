@@ -646,6 +646,17 @@ function apiGet(path) {
     .catch(() => null);
 }
 
+// Un precio guardado sin formato igual se muestra bien: 250000 -> Gs. 250.000.
+// Lo que ya viene escrito, como "Gs. 150.000", queda intacto.
+function precio(valor) {
+  const t = String(valor == null ? '' : valor).trim().replace(/\d[\d.]*/g, (bloque) => {
+    const digitos = bloque.replace(/\./g, '');
+    return digitos.length < 4 ? digitos : digitos.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  });
+  if (!t) return '';
+  return /^[\d.]+$/.test(t) ? 'Gs. ' + t : t;
+}
+
 // 595984053323 -> 0984 053 323
 function telLocal(d) {
   const n = String(d || '').replace(/[^0-9]/g, '');
@@ -756,7 +767,7 @@ class Component extends DCLogic {
       name: x.name, description: x.desc, price: x.price,
       image_url: x.img, image_position: x.pos || 'center'
     }))).map((r) => ({
-      name: r.name || '', desc: r.description || '', price: r.price || '',
+      name: r.name || '', desc: r.description || '', price: precio(r.price),
       img: r.image_url || '', pos: r.image_position || 'center'
     }));
 
@@ -798,12 +809,12 @@ class Component extends DCLogic {
           ask: g.ask || '',
           items: (db.priceItems || [])
             .filter((i) => i.group_id === g.id)
-            .map((i) => ({ label: i.label || '', price: i.price || '' }))
+            .map((i) => ({ label: i.label || '', price: precio(i.price) }))
         }))
       : PRICE_GROUPS.map((g) => ({
           title: g.title,
           ask: g.ask,
-          items: g.items.map((it) => ({ label: it[0], price: it[1] }))
+          items: g.items.map((it) => ({ label: it[0], price: precio(it[1]) }))
         }));
 
     const settings = db.settings || {};

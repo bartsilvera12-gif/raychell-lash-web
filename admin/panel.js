@@ -20,7 +20,7 @@
       grupos: [{
         tabla: 'services', etiqueta: 'servicio', articulo: 'el',
         titulo: function (f) { return f.name || 'Servicio sin nombre'; },
-        subtitulo: function (f) { return f.price || ''; },
+        subtitulo: function (f) { return formatearPrecio(f.price); },
         foto: function (f) { return f.image_url; },
         campos: [
           { k: 'name', et: 'Nombre', tipo: 'texto', req: true },
@@ -46,7 +46,7 @@
       {
         tabla: 'price_items', etiqueta: 'renglón', articulo: 'el', titulo_grupo: 'Tabla de precios · renglones',
         titulo: function (f) { return f.label || 'Renglón sin nombre'; },
-        subtitulo: function (f) { return [nombreDe('price_groups', f.group_id), f.price].filter(Boolean).join(' · '); },
+        subtitulo: function (f) { return [nombreDe('price_groups', f.group_id), formatearPrecio(f.price)].filter(Boolean).join(' · '); },
         campos: [
           { k: 'group_id', et: 'Grupo', tipo: 'select', opciones_de: 'price_groups' },
           { k: 'label', et: 'Nombre', tipo: 'texto', req: true, nota: 'Por ejemplo: 15 días' },
@@ -665,7 +665,8 @@
       entrada.value = valor;
     } else if (c.tipo === 'precio') {
       entrada = el('input', { type: 'text', name: c.k, inputmode: 'numeric', autocomplete: 'off' });
-      entrada.value = valor;
+      // Lo que ya estaba guardado sin formato se muestra formateado al abrir.
+      entrada.value = formatearPrecio(valor);
       // El punto de miles aparece mientras se escribe; el "Gs." se agrega al
       // salir del campo, para no meterlo cuando recien se tecleo un digito.
       entrada.addEventListener('input', function () { puntuarEnVivo(entrada); });
