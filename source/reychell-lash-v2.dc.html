@@ -35,7 +35,11 @@
   @keyframes gz-lid { 0%,86%,100% { transform: scaleY(1) } 90.5% { transform: scaleY(0.78) } 94.5% { transform: scaleY(1) } }
   @keyframes gz-blink { 0%,86%,100% { transform: scaleY(1) } 91% { transform: scaleY(0.07) } 95.5% { transform: scaleY(1) } }
   @keyframes gz-lash { 0%,86%,100% { transform: translateY(0) scaleY(1) } 91% { transform: translateY(24px) scaleY(0.72) } 95.5% { transform: translateY(0) scaleY(1) } }
-  section img, section span[role="img"] { max-height: 78vh; }
+  /* Ninguna foto pasa del 78% del alto de la ventana. Quedan afuera las
+     marcadas con data-llena: esas llenan su contenedor y acortarlas dejaria
+     un hueco debajo. */
+  section img:not([data-llena]),
+  section span[role="img"] { max-height: 78vh; }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important } }
 </style>
 </helmet>
@@ -181,8 +185,8 @@
               <div style="border-top:1px solid rgba(72,57,54,0.14)"></div>
             </div>
           </div>
-          <div style="position:relative;align-self:start;height:min(clamp(380px,46vw,680px),72vh)">
-            <img src="assets/foto-7-lg.webp" loading="lazy" decoding="async" alt="Extensiones de pestañas en plano cerrado" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;animation:gz-mask .9s cubic-bezier(.4,0,.2,1) both">
+          <div style="position:relative;min-height:280px">
+            <img data-llena src="assets/foto-7-lg.webp" loading="lazy" decoding="async" alt="Extensiones de pestañas en plano cerrado" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;animation:gz-mask .9s cubic-bezier(.4,0,.2,1) both">
           </div>
         </div>
       </section>
