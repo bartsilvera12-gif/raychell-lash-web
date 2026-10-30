@@ -22,13 +22,17 @@ head_extra = f"""<meta charset="utf-8">
 <meta property="og:description" content="Un espacio dedicado a realzar tu mirada con atención al detalle.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_PY">
-<meta property="og:image" content="assets/portada-lg.jpg">
+<meta property="og:image" content="assets/og-portada.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Reychell Lash | Belleza en cada mirada">
 <meta name="twitter:description" content="Un espacio dedicado a realzar tu mirada con atención al detalle.">
-<meta name="twitter:image" content="assets/portada-lg.jpg">
+<meta name="twitter:image" content="assets/og-portada.jpg">
 <link rel="icon" href="assets/reychell-logo-circular.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/reychell-logo-circular.png">
+<!-- La foto de portada abre la pagina: se pide cuanto antes, sin esperar al JavaScript -->
+<link rel="preload" as="image" href="assets/portada-lg.webp" fetchpriority="high">
 {fonts}
 {style}
 <!-- React 18.3.1 (UMD) servido localmente: el runtime lo detecta y no descarga nada de un CDN externo -->

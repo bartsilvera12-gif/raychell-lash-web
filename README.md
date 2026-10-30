@@ -11,7 +11,7 @@ support.js      Runtime que interpreta la plantilla y la monta con React
 vendor/         React y ReactDOM 18.3.1 (UMD) servidos desde el propio dominio
 assets/         Fotos y logos
 source/         Archivo .dc.html original (fuente editable)
-scripts/        Script que regenera index.html desde la fuente
+scripts/        Scripts de mantenimiento (regenerar index.html, optimizar fotos)
 vercel.json     Configuración de Vercel (cabeceras, caché, fallback de rutas)
 ```
 
@@ -66,10 +66,32 @@ python3 scripts/build-index.py source/reychell-lash-v2.dc.html index.html
 El número de WhatsApp por defecto (`595984053323`) está en el mismo bloque, en
 `renderVals()`.
 
+## Fotos
+
+Las fotos están en WebP, redimensionadas al tamaño máximo con el que el sitio
+las llega a mostrar. En conjunto pesan 478 KB en la primera carga, frente a los
+1,4 MB de los JPEG originales.
+
+Si agregás fotos nuevas en JPEG, copialas a `assets/` siguiendo la convención de
+nombres (`-sm` miniatura, `-md` tamaño normal, `-lg` para el visor ampliado) y
+corré:
+
+```bash
+python3 scripts/optimize-images.py
+```
+
+El script convierte a WebP, achica lo que esté más grande de lo necesario,
+regenera `assets/og-portada.jpg` (la vista previa al compartir el enlace, que se
+deja en JPEG porque WhatsApp y Facebook no muestran WebP de forma confiable) y
+borra de `assets/` todo lo que el sitio no usa. La lista de fotos que el sitio
+usa está al principio del script, en `PHOTOS`.
+
 ## Notas técnicas
 
 - React se sirve desde `vendor/`, no desde un CDN externo; el runtime lo detecta y
   no hace ninguna descarga de terceros.
 - Lo único externo que carga la página son las tipografías de Google Fonts.
+- La foto de portada se precarga desde el `<head>`, así empieza a bajar sin
+  esperar a que corra el JavaScript.
 - Las etiquetas `<title>`, `description` y Open Graph están en el `<head>` estático,
   para que WhatsApp, Facebook y los buscadores las lean sin ejecutar JavaScript.

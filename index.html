@@ -12,13 +12,17 @@
 <meta property="og:description" content="Un espacio dedicado a realzar tu mirada con atención al detalle.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_PY">
-<meta property="og:image" content="assets/portada-lg.jpg">
+<meta property="og:image" content="assets/og-portada.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Reychell Lash | Belleza en cada mirada">
 <meta name="twitter:description" content="Un espacio dedicado a realzar tu mirada con atención al detalle.">
-<meta name="twitter:image" content="assets/portada-lg.jpg">
+<meta name="twitter:image" content="assets/og-portada.jpg">
 <link rel="icon" href="assets/reychell-logo-circular.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/reychell-logo-circular.png">
+<!-- La foto de portada abre la pagina: se pide cuanto antes, sin esperar al JavaScript -->
+<link rel="preload" as="image" href="assets/portada-lg.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -142,7 +146,7 @@
 
             <div style="position:relative;z-index:3;display:{{ heroAside }};flex-direction:column;justify-content:space-between;align-items:flex-end;padding-top:clamp(40px,7vw,120px)">
               <div style="width:clamp(130px,11vw,190px);animation:gz-maskr .7s cubic-bezier(.4,0,.2,1) .95s both">
-                <img src="assets/foto-2-md.jpg" loading="lazy" decoding="async" alt="Detalle de pestañas en primer plano" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block">
+                <img src="assets/foto-2-md.webp" loading="lazy" decoding="async" alt="Detalle de pestañas en primer plano" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block">
               </div>
               <h2 style="margin:0 0 0 clamp(-300px,-22vw,-110px);font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(40px,5.4vw,96px);line-height:0.84;letter-spacing:-0.02em;text-align:right;color:#483936;position:relative;z-index:4;width:max-content;padding-left:0.22em;text-shadow:0 0 18px #FFF8F3,0 0 42px rgba(255,248,243,0.95),0 0 90px rgba(255,248,243,0.8);animation:gz-rise 1s cubic-bezier(.22,.61,.36,1) .62s both">En primer<br>plano.</h2>
             </div>
@@ -199,7 +203,7 @@
             </div>
           </div>
           <div style="position:relative;min-height:clamp(380px,46vw,680px)">
-            <img src="assets/foto-7-lg.jpg" loading="lazy" decoding="async" alt="Extensiones de pestañas en plano cerrado" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;animation:gz-mask .9s cubic-bezier(.4,0,.2,1) both">
+            <img src="assets/foto-7-lg.webp" loading="lazy" decoding="async" alt="Extensiones de pestañas en plano cerrado" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;animation:gz-mask .9s cubic-bezier(.4,0,.2,1) both">
           </div>
         </div>
       </section>
@@ -235,10 +239,10 @@
         <div style="max-width:1340px;margin:0 auto;padding:clamp(56px,8vw,120px) clamp(22px,4vw,56px)">
           <h2 style="margin:0;max-width:720px;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(34px,4.6vw,70px);line-height:0.96;letter-spacing:-0.02em;text-wrap:pretty">Miradas reales. Detalles que hablan.</h2>
           <div style="margin-top:clamp(28px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:14px">
-            <img src="assets/foto-1-lg.jpg" loading="lazy" decoding="async" alt="Extensiones de pestañas, mirada completa" style="grid-column:span 2;width:100%;aspect-ratio:16/11;object-fit:cover;display:block">
-            <img src="assets/foto-4-md.jpg" loading="lazy" decoding="async" alt="Volumen en detalle" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block">
-            <img src="assets/foto-6-md.jpg" loading="lazy" decoding="async" alt="Aplicación pelo a pelo" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
-            <img src="assets/foto-2-md.jpg" loading="lazy" decoding="async" alt="Abanicos de volumen en primer plano" style="grid-column:span 2;width:100%;aspect-ratio:21/9;object-fit:cover;display:block">
+            <img src="assets/foto-1-lg.webp" loading="lazy" decoding="async" alt="Extensiones de pestañas, mirada completa" style="grid-column:span 2;width:100%;aspect-ratio:16/11;object-fit:cover;display:block">
+            <img src="assets/foto-4-md.webp" loading="lazy" decoding="async" alt="Volumen en detalle" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block">
+            <img src="assets/foto-6-md.webp" loading="lazy" decoding="async" alt="Aplicación pelo a pelo" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+            <img src="assets/foto-2-md.webp" loading="lazy" decoding="async" alt="Abanicos de volumen en primer plano" style="grid-column:span 2;width:100%;aspect-ratio:21/9;object-fit:cover;display:block">
           </div>
           <button onClick="{{ goGaleria }}" style="margin-top:32px;background:none;border:0;padding:0 0 4px;font-size:12.5px;letter-spacing:.15em;text-transform:uppercase;color:#483936;border-bottom:1px solid rgba(72,57,54,0.4)">Ver todos los trabajos</button>
         </div>
@@ -246,7 +250,7 @@
 
       <section style="background:#F7E2DB">
         <div style="max-width:1340px;margin:0 auto;padding:clamp(56px,8vw,120px) clamp(22px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:clamp(28px,4vw,64px);align-items:center">
-          <img src="assets/foto-3-md.jpg" loading="lazy" decoding="async" alt="Reychell trabajando en una sesión de pestañas" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block">
+          <img src="assets/foto-3-md.webp" loading="lazy" decoding="async" alt="Reychell trabajando en una sesión de pestañas" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block">
           <div>
             <p style="margin:0;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#9E554D">Sobre Reychell</p>
             <h2 style="margin:18px 0 0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(32px,4.4vw,64px);line-height:0.98;letter-spacing:-0.02em;text-wrap:pretty">Detrás de cada mirada, hay dedicación.</h2>
@@ -262,7 +266,7 @@
             <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,5.4vw,84px);line-height:0.94;letter-spacing:-0.02em;color:#483936;text-wrap:pretty">Tu próxima cita empieza acá.</h2>
             <button onClick="{{ goReservas }}" style="margin-top:34px;padding:17px 32px;border-radius:999px;border:1px solid rgba(72,57,54,0.45);background:transparent;color:#483936;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;transition:background .35s ease,color .35s ease" style-hover="background:#483936;color:#FFF8F3">Quiero agendar</button>
           </div>
-          <img src="assets/foto-5-md.jpg" loading="lazy" decoding="async" alt="Sesión de pestañas en el estudio" style="width:100%;aspect-ratio:5/4;object-fit:cover;display:block">
+          <img src="assets/foto-5-md.webp" loading="lazy" decoding="async" alt="Sesión de pestañas en el estudio" style="width:100%;aspect-ratio:5/4;object-fit:cover;display:block">
         </div>
       </section>
     </sc-if>
@@ -272,7 +276,7 @@
       <section style="background:#FFF8F3">
         <div style="max-width:1340px;margin:0 auto;padding:clamp(44px,6vw,96px) clamp(22px,4vw,56px) clamp(32px,4vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:clamp(24px,3vw,56px);align-items:end">
           <h1 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(42px,6.4vw,112px);line-height:0.9;letter-spacing:-0.025em;text-wrap:pretty;animation:gz-rise .9s ease both">Cada mirada tiene su <em style="font-style:italic;color:#B96F62">estilo</em>.</h1>
-          <img src="assets/foto-6-md.jpg" loading="lazy" decoding="async" alt="Aplicación de extensiones de pestañas" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;animation:gz-mask .8s cubic-bezier(.4,0,.2,1) .2s both">
+          <img src="assets/foto-6-md.webp" loading="lazy" decoding="async" alt="Aplicación de extensiones de pestañas" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;animation:gz-mask .8s cubic-bezier(.4,0,.2,1) .2s both">
         </div>
       </section>
       <section style="background:#FFFFFF;border-top:1px solid rgba(72,57,54,0.08)">
@@ -350,7 +354,7 @@
       </section>
       <section style="background:#FFFFFF">
         <div style="max-width:1200px;margin:0 auto;padding:0 clamp(22px,4vw,56px) clamp(56px,8vw,120px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(270px,100%),1fr));gap:clamp(28px,4vw,72px);align-items:start">
-          <img src="assets/foto-3-md.jpg" loading="lazy" decoding="async" alt="Reychell durante una sesión de extensiones" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block;animation:gz-mask .9s cubic-bezier(.4,0,.2,1) .15s both">
+          <img src="assets/foto-3-md.webp" loading="lazy" decoding="async" alt="Reychell durante una sesión de extensiones" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block;animation:gz-mask .9s cubic-bezier(.4,0,.2,1) .15s both">
           <div style="padding-top:clamp(0px,3vw,48px)">
             <p style="margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(21px,2.4vw,32px);line-height:1.35;color:#483936">Belleza en cada mirada.</p>
             <div style="margin-top:32px;display:flex;flex-direction:column;gap:30px">
@@ -367,9 +371,9 @@
       </section>
       <section style="background:#F7E2DB">
         <div style="max-width:1340px;margin:0 auto;padding:clamp(40px,5vw,80px) clamp(22px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:14px">
-          <img src="assets/foto-5-md.jpg" loading="lazy" decoding="async" alt="El espacio de trabajo durante una sesión" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
-          <img src="assets/foto-6-md.jpg" loading="lazy" decoding="async" alt="Aplicación pelo a pelo con pinzas" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
-          <img src="assets/foto-2-md.jpg" loading="lazy" decoding="async" alt="Resultado de un set de volumen" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+          <img src="assets/foto-5-md.webp" loading="lazy" decoding="async" alt="El espacio de trabajo durante una sesión" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+          <img src="assets/foto-6-md.webp" loading="lazy" decoding="async" alt="Aplicación pelo a pelo con pinzas" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+          <img src="assets/foto-2-md.webp" loading="lazy" decoding="async" alt="Resultado de un set de volumen" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
         </div>
       </section>
     </sc-if>
@@ -610,15 +614,15 @@ const LEGAL = {
   }
 };
 
-const HERO_PHOTOS = ['assets/portada-lg.jpg', 'assets/foto-1-lg.jpg', 'assets/foto-7-lg.jpg', 'assets/foto-4-lg.jpg', 'assets/foto-6-lg.jpg'];
-const HERO_THUMBS = ['assets/portada-sm.jpg', 'assets/foto-1-sm.jpg', 'assets/foto-7-sm.jpg', 'assets/foto-4-sm.jpg', 'assets/foto-6-sm.jpg'];
+const HERO_PHOTOS = ['assets/portada-lg.webp', 'assets/foto-1-lg.webp', 'assets/foto-7-lg.webp', 'assets/foto-4-lg.webp', 'assets/foto-6-lg.webp'];
+const HERO_THUMBS = ['assets/portada-sm.webp', 'assets/foto-1-sm.webp', 'assets/foto-7-sm.webp', 'assets/foto-4-sm.webp', 'assets/foto-6-sm.webp'];
 
 const SERVICE_SLOTS = [
-  { name: 'Efecto natural', price: 'Gs. 100.000', img: 'assets/srv-natural-md.jpg', desc: 'Realza tu mirada con un acabado natural y elegante. Ideal para el día a día.' },
-  { name: 'Efecto clásico', price: 'Gs. 120.000', img: 'assets/srv-clasico-md.jpg', pos: '72% 62%', desc: 'Más longitud y definición. Un look sutil pero impactante.' },
-  { name: 'Efecto híbrido', price: 'Gs. 130.000', img: 'assets/srv-hibrido-md.jpg', desc: 'La combinación perfecta entre lo natural y el volumen.' },
-  { name: 'Efecto volumen', price: 'Gs. 150.000', img: 'assets/srv-volumen-md.jpg', desc: 'Máxima densidad y profundidad en tu mirada.' },
-  { name: 'Efecto mega volumen', price: 'Gs. 170.000', img: 'assets/foto-7-md.jpg', desc: 'Para una mirada más intensa y espectacular.' }
+  { name: 'Efecto natural', price: 'Gs. 100.000', img: 'assets/srv-natural-md.webp', desc: 'Realza tu mirada con un acabado natural y elegante. Ideal para el día a día.' },
+  { name: 'Efecto clásico', price: 'Gs. 120.000', img: 'assets/srv-clasico-md.webp', pos: '72% 62%', desc: 'Más longitud y definición. Un look sutil pero impactante.' },
+  { name: 'Efecto híbrido', price: 'Gs. 130.000', img: 'assets/srv-hibrido-md.webp', desc: 'La combinación perfecta entre lo natural y el volumen.' },
+  { name: 'Efecto volumen', price: 'Gs. 150.000', img: 'assets/srv-volumen-md.webp', desc: 'Máxima densidad y profundidad en tu mirada.' },
+  { name: 'Efecto mega volumen', price: 'Gs. 170.000', img: 'assets/foto-7-md.webp', desc: 'Para una mirada más intensa y espectacular.' }
 ];
 
 const PRICE_GROUPS = [
@@ -628,13 +632,13 @@ const PRICE_GROUPS = [
 ];
 
 const GALLERY = [
-  { src: 'assets/foto-1-md.jpg', label: 'Volumen · mirada completa', ratio: '1/1', span: 'span 1' },
-  { src: 'assets/foto-7-md.jpg', label: 'Efecto natural · plano cerrado', ratio: '3/4', span: 'span 1' },
-  { src: 'assets/foto-2-md.jpg', label: 'Abanicos de volumen', ratio: '16/11', span: 'span 2' },
-  { src: 'assets/foto-4-md.jpg', label: 'Efecto clásico · detalle', ratio: '3/4', span: 'span 1' },
-  { src: 'assets/foto-6-md.jpg', label: 'Aplicación pelo a pelo', ratio: '3/4', span: 'span 1' },
-  { src: 'assets/foto-3-md.jpg', label: 'Sesión en el estudio', ratio: '3/4', span: 'span 1' },
-  { src: 'assets/foto-5-md.jpg', label: 'Cuidado durante la sesión', ratio: '3/4', span: 'span 1' }
+  { src: 'assets/foto-1-md.webp', label: 'Volumen · mirada completa', ratio: '1/1', span: 'span 1' },
+  { src: 'assets/foto-7-md.webp', label: 'Efecto natural · plano cerrado', ratio: '3/4', span: 'span 1' },
+  { src: 'assets/foto-2-md.webp', label: 'Abanicos de volumen', ratio: '16/11', span: 'span 2' },
+  { src: 'assets/foto-4-md.webp', label: 'Efecto clásico · detalle', ratio: '3/4', span: 'span 1' },
+  { src: 'assets/foto-6-md.webp', label: 'Aplicación pelo a pelo', ratio: '3/4', span: 'span 1' },
+  { src: 'assets/foto-3-md.webp', label: 'Sesión en el estudio', ratio: '3/4', span: 'span 1' },
+  { src: 'assets/foto-5-md.webp', label: 'Cuidado durante la sesión', ratio: '3/4', span: 'span 1' }
 ];
 
 const ABOUT_SLOTS = [
@@ -815,7 +819,7 @@ class Component extends DCLogic {
       })),
       lightboxOpen: s.lb >= 0,
       lightboxLabel: s.lb >= 0 ? GALLERY[s.lb].label : '',
-      lightboxBg: s.lb >= 0 ? 'url(' + GALLERY[s.lb].src.replace('-md.jpg', '-lg.jpg') + ')' : 'none',
+      lightboxBg: s.lb >= 0 ? 'url(' + GALLERY[s.lb].src.replace('-md.webp', '-lg.webp') + ')' : 'none',
       lightboxRatio: s.lb >= 0 ? GALLERY[s.lb].ratio : '3/4',
       lightboxCount: s.lb >= 0 ? (s.lb + 1) + ' / ' + GALLERY.length : '',
       closeLightbox: () => this.setState({ lb: -1 }),
