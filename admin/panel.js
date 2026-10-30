@@ -76,10 +76,11 @@
         foto: function (f) { return f.thumb_url || f.image_url; },
         campos: [
           { k: 'image_url', et: 'Foto', tipo: 'imagen-doble', carpeta: 'galeria', ancho: 1600,
-            tamanos: [{ k: 'thumb_url', ancho: 640 }, { k: 'mini_url', ancho: 200 }] },
+            tamanos: [{ k: 'thumb_url', ancho: 640 }, { k: 'mini_url', ancho: 200 }],
+            guarda_ratio: 'ratio' },
           { k: 'label', et: 'Título', tipo: 'texto', nota: 'Se muestra al abrir la foto en grande.' },
           { k: 'is_featured', et: 'Destacada: también va en el carrusel del inicio', tipo: 'check' },
-          { k: 'is_wide', et: 'Ocupa el doble de ancho en la grilla', tipo: 'check' },
+          { k: 'is_wide', et: 'Ocupa todo el ancho de la galería', tipo: 'check' },
           { k: 'is_active', et: 'Visible en la página', tipo: 'check' }
         ],
         nuevo: { image_url: '', thumb_url: '', mini_url: '', label: '', is_featured: false, is_wide: false, ratio: '3/4', is_active: true }
@@ -215,7 +216,9 @@
         cv.getContext('2d').drawImage(bmp, 0, 0, w, h);
         if (bmp.close) bmp.close();
         return new Promise(function (res, rej) {
-          cv.toBlob(function (b) { b ? res(b) : rej(new Error('No se pudo procesar la imagen.')); }, 'image/webp', 0.82);
+          cv.toBlob(function (b) {
+            b ? res({ blob: b, ancho: w, alto: h }) : rej(new Error('No se pudo procesar la imagen.'));
+          }, 'image/webp', 0.82);
         });
       });
   }
@@ -531,6 +534,10 @@
         var m = form.querySelector('[name="' + t.k + '"]');
         if (m) out[t.k] = m.value;
       });
+      if (c.guarda_ratio) {
+        var pr = form.querySelector('[name="' + c.guarda_ratio + '"]');
+        if (pr) out[c.guarda_ratio] = pr.value;
+      }
     });
     return out;
   }
@@ -663,6 +670,14 @@
       h.value = fila[t.k] || '';
       ocultos[t.k] = h;
     });
+    // La proporcion real de la foto, para que la galeria la muestre sin
+    // recortar. Se completa sola al subir.
+    if (c.guarda_ratio) {
+      var hr = el('input', { type: 'hidden', name: c.guarda_ratio });
+      hr.value = fila[c.guarda_ratio] || '3/4';
+      ocultos[c.guarda_ratio] = hr;
+      partes = partes.concat([{ k: c.guarda_ratio, soloCampo: true }]);
+    }
 
     // Caja con background-image en vez de <img>: sin foto cargada, un <img>
     // con src vacio muestra el icono de imagen rota.
@@ -689,9 +704,15 @@
       estado.textContent = 'Procesando y subiendo…';
 
       partes.reduce(function (cadena, t) {
+        if (t.soloCampo) return cadena;
         return cadena
           .then(function () { return achicar(f, t.ancho); })
-          .then(function (b) { return subir(b, c.carpeta); })
+          .then(function (r) {
+            if (t.k === c.k && c.guarda_ratio) {
+              ocultos[c.guarda_ratio].value = r.ancho + '/' + r.alto;
+            }
+            return subir(r.blob, c.carpeta);
+          })
           .then(function (url) {
             ocultos[t.k].value = url;
             if (t.k === c.k) pintarVista(url);
