@@ -189,15 +189,41 @@
     no.focus();
   }
 
+  // Pone el punto de miles y deja el resto del texto como esta. Cada bloque
+  // de numero se desarma primero: si no, al escribir sobre "2.500" el punto
+  // ya puesto corta el numero y el reagrupado sale mal ("2.5.000").
+  function puntuar(texto) {
+    return String(texto == null ? '' : texto).replace(/\d[\d.]*/g, function (bloque) {
+      var digitos = bloque.replace(/\./g, '');
+      if (digitos.length < 4) return digitos;
+      return digitos.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    });
+  }
+
   // 250000 -> Gs. 250.000. Si lo escrito no es solo numeros, por ejemplo
   // "Desde 250000", se le ponen los puntos y se respeta el resto.
   function formatearPrecio(valor) {
-    var t = String(valor == null ? '' : valor).trim();
+    var t = puntuar(String(valor == null ? '' : valor).trim());
     if (!t) return '';
-    var conPuntos = t.replace(/\d{4,}/g, function (n) {
-      return n.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    });
-    return /^[\d.]+$/.test(conPuntos) ? 'Gs. ' + conPuntos : conPuntos;
+    return /^[\d.]+$/.test(t) ? 'Gs. ' + t : t;
+  }
+
+  // Formatea mientras se escribe. Reescribir el valor manda el cursor al
+  // final, asi que se cuenta cuantos digitos habia antes del cursor y se lo
+  // devuelve despues de esa misma cantidad de digitos.
+  function puntuarEnVivo(input) {
+    var antes = input.value;
+    var despues = puntuar(antes);
+    if (despues === antes) return;
+    var corte = input.selectionStart == null ? antes.length : input.selectionStart;
+    var digitos = antes.slice(0, corte).replace(/\D/g, '').length;
+    input.value = despues;
+    var i = 0, vistos = 0;
+    while (i < despues.length && vistos < digitos) {
+      if (despues.charCodeAt(i) >= 48 && despues.charCodeAt(i) <= 57) vistos++;
+      i++;
+    }
+    try { input.setSelectionRange(i, i); } catch (e) { /* algunos navegadores */ }
   }
 
   // Traduce los errores mas comunes de Supabase a algo legible.
@@ -640,8 +666,9 @@
     } else if (c.tipo === 'precio') {
       entrada = el('input', { type: 'text', name: c.k, inputmode: 'numeric', autocomplete: 'off' });
       entrada.value = valor;
-      // Se formatea al salir del campo y no en cada tecla, para no mover el
-      // cursor mientras se escribe.
+      // El punto de miles aparece mientras se escribe; el "Gs." se agrega al
+      // salir del campo, para no meterlo cuando recien se tecleo un digito.
+      entrada.addEventListener('input', function () { puntuarEnVivo(entrada); });
       entrada.addEventListener('blur', function () { entrada.value = formatearPrecio(entrada.value); });
     } else {
       entrada = el('input', { type: 'text', name: c.k });
