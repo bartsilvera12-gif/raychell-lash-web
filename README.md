@@ -169,6 +169,13 @@ usa está al principio del script, en `PHOTOS`.
 - El contenido editable se lee de Supabase con la anon key, que es pública por
   diseño: lo que protege de verdad son las políticas RLS del schema. Solo un
   correo que esté en `raychelllashweb.admins` puede escribir.
+- El fondo de rayos del hero es SideRays, de [React Bits](https://reactbits.dev),
+  portado a JavaScript plano en `vendor/side-rays.js`: los shaders van tal cual,
+  solo cambia el envoltorio de React por `window.SideRays.montar(caja, opciones)`.
+  Se monta únicamente en el inicio y en pantallas de escritorio, se apaga al
+  cambiar de página o cuando la pestaña queda oculta, y si el navegador no tiene
+  WebGL simplemente no aparece. Los valores están en el método `rayos()` del
+  bloque de script de `index.html`.
 - La foto de portada se precarga desde el `<head>`, así empieza a bajar sin
   esperar a que corra el JavaScript.
 - Las etiquetas `<title>`, `description` y Open Graph están en el `<head>` estático,

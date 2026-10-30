@@ -40,6 +40,8 @@ head_extra = f"""<meta charset="utf-8">
 <!-- React 18.3.1 (UMD) servido localmente: el runtime lo detecta y no descarga nada de un CDN externo -->
 <script src="vendor/react.production.min.js"></script>
 <script src="vendor/react-dom.production.min.js"></script>
+<!-- Fondo de rayos del hero (SideRays, de React Bits) -->
+<script src="vendor/side-rays.js" defer></script>
 <script src="support.js"></script>"""
 
 body = body.replace("""<meta charset="utf-8">
