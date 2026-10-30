@@ -2,6 +2,7 @@
 .github
 source
 scripts
+supabase
 README.md
 vercel.json
 .dockerignore

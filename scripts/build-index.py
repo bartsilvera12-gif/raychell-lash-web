@@ -35,6 +35,8 @@ head_extra = f"""<meta charset="utf-8">
 <link rel="preload" as="image" href="assets/portada-lg.webp" fetchpriority="high">
 {fonts}
 {style}
+<!-- Datos de conexion a Supabase, de donde sale el contenido editable -->
+<script src="config.js"></script>
 <!-- React 18.3.1 (UMD) servido localmente: el runtime lo detecta y no descarga nada de un CDN externo -->
 <script src="vendor/react.production.min.js"></script>
 <script src="vendor/react-dom.production.min.js"></script>

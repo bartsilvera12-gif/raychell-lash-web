@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Reychell Lash</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../assets/reychell-logo-circular.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fondo: #FFF8F3; --papel: #FFFFFF; --tinta: #483936; --suave: #6B544F;
+    --tenue: #9E554D; --acento: #B96F62; --linea: rgba(72,57,54,0.14);
+    --rosa: #F7E2DB;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--fondo); }
+  body { font-family: 'Poppins', system-ui, sans-serif; color: var(--tinta); font-weight: 300; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 300; margin: 0; letter-spacing: -0.01em; }
+  button { font-family: inherit; cursor: pointer; }
+  input, textarea, select { font-family: inherit; font-weight: 300; }
+  a { color: var(--acento); }
+
+  .caja { max-width: 1060px; margin: 0 auto; padding: 0 clamp(16px,3vw,32px); }
+
+  /* ---- ingreso ---- */
+  #ingreso { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+  #ingreso form { width: min(400px, 100%); background: var(--papel); padding: clamp(28px,4vw,44px); border: 1px solid var(--linea); }
+  #ingreso img { width: 64px; height: 64px; border-radius: 50%; display: block; margin: 0 auto 20px; }
+  #ingreso h1 { font-size: 30px; text-align: center; }
+  #ingreso p.sub { margin: 8px 0 28px; text-align: center; font-size: 13px; color: var(--suave); }
+
+  /* ---- marco ---- */
+  header.barra { position: sticky; top: 0; z-index: 20; background: rgba(255,248,243,0.94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--linea); }
+  header.barra .caja { display: flex; align-items: center; gap: 16px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
+  header.barra img { width: 38px; height: 38px; border-radius: 50%; }
+  header.barra .quien { font-size: 12px; color: var(--suave); margin-left: auto; text-align: right; line-height: 1.5; }
+
+  nav.pestanas { border-bottom: 1px solid var(--linea); background: var(--papel); position: sticky; top: 67px; z-index: 19; }
+  nav.pestanas .caja { display: flex; gap: 4px; overflow-x: auto; }
+  nav.pestanas button { background: none; border: 0; border-bottom: 2px solid transparent; padding: 15px 14px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--suave); white-space: nowrap; }
+  nav.pestanas button[aria-current="true"] { color: var(--acento); border-bottom-color: var(--acento); }
+
+  main { padding: clamp(24px,4vw,48px) 0 120px; }
+  .encabezado { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+  .encabezado h2 { font-size: clamp(30px,4vw,46px); }
+  .ayuda-seccion { margin: 0 0 28px; font-size: 14px; color: var(--suave); line-height: 1.7; max-width: 60ch; }
+
+  /* ---- fichas ---- */
+  .ficha { background: var(--papel); border: 1px solid var(--linea); margin-bottom: 18px; }
+  .ficha > summary { list-style: none; cursor: pointer; padding: 16px 18px; display: flex; align-items: center; gap: 14px; }
+  .ficha > summary::-webkit-details-marker { display: none; }
+  .ficha .miniatura { width: 54px; height: 54px; flex: none; object-fit: cover; background: var(--rosa); border-radius: 2px; }
+  .ficha .titulo { flex: 1 1 auto; min-width: 0; }
+  .ficha .titulo strong { display: block; font-weight: 400; font-size: 16px; }
+  .ficha .titulo span { font-size: 12px; color: var(--tenue); }
+  .ficha .cuerpo { padding: 4px 18px 20px; border-top: 1px solid var(--linea); }
+  .oculto-pill { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--tenue); border: 1px solid var(--linea); padding: 3px 8px; border-radius: 999px; }
+
+  label.campo { display: block; margin-top: 18px; }
+  label.campo > span.et { display: block; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--tenue); margin-bottom: 7px; }
+  label.campo > span.nota { display: block; font-size: 12px; color: var(--suave); margin-top: 6px; line-height: 1.6; }
+  input[type=text], input[type=email], input[type=password], textarea, select {
+    width: 100%; padding: 11px 13px; border: 1px solid var(--linea); background: var(--fondo);
+    font-size: 14.5px; color: var(--tinta); border-radius: 2px;
+  }
+  textarea { min-height: 110px; resize: vertical; line-height: 1.7; }
+  input:focus, textarea:focus, select:focus { outline: 2px solid var(--rosa); outline-offset: 1px; }
+  .fila-check { display: flex; align-items: center; gap: 10px; margin-top: 18px; font-size: 14px; }
+  .fila-check input { width: 18px; height: 18px; accent-color: var(--acento); }
+
+  .boton { min-height: 44px; padding: 12px 22px; border: 1px solid var(--tinta); background: var(--tinta); color: var(--fondo); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; border-radius: 2px; }
+  .boton.claro { background: transparent; color: var(--tinta); }
+  .boton.peligro { background: transparent; color: #9B3B2F; border-color: rgba(155,59,47,0.4); }
+  .boton:disabled { opacity: .5; cursor: progress; }
+  .acciones { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--linea); }
+  .acciones .espacio { flex: 1 1 auto; }
+  .mini { min-height: 36px; padding: 7px 12px; font-size: 11px; border: 1px solid var(--linea); background: var(--papel); color: var(--suave); border-radius: 2px; }
+
+  .vista-imagen { display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
+  .vista-imagen img { width: 128px; height: 128px; object-fit: cover; border: 1px solid var(--linea); background: var(--rosa); }
+  .vista-imagen .controles { flex: 1 1 220px; min-width: 0; }
+  .vista-imagen input[type=file] { font-size: 13px; width: 100%; }
+
+  .aviso { padding: 13px 16px; border-radius: 2px; font-size: 13.5px; line-height: 1.6; margin-bottom: 18px; }
+  .aviso.error { background: #FBE9E6; color: #8E3124; border: 1px solid #E9C3BC; }
+  .aviso.ok { background: #E8F1E9; color: #2F5733; border: 1px solid #C3DCC6; }
+  .cargando { padding: 40px 0; text-align: center; color: var(--suave); font-size: 14px; }
+  .vacio { padding: 34px 20px; text-align: center; color: var(--suave); font-size: 14px; border: 1px dashed var(--linea); margin-bottom: 18px; }
+
+  #mensajes { position: fixed; left: 50%; transform: translateX(-50%); bottom: 24px; z-index: 50; width: min(460px, calc(100% - 32px)); }
+  #mensajes .aviso { box-shadow: 0 12px 34px rgba(72,57,54,0.18); margin: 0 0 10px; }
+
+  @media (max-width: 600px) {
+    nav.pestanas { top: 0; position: static; }
+    header.barra { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<section id="ingreso">
+  <form id="form-ingreso">
+    <img src="../assets/reychell-logo-circular.png" alt="Reychell Lash">
+    <h1>Panel de administración</h1>
+    <p class="sub">Reychell Lash</p>
+    <div id="error-ingreso"></div>
+    <label class="campo"><span class="et">Correo</span>
+      <input type="email" name="email" autocomplete="username" required></label>
+    <label class="campo"><span class="et">Contraseña</span>
+      <input type="password" name="password" autocomplete="current-password" required></label>
+    <div style="margin-top:26px"><button class="boton" style="width:100%" type="submit">Entrar</button></div>
+  </form>
+</section>
+
+<div id="app" hidden>
+  <header class="barra">
+    <div class="caja">
+      <img src="../assets/reychell-logo-circular.png" alt="">
+      <h2 style="font-size:24px">Panel</h2>
+      <div class="quien">
+        <div id="quien-email"></div>
+        <a href="../" target="_blank" rel="noopener">Ver la página ↗</a>
+        · <a href="#" id="salir">Cerrar sesión</a>
+      </div>
+    </div>
+  </header>
+  <nav class="pestanas"><div class="caja" id="pestanas"></div></nav>
+  <main><div class="caja" id="contenido"></div></main>
+</div>
+
+<div id="mensajes"></div>
+
+<script src="../config.js"></script>
+<script src="../vendor/supabase-js-2.118.0.min.js"></script>
+<script src="panel.js"></script>
+</body>
+</html>

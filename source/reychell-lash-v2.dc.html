@@ -332,7 +332,7 @@
       </section>
       <section style="background:#FFFFFF">
         <div style="max-width:1200px;margin:0 auto;padding:0 clamp(22px,4vw,56px) clamp(56px,8vw,120px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(270px,100%),1fr));gap:clamp(28px,4vw,72px);align-items:start">
-          <img src="assets/foto-3-md.webp" loading="lazy" decoding="async" alt="Reychell durante una sesión de extensiones" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block;animation:gz-mask .9s cubic-bezier(.4,0,.2,1) .15s both">
+          <img src="{{ aboutPortrait }}" loading="lazy" decoding="async" alt="{{ aboutPortraitAlt }}" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block;animation:gz-mask .9s cubic-bezier(.4,0,.2,1) .15s both">
           <div style="padding-top:clamp(0px,3vw,48px)">
             <p style="margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(21px,2.4vw,32px);line-height:1.35;color:#483936">Belleza en cada mirada.</p>
             <div style="margin-top:32px;display:flex;flex-direction:column;gap:30px">
@@ -347,11 +347,29 @@
           </div>
         </div>
       </section>
+      <sc-if value="{{ hasInstructors }}" hint-placeholder-val="{{ false }}">
+        <section style="background:#FFF8F3;border-top:1px solid rgba(72,57,54,0.08)">
+          <div style="max-width:1200px;margin:0 auto;padding:clamp(44px,6vw,100px) clamp(22px,4vw,56px)">
+            <p style="margin:0;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:#9E554D">Instructores</p>
+            <h2 style="margin:14px 0 0;max-width:720px;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(32px,4.4vw,64px);line-height:1;letter-spacing:-0.02em">Quiénes <em style="font-style:italic;color:#B96F62">enseñan</em>.</h2>
+            <div style="margin-top:clamp(32px,4.5vw,64px);display:grid;grid-template-columns:{{ instructorCols }};gap:clamp(24px,3.2vw,48px)">
+              <sc-for list="{{ instructors }}" as="p" hint-placeholder-count="2">
+                <article>
+                  <span role="img" aria-label="{{ p.name }}" style="display:block;width:100%;aspect-ratio:4/5;background-image:{{ p.bg }};background-size:cover;background-position:center;background-color:#F0DED7"></span>
+                  <h3 style="margin:18px 0 0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(22px,2.4vw,30px);line-height:1.1">{{ p.name }}</h3>
+                  <p style="margin:10px 0 0;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#9E554D">{{ p.teaches }}</p>
+                  <p style="margin:12px 0 0;font-size:14.5px;font-weight:300;line-height:1.8;color:#6B544F">{{ p.bio }}</p>
+                </article>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+      </sc-if>
       <section style="background:#F7E2DB">
         <div style="max-width:1340px;margin:0 auto;padding:clamp(40px,5vw,80px) clamp(22px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:14px">
-          <img src="assets/foto-5-md.webp" loading="lazy" decoding="async" alt="El espacio de trabajo durante una sesión" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
-          <img src="assets/foto-6-md.webp" loading="lazy" decoding="async" alt="Aplicación pelo a pelo con pinzas" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
-          <img src="assets/foto-2-md.webp" loading="lazy" decoding="async" alt="Resultado de un set de volumen" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+          <sc-for list="{{ aboutStrip }}" as="im" hint-placeholder-count="3">
+            <img src="{{ im.src }}" loading="lazy" decoding="async" alt="{{ im.alt }}" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+          </sc-for>
         </div>
       </section>
     </sc-if>
@@ -364,7 +382,7 @@
             <h1 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(40px,5.6vw,96px);line-height:0.9;letter-spacing:-0.025em;text-wrap:pretty;animation:gz-rise .9s ease both">Hacé un espacio para <em style="font-style:italic;color:#B96F62">vos</em>.</h1>
             <p style="margin:28px 0 0;max-width:420px;font-size:15.5px;font-weight:300;line-height:1.8;color:#6B544F">Completá tus datos y te respondo para coordinar. La fecha que elijas es una preferencia: la cita queda confirmada cuando te escribo.</p>
             <div style="margin-top:34px;border-top:1px solid rgba(72,57,54,0.14);padding-top:22px;display:flex;flex-direction:column;gap:14px">
-              <a href="https://www.instagram.com/reychell_lash/" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid rgba(72,57,54,0.12);padding-bottom:14px">Escribir por Instagram <span>↗</span></a>
+              <a href="{{ igLink }}" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid rgba(72,57,54,0.12);padding-bottom:14px">Escribir por Instagram <span>↗</span></a>
               <sc-if value="{{ hasWhatsapp }}" hint-placeholder-val="{{ false }}">
                 <a href="{{ waLink }}" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid rgba(72,57,54,0.12);padding-bottom:14px">Escribir por WhatsApp <span>↗</span></a>
               </sc-if>
@@ -468,8 +486,8 @@
             <div>
               <p style="margin:0;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#9E554D">Redes</p>
               <div style="margin-top:18px;display:flex;flex-direction:column">
-                <a href="https://www.instagram.com/reychell_lash/" target="_blank" rel="noopener" style="border-top:1px solid rgba(72,57,54,0.14);padding:16px 0;display:flex;align-items:baseline;justify-content:space-between;gap:14px;font-family:'Cormorant Garamond',serif;font-size:24px">Instagram <span style="font-size:14px">↗</span></a>
-                <a href="https://www.facebook.com/profile.php?id=61596141145825" target="_blank" rel="noopener" style="border-top:1px solid rgba(72,57,54,0.14);border-bottom:1px solid rgba(72,57,54,0.14);padding:16px 0;display:flex;align-items:baseline;justify-content:space-between;gap:14px;font-family:'Cormorant Garamond',serif;font-size:24px">Facebook <span style="font-size:14px">↗</span></a>
+                <a href="{{ igLink }}" target="_blank" rel="noopener" style="border-top:1px solid rgba(72,57,54,0.14);padding:16px 0;display:flex;align-items:baseline;justify-content:space-between;gap:14px;font-family:'Cormorant Garamond',serif;font-size:24px">Instagram <span style="font-size:14px">↗</span></a>
+                <a href="{{ fbLink }}" target="_blank" rel="noopener" style="border-top:1px solid rgba(72,57,54,0.14);border-bottom:1px solid rgba(72,57,54,0.14);padding:16px 0;display:flex;align-items:baseline;justify-content:space-between;gap:14px;font-family:'Cormorant Garamond',serif;font-size:24px">Facebook <span style="font-size:14px">↗</span></a>
               </div>
             </div>
             <div>
@@ -511,8 +529,8 @@
       <div>
         <p style="margin:0;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#B96F62">Contacto</p>
         <div style="margin-top:22px;display:flex;flex-direction:column;align-items:flex-start;gap:14px;font-size:14px;font-weight:300">
-          <a href="https://www.instagram.com/reychell_lash/" target="_blank" rel="noopener" style="color:#E2CCC5">Instagram</a>
-          <a href="https://www.facebook.com/profile.php?id=61596141145825" target="_blank" rel="noopener" style="color:#E2CCC5">Facebook</a>
+          <a href="{{ igLink }}" target="_blank" rel="noopener" style="color:#E2CCC5">Instagram</a>
+          <a href="{{ fbLink }}" target="_blank" rel="noopener" style="color:#E2CCC5">Facebook</a>
           <sc-if value="{{ hasWhatsapp }}" hint-placeholder-val="{{ false }}">
             <a href="{{ waLink }}" target="_blank" rel="noopener" style="color:#E2CCC5">WhatsApp</a>
           </sc-if>
@@ -636,10 +654,38 @@ const FAQS = [
   { q: 'Medios de contacto', a: 'Podés escribir por Instagram o Facebook para consultar disponibilidad y coordinar tu turno.' }
 ];
 
+// Lee el contenido del panel. Si Supabase no responde, la pagina igual se
+// muestra con el contenido por defecto que esta mas arriba en este archivo.
+const CFG = window.RL_CONFIG || {};
+const API_ON = !!(CFG.url && CFG.anonKey);
+
+function apiGet(path) {
+  return fetch(CFG.url + '/rest/v1/' + path, {
+    headers: {
+      apikey: CFG.anonKey,
+      Authorization: 'Bearer ' + CFG.anonKey,
+      'Accept-Profile': CFG.schema || 'public'
+    }
+  })
+    .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null);
+}
+
+// 595984053323 -> 0984 053 323
+function telLocal(d) {
+  const n = String(d || '').replace(/[^0-9]/g, '');
+  if (n.indexOf('595') === 0 && n.length === 12) {
+    const r = n.slice(3);
+    return '0' + r.slice(0, 3) + ' ' + r.slice(3, 6) + ' ' + r.slice(6);
+  }
+  return n;
+}
+
 class Component extends DCLogic {
-  state = { page: 'inicio', atFooter: false, srv: '', hor: '', srvOpen: false, menu: false, wide: window.innerWidth >= 1280, desktop: window.innerWidth >= 980, phone: window.innerWidth < 700, hero: 0, hover: 0, faq: -1, lb: -1, sent: false };
+  state = { page: 'inicio', atFooter: false, srv: '', hor: '', srvOpen: false, menu: false, wide: window.innerWidth >= 1280, desktop: window.innerWidth >= 980, phone: window.innerWidth < 700, hero: 0, hover: 0, faq: -1, lb: -1, sent: false, db: null };
 
   componentDidMount() {
+    this.loadContent();
     this._lastPage = this.state.page;
     this._sync = () => this.setState({ desktop: window.innerWidth >= 980, wide: window.innerWidth >= 1280, phone: window.innerWidth < 700 });
     this._sync();
@@ -656,9 +702,11 @@ class Component extends DCLogic {
 
     this._keys = (e) => {
       if (this.state.lb < 0) return;
+      const n = this.content().gallery.length;
+      if (!n) return;
       if (e.key === 'Escape') this.setState({ lb: -1 });
-      if (e.key === 'ArrowRight') this.setState((s) => ({ lb: (s.lb + 1) % GALLERY.length }));
-      if (e.key === 'ArrowLeft') this.setState((s) => ({ lb: (s.lb - 1 + GALLERY.length) % GALLERY.length }));
+      if (e.key === 'ArrowRight') this.setState((s) => ({ lb: (s.lb + 1) % n }));
+      if (e.key === 'ArrowLeft') this.setState((s) => ({ lb: (s.lb - 1 + n) % n }));
     };
     window.addEventListener('keydown', this._keys);
 
@@ -670,6 +718,86 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this._scroll, { passive: true });
     this._scroll();
+  }
+
+  loadContent() {
+    if (!API_ON) return;
+    const activo = '&is_active=eq.true&order=position';
+    Promise.all([
+      apiGet('services?select=*' + activo),
+      apiGet('about_blocks?select=*' + activo),
+      apiGet('about_images?select=*' + activo),
+      apiGet('gallery_images?select=*' + activo),
+      apiGet('instructors?select=*' + activo),
+      apiGet('settings?select=*&id=eq.1')
+    ]).then((r) => {
+      this.setState({
+        db: {
+          services: r[0], about: r[1], aboutImgs: r[2], gallery: r[3],
+          instructors: r[4], settings: r[5] && r[5][0]
+        }
+      });
+    });
+  }
+
+  // Une lo que vino de la base con el contenido por defecto y lo deja con la
+  // misma forma, para que el resto del componente no tenga que distinguirlos.
+  content() {
+    const db = this.state.db || {};
+    const con = (x) => (Array.isArray(x) && x.length ? x : null);
+
+    const services = (con(db.services) || SERVICE_SLOTS.map((x) => ({
+      name: x.name, description: x.desc, price: x.price,
+      image_url: x.img, image_position: x.pos || 'center'
+    }))).map((r) => ({
+      name: r.name || '', desc: r.description || '', price: r.price || '',
+      img: r.image_url || '', pos: r.image_position || 'center'
+    }));
+
+    const gallery = (con(db.gallery) || GALLERY.map((g) => ({
+      image_url: g.src.replace('-md.webp', '-lg.webp'),
+      thumb_url: g.src,
+      label: g.label,
+      ratio: g.ratio,
+      is_wide: g.span === 'span 2',
+      mini_url: g.src.replace('-md.webp', '-sm.webp'),
+      is_featured: HERO_PHOTOS.indexOf(g.src.replace('-md.webp', '-lg.webp')) > 0
+    }))).map((r) => ({
+      full: r.image_url || r.thumb_url || '',
+      src: r.thumb_url || r.image_url || '',
+      mini: r.mini_url || r.thumb_url || r.image_url || '',
+      label: r.label || '',
+      ratio: r.ratio || '3/4',
+      span: r.is_wide ? 'span 2' : 'span 1',
+      featured: !!r.is_featured
+    }));
+
+    const aboutBlocks = (con(db.about) || ABOUT_SLOTS.map((a) => ({ label: a.label, body: a.text })))
+      .map((r) => ({ label: r.label || '', text: r.body || '' }));
+
+    const aboutImgs = con(db.aboutImgs) || [
+      { image_url: 'assets/foto-3-md.webp', alt: 'Reychell durante una sesión de extensiones', slot: 'retrato' },
+      { image_url: 'assets/foto-5-md.webp', alt: 'El espacio de trabajo durante una sesión', slot: 'tira' },
+      { image_url: 'assets/foto-6-md.webp', alt: 'Aplicación pelo a pelo con pinzas', slot: 'tira' },
+      { image_url: 'assets/foto-2-md.webp', alt: 'Resultado de un set de volumen', slot: 'tira' }
+    ];
+    const retrato = aboutImgs.filter((x) => x.slot === 'retrato')[0] || aboutImgs[0] || {};
+    const tira = aboutImgs.filter((x) => x.slot === 'tira')
+      .map((x) => ({ src: x.image_url || '', alt: x.alt || '' }));
+
+    const instructors = (con(db.instructors) || []).map((r) => ({
+      name: r.name || '', bio: r.bio || '', teaches: r.teaches || '', img: r.image_url || ''
+    }));
+
+    const settings = db.settings || {};
+    const portada = settings.cover_image_url || HERO_PHOTOS[0];
+    const destacadas = gallery.filter((g) => g.featured);
+
+    return {
+      services, gallery, aboutBlocks, retrato, tira, instructors, settings,
+      heroPhotos: [portada].concat(destacadas.map((g) => g.full)),
+      heroThumbs: [portada].concat(destacadas.map((g) => g.mini))
+    };
   }
 
   componentWillUnmount() {
@@ -696,9 +824,21 @@ class Component extends DCLogic {
 
   renderVals() {
     const s = this.state;
+    const C = this.content();
+    const cfg = C.settings;
+    // El numero cargado en el panel manda; despues la prop del editor; y si no
+    // hay ninguno, el que vino con la pagina.
+    const deCfg = String(cfg.whatsapp || '').replace(/[^0-9]/g, '');
     const prop = String(this.props.whatsapp ?? '').replace(/[^0-9]/g, '');
-    const phoneRaw = prop.length >= 8 ? prop : '595984053323';
+    const phoneRaw = deCfg.length >= 8 ? deCfg : (prop.length >= 8 ? prop : '595984053323');
     const hasWa = phoneRaw.length >= 8;
+    const ig = cfg.instagram_url || 'https://www.instagram.com/reychell_lash/';
+    const fb = cfg.facebook_url || 'https://www.facebook.com/profile.php?id=61596141145825';
+    // Los indices guardados en el estado pueden quedar fuera de rango si desde
+    // el panel se borra contenido mientras alguien esta mirando la pagina.
+    const hi = Math.max(0, Math.min(s.hero, C.heroPhotos.length - 1));
+    const hv = Math.max(0, Math.min(s.hover, C.services.length - 1));
+    const lb = s.lb >= 0 && s.lb < C.gallery.length ? s.lb : -1;
     const link = (id) => ({
       label: PAGES.find((p) => p[0] === id)[1],
       go: this.go(id),
@@ -738,15 +878,15 @@ class Component extends DCLogic {
         { label: 'Detalle', text: 'Cada pestaña aislada y colocada con precisión.' },
         { label: 'Atención', text: 'Una clienta por turno, sin apuros.' }
       ],
-      heroKey: 'hero-' + s.hero,
-      heroBg: 'url(' + HERO_PHOTOS[s.hero] + ')',
+      heroKey: 'hero-' + hi,
+      heroBg: 'url(' + C.heroPhotos[hi] + ')',
       heroCols: 'minmax(0,1fr) minmax(0,1.25fr) minmax(0,0.9fr)',
       heroAside: 'flex',
-      heroThumbs: HERO_THUMBS.slice(1).map((src, i0) => ((i) => ({
+      heroThumbs: C.heroThumbs.slice(1).map((src, i0) => ((i) => ({
         bg: 'url(' + src + ')',
         select: () => this.setState({ hero: i }),
-        ring: s.hero === i ? '#B96F62' : 'transparent',
-        opacity: s.hero === i ? 1 : 0.55
+        ring: hi === i ? '#B96F62' : 'transparent',
+        opacity: hi === i ? 1 : 0.55
       }))(i0 + 1)),
 
       // En celular los servicios van de a dos por fila; de 700px para arriba
@@ -754,13 +894,13 @@ class Component extends DCLogic {
       srvGridCols: s.phone ? 'repeat(2,minmax(0,1fr))' : 'repeat(auto-fit,minmax(170px,1fr))',
       serviceCols: s.desktop ? 'minmax(0,1.35fr) minmax(0,0.8fr)' : 'minmax(0,1fr)',
       hoverKey: 'hv-' + s.hover,
-      hoverPhoto: SERVICE_SLOTS[s.hover].img,
-      serviceSlots: SERVICE_SLOTS.map((x, i) => ({
+      hoverPhoto: C.services[hv] ? C.services[hv].img : '',
+      serviceSlots: C.services.map((x, i) => ({
         name: x.name,
         img: x.img,
         bg: 'url(' + x.img + ')',
         pos: x.pos || 'center',
-        wa: hasWa ? 'https://wa.me/' + phoneRaw + '?text=' + encodeURIComponent('¡Hola Reychell! Me interesa el ' + x.name + ' (' + x.price + '). ¿Tenés disponibilidad?') : 'https://www.instagram.com/reychell_lash/',
+        wa: hasWa ? 'https://wa.me/' + phoneRaw + '?text=' + encodeURIComponent('¡Hola Reychell! Me interesa el ' + x.name + ' (' + x.price + '). ¿Tenés disponibilidad?') : ig,
         desc: x.desc,
         price: x.price,
         status: x.price,
@@ -774,7 +914,7 @@ class Component extends DCLogic {
       srvOpen: s.srvOpen,
       srvArrow: s.srvOpen ? '▲' : '▼',
       srvValue: s.srv || 'Consulta general',
-      srvOptions: ['Consulta general'].concat(SERVICE_SLOTS.map((x) => x.name), ['Retoque', 'Diseño especial', 'Retiro de pestañas', 'Limpieza facial + pestañas']).map((n) => ({
+      srvOptions: ['Consulta general'].concat(C.services.map((x) => x.name), ['Retoque', 'Diseño especial', 'Retiro de pestañas', 'Limpieza facial + pestañas']).map((n) => ({
         label: n,
         bg: (s.srv || 'Consulta general') === n ? '#F7E2DB' : 'transparent',
         pick: () => this.setState({ srv: n, srvOpen: false })
@@ -788,16 +928,16 @@ class Component extends DCLogic {
         border: (s.hor || 'Me adapto') === n ? '#483936' : 'rgba(72,57,54,0.28)'
       })),
       toggleSrv: () => this.setState({ srvOpen: !s.srvOpen }),
-      serviceNames: SERVICE_SLOTS.map((x) => x.name).concat(['Retoque', 'Diseño especial', 'Retiro de pestañas', 'Limpieza facial + pestañas']),
+      serviceNames: C.services.map((x) => x.name).concat(['Retoque', 'Diseño especial', 'Retiro de pestañas', 'Limpieza facial + pestañas']),
       priceGroups: PRICE_GROUPS.map((g) => ({
         title: g.title,
         items: g.items.map((it) => ({ label: it[0], price: it[1] })),
         wa: hasWa
           ? 'https://wa.me/' + phoneRaw + '?text=' + encodeURIComponent('¡Hola Reychell! Me interesa ' + g.ask + '. ¿Tenés disponibilidad?')
-          : 'https://www.instagram.com/reychell_lash/'
+          : ig
       })),
 
-      gallery: GALLERY.map((g, i) => ({
+      gallery: C.gallery.map((g, i) => ({
         label: g.label,
         src: g.src,
         bg: 'url(' + g.src + ')',
@@ -805,16 +945,29 @@ class Component extends DCLogic {
         span: s.desktop ? g.span : 'span 1',
         open: () => this.setState({ lb: i })
       })),
-      lightboxOpen: s.lb >= 0,
-      lightboxLabel: s.lb >= 0 ? GALLERY[s.lb].label : '',
-      lightboxBg: s.lb >= 0 ? 'url(' + GALLERY[s.lb].src.replace('-md.webp', '-lg.webp') + ')' : 'none',
-      lightboxRatio: s.lb >= 0 ? GALLERY[s.lb].ratio : '3/4',
-      lightboxCount: s.lb >= 0 ? (s.lb + 1) + ' / ' + GALLERY.length : '',
+      lightboxOpen: lb >= 0,
+      lightboxLabel: lb >= 0 ? C.gallery[lb].label : '',
+      lightboxBg: lb >= 0 ? 'url(' + C.gallery[lb].full + ')' : 'none',
+      lightboxRatio: lb >= 0 ? C.gallery[lb].ratio : '3/4',
+      lightboxCount: lb >= 0 ? (lb + 1) + ' / ' + C.gallery.length : '',
       closeLightbox: () => this.setState({ lb: -1 }),
-      nextPhoto: () => this.setState((st) => ({ lb: (st.lb + 1) % GALLERY.length })),
-      prevPhoto: () => this.setState((st) => ({ lb: (st.lb - 1 + GALLERY.length) % GALLERY.length })),
+      nextPhoto: () => this.setState((st) => ({ lb: (st.lb + 1) % C.gallery.length })),
+      prevPhoto: () => this.setState((st) => ({ lb: (st.lb - 1 + C.gallery.length) % C.gallery.length })),
 
-      aboutSlots: ABOUT_SLOTS,
+      aboutSlots: C.aboutBlocks,
+      aboutPortrait: C.retrato.image_url || '',
+      aboutPortraitAlt: C.retrato.alt || '',
+      aboutStrip: C.tira,
+      hasInstructors: C.instructors.length > 0,
+      instructorCols: s.phone ? 'minmax(0,1fr)' : 'repeat(auto-fit,minmax(min(240px,100%),1fr))',
+      instructors: C.instructors.map((x) => ({
+        name: x.name,
+        bio: x.bio,
+        teaches: x.teaches,
+        bg: x.img ? 'url(' + x.img + ')' : 'none'
+      })),
+      igLink: ig,
+      fbLink: fb,
       faqs: FAQS.map((x, i) => ({
         q: x.q,
         a: x.a,
@@ -824,9 +977,9 @@ class Component extends DCLogic {
       })),
 
       pendingData: [
-        { label: 'WhatsApp', note: '0984 053 323' },
-        { label: 'Dirección', note: 'San Lorenzo, Paraguay · dirección exacta al confirmar tu cita.' },
-        { label: 'Horarios', note: 'Pendiente de confirmación.' }
+        { label: 'WhatsApp', note: telLocal(phoneRaw) },
+        { label: 'Dirección', note: cfg.address || 'San Lorenzo, Paraguay · dirección exacta al confirmar tu cita.' },
+        { label: 'Horarios', note: cfg.hours || 'Pendiente de confirmación.' }
       ],
       showBubble: hasWa && !s.atFooter && s.lb < 0 && !s.menu,
       hasWhatsapp: hasWa,

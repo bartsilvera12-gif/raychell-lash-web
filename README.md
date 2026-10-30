@@ -12,6 +12,9 @@ vendor/         React y ReactDOM 18.3.1 (UMD) servidos desde el propio dominio
 assets/         Fotos y logos
 source/         Archivo .dc.html original (fuente editable)
 scripts/        Scripts de mantenimiento (regenerar index.html, optimizar fotos)
+admin/          Panel de administración (se entra por /admin)
+config.js       Datos de conexión a Supabase (valores públicos)
+supabase/       El SQL que crea el schema raychelllashweb
 Dockerfile      Imagen con nginx para desplegar en Coolify
 docker/         Configuración de nginx (caché, cabeceras, fallback de rutas)
 vercel.json     Lo mismo, para cuando se despliega en Vercel
@@ -19,6 +22,55 @@ vercel.json     Lo mismo, para cuando se despliega en Vercel
 
 El sitio es una SPA con ruteo por hash (`#/servicios`, `#/galeria`, …), así que no
 necesita rutas en el servidor.
+
+## Panel de administración
+
+Se entra por `/admin` con una cuenta de Supabase Auth. Desde ahí se editan los
+servicios, Sobre Reychell, la galería, los instructores y los datos de contacto,
+sin tocar el código.
+
+### Puesta en marcha (una sola vez)
+
+1. **Crear las tablas.** Pegar `supabase/schema.sql` entero en el SQL Editor de
+   Supabase y ejecutar. Crea el schema `raychelllashweb` con su contenido
+   inicial —el mismo que ya tiene la página— y el bucket de imágenes. Se puede
+   correr más de una vez sin duplicar nada.
+2. **Exponer el schema en la API.** En el Supabase self-hosted, agregar
+   `raychelllashweb` a la variable `PGRST_DB_SCHEMAS` del servicio `rest`
+   (queda, por ejemplo, `public,storage,graphql_public,raychelllashweb`) y
+   reiniciar ese servicio. Sin esto la API responde `PGRST106`.
+3. **Crear la cuenta.** En Studio → Authentication → Users → Add user, con el
+   correo `admin@raychelllash.com` y una contraseña. Ese correo ya está cargado
+   en la tabla `raychelllashweb.admins`; para sumar a otra persona, agregar su
+   correo a esa tabla.
+
+### Qué se puede editar
+
+| Sección | Qué permite |
+|---|---|
+| Servicios | Agregar, editar, ordenar y borrar servicios, con foto, detalle, nombre y precio |
+| Sobre Reychell | Los bloques de texto y las fotos (la principal y la tira del final) |
+| Galería | Agregar fotos, marcar cuáles son destacadas para el carrusel del inicio |
+| Instructores | Agregar instructores con foto, descripción y qué enseñan |
+| Configuración | Foto de portada, WhatsApp, ubicación, horarios y redes sociales |
+
+El WhatsApp que se carga en Configuración es el que usan el botón flotante, los
+enlaces de cada servicio, la tabla de precios y el pie de página.
+
+### Las fotos
+
+Van al bucket `raychelllash` de Supabase. Antes de subirlas, el panel las achica
+y las convierte a WebP en el navegador, así una foto sacada con el celular no
+termina pesando varios megas en la página. De la galería se guardan dos tamaños:
+uno grande para el visor ampliado y uno chico para la grilla.
+
+Las fotos que ya venían con la página siguen sirviéndose desde `assets/` hasta
+que se reemplacen desde el panel.
+
+### Si Supabase no responde
+
+La página pública no se rompe: muestra el contenido que trae el propio
+`index.html`, que es el mismo con el que se sembró la base.
 
 ## Desplegar en Coolify
 
@@ -114,6 +166,9 @@ usa está al principio del script, en `PHOTOS`.
 - React se sirve desde `vendor/`, no desde un CDN externo; el runtime lo detecta y
   no hace ninguna descarga de terceros.
 - Lo único externo que carga la página son las tipografías de Google Fonts.
+- El contenido editable se lee de Supabase con la anon key, que es pública por
+  diseño: lo que protege de verdad son las políticas RLS del schema. Solo un
+  correo que esté en `raychelllashweb.admins` puede escribir.
 - La foto de portada se precarga desde el `<head>`, así empieza a bajar sin
   esperar a que corra el JavaScript.
 - Las etiquetas `<title>`, `description` y Open Graph están en el `<head>` estático,
