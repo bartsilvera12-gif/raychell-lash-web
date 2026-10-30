@@ -12,11 +12,34 @@ vendor/         React y ReactDOM 18.3.1 (UMD) servidos desde el propio dominio
 assets/         Fotos y logos
 source/         Archivo .dc.html original (fuente editable)
 scripts/        Scripts de mantenimiento (regenerar index.html, optimizar fotos)
-vercel.json     Configuración de Vercel (cabeceras, caché, fallback de rutas)
+Dockerfile      Imagen con nginx para desplegar en Coolify
+docker/         Configuración de nginx (caché, cabeceras, fallback de rutas)
+vercel.json     Lo mismo, para cuando se despliega en Vercel
 ```
 
 El sitio es una SPA con ruteo por hash (`#/servicios`, `#/galeria`, …), así que no
 necesita rutas en el servidor.
+
+## Desplegar en Coolify
+
+El repositorio trae un `Dockerfile` que sirve el sitio con nginx, con el caché de
+las fotos y las cabeceras de seguridad ya configurados.
+
+1. En Coolify: *New Resource → Application → Public/Private Repository*.
+2. Elegí este repositorio y la rama `main`.
+3. En *Build Pack* seleccioná **Dockerfile** (no Nixpacks).
+4. En *Domains* poné `https://raychelllash.com`.
+5. Deploy.
+
+Antes de desplegar, en el DNS del dominio:
+
+- El registro `A` de `raychelllash.com` tiene que apuntar a la IP del servidor
+  de Coolify.
+- El `CNAME` de `www` tiene que apuntar a `raychelllash.com`.
+- Si el DNS está en Cloudflare, dejá los dos en **DNS only** (nube gris) para el
+  primer despliegue: con el proxy activado Coolify no puede completar el desafío
+  de Let's Encrypt y se queda sin certificado. Si después querés activar el
+  proxy, poné antes el SSL de Cloudflare en **Full (strict)**.
 
 ## Desplegar en Vercel
 

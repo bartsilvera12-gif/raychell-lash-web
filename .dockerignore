@@ -1,0 +1,8 @@
+.git
+.github
+source
+scripts
+README.md
+vercel.json
+.dockerignore
+Dockerfile
