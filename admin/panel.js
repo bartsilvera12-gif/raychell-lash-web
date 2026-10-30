@@ -87,24 +87,6 @@
       }]
     },
     {
-      id: 'instructores', nombre: 'Instructores',
-      ayuda: 'Aparecen en la página Sobre Reychell. Mientras no haya ninguno cargado, la sección no se muestra.',
-      grupos: [{
-        tabla: 'instructors', etiqueta: 'instructor', articulo: 'el',
-        titulo: function (f) { return f.name || 'Instructor sin nombre'; },
-        subtitulo: function (f) { return f.teaches || ''; },
-        foto: function (f) { return f.image_url; },
-        campos: [
-          { k: 'name', et: 'Nombre', tipo: 'texto', req: true },
-          { k: 'teaches', et: 'Qué enseña', tipo: 'texto', nota: 'Por ejemplo: Volumen ruso · Lash lifting' },
-          { k: 'bio', et: 'Descripción', tipo: 'area' },
-          { k: 'image_url', et: 'Foto', tipo: 'imagen', carpeta: 'instructores', ancho: 800 },
-          { k: 'is_active', et: 'Visible en la página', tipo: 'check' }
-        ],
-        nuevo: { name: '', bio: '', teaches: '', image_url: '', is_active: true }
-      }]
-    },
-    {
       id: 'config', nombre: 'Configuración',
       ayuda: 'La foto de portada y los datos de contacto. El número de WhatsApp que cargues acá es el que usan el botón flotante, los enlaces de los servicios y el pie de página.',
       grupos: [{

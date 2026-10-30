@@ -127,19 +127,6 @@ create table if not exists raychelllashweb.gallery_images (
   updated_at  timestamptz not null default now()
 );
 
--- Instructores
-create table if not exists raychelllashweb.instructors (
-  id         uuid primary key default gen_random_uuid(),
-  name       text not null,
-  bio        text not null default '',
-  teaches    text not null default '',
-  image_url  text not null default '',
-  position   integer not null default 0,
-  is_active  boolean not null default true,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
-);
-
 -- Configuracion general. Una sola fila, siempre id = 1.
 create table if not exists raychelllashweb.settings (
   id              integer primary key default 1,
@@ -158,7 +145,7 @@ do $$
 declare t text;
 begin
   foreach t in array array['services', 'about_blocks', 'about_images',
-                           'gallery_images', 'instructors', 'settings']
+                           'gallery_images', 'settings']
   loop
     execute format('drop trigger if exists touch_updated_at on raychelllashweb.%I', t);
     execute format(
@@ -171,7 +158,6 @@ create index if not exists services_position_idx       on raychelllashweb.servic
 create index if not exists about_blocks_position_idx   on raychelllashweb.about_blocks (position);
 create index if not exists about_images_slot_idx       on raychelllashweb.about_images (slot, position);
 create index if not exists gallery_images_position_idx on raychelllashweb.gallery_images (position);
-create index if not exists instructors_position_idx    on raychelllashweb.instructors (position);
 
 -- ---------------------------------------------------------------------
 -- 3. Permisos y RLS
@@ -183,13 +169,12 @@ grant execute on function raychelllashweb.is_admin() to anon, authenticated;
 
 grant select on raychelllashweb.services, raychelllashweb.about_blocks,
                 raychelllashweb.about_images, raychelllashweb.gallery_images,
-                raychelllashweb.instructors, raychelllashweb.settings
+                raychelllashweb.settings
   to anon, authenticated;
 
 grant insert, update, delete on raychelllashweb.services,
                 raychelllashweb.about_blocks, raychelllashweb.about_images,
-                raychelllashweb.gallery_images, raychelllashweb.instructors,
-                raychelllashweb.settings
+                raychelllashweb.gallery_images, raychelllashweb.settings
   to authenticated;
 
 grant select on raychelllashweb.admins to authenticated;
@@ -199,7 +184,6 @@ alter table raychelllashweb.services       enable row level security;
 alter table raychelllashweb.about_blocks   enable row level security;
 alter table raychelllashweb.about_images   enable row level security;
 alter table raychelllashweb.gallery_images enable row level security;
-alter table raychelllashweb.instructors    enable row level security;
 alter table raychelllashweb.settings       enable row level security;
 
 do $$
@@ -207,7 +191,7 @@ declare t text;
 begin
   -- Contenido: lo lee cualquiera, lo edita solo un admin.
   foreach t in array array['services', 'about_blocks', 'about_images',
-                           'gallery_images', 'instructors', 'settings']
+                           'gallery_images', 'settings']
   loop
     execute format('drop policy if exists lectura_publica on raychelllashweb.%I', t);
     execute format('drop policy if exists escritura_admin on raychelllashweb.%I', t);

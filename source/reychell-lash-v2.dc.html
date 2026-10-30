@@ -261,7 +261,7 @@
           <p style="margin:0;max-width:620px;font-size:15.5px;font-weight:300;line-height:1.8;color:#6B544F">Elegí el efecto que mejor acompañe tu mirada. Los precios corresponden al catálogo vigente; la duración de cada sesión se confirma al agendar.</p>
           <div style="margin-top:clamp(36px,5vw,72px);display:flex;flex-direction:column">
             <sc-for list="{{ serviceSlots }}" as="s" hint-placeholder-count="4">
-              <article style="border-top:1px solid rgba(72,57,54,0.14);padding:clamp(26px,3.6vw,52px) 0;display:grid;grid-template-columns:{{ s.cols }};gap:clamp(22px,3vw,48px);align-items:start">
+              <article data-servicio="{{ s.i }}" style="border-top:1px solid rgba(72,57,54,0.14);padding:clamp(26px,3.6vw,52px) 0;display:grid;grid-template-columns:{{ s.cols }};gap:clamp(22px,3vw,48px);align-items:start">
                 <span role="img" aria-label="{{ s.name }}" style="display:block;width:100%;aspect-ratio:{{ s.ratio }};background-image:{{ s.bg }};background-size:cover;background-position:{{ s.pos }};order:{{ s.order }}"></span>
                 <div>
                   <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(28px,3.4vw,48px);line-height:1;letter-spacing:-0.015em">{{ s.name }}</h2>
@@ -347,24 +347,6 @@
           </div>
         </div>
       </section>
-      <sc-if value="{{ hasInstructors }}" hint-placeholder-val="{{ false }}">
-        <section style="background:#FFF8F3;border-top:1px solid rgba(72,57,54,0.08)">
-          <div style="max-width:1200px;margin:0 auto;padding:clamp(44px,6vw,100px) clamp(22px,4vw,56px)">
-            <p style="margin:0;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:#9E554D">Instructores</p>
-            <h2 style="margin:14px 0 0;max-width:720px;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(32px,4.4vw,64px);line-height:1;letter-spacing:-0.02em">Quiénes <em style="font-style:italic;color:#B96F62">enseñan</em>.</h2>
-            <div style="margin-top:clamp(32px,4.5vw,64px);display:grid;grid-template-columns:{{ instructorCols }};gap:clamp(24px,3.2vw,48px)">
-              <sc-for list="{{ instructors }}" as="p" hint-placeholder-count="2">
-                <article>
-                  <span role="img" aria-label="{{ p.name }}" style="display:block;width:100%;aspect-ratio:4/5;background-image:{{ p.bg }};background-size:cover;background-position:center;background-color:#F0DED7"></span>
-                  <h3 style="margin:18px 0 0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(22px,2.4vw,30px);line-height:1.1">{{ p.name }}</h3>
-                  <p style="margin:10px 0 0;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#9E554D">{{ p.teaches }}</p>
-                  <p style="margin:12px 0 0;font-size:14.5px;font-weight:300;line-height:1.8;color:#6B544F">{{ p.bio }}</p>
-                </article>
-              </sc-for>
-            </div>
-          </div>
-        </section>
-      </sc-if>
       <section style="background:#F7E2DB">
         <div style="max-width:1340px;margin:0 auto;padding:clamp(40px,5vw,80px) clamp(22px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:14px">
           <sc-for list="{{ aboutStrip }}" as="im" hint-placeholder-count="3">
@@ -666,7 +648,7 @@ function telLocal(d) {
 }
 
 class Component extends DCLogic {
-  state = { page: 'inicio', atFooter: false, srv: '', hor: '', srvOpen: false, menu: false, wide: window.innerWidth >= 1280, desktop: window.innerWidth >= 980, phone: window.innerWidth < 700, hero: 0, hover: 0, faq: -1, lb: -1, sent: false, db: null };
+  state = { page: 'inicio', atFooter: false, srv: '', hor: '', srvOpen: false, menu: false, wide: window.innerWidth >= 1280, desktop: window.innerWidth >= 980, phone: window.innerWidth < 700, hero: 0, hover: 0, faq: -1, lb: -1, sent: false, db: null, irA: null };
 
   componentDidMount() {
     this.loadContent();
@@ -703,13 +685,12 @@ class Component extends DCLogic {
       apiGet('about_blocks?select=*' + activo),
       apiGet('about_images?select=*' + activo),
       apiGet('gallery_images?select=*' + activo),
-      apiGet('instructors?select=*' + activo),
       apiGet('settings?select=*&id=eq.1')
     ]).then((r) => {
       this.setState({
         db: {
           services: r[0], about: r[1], aboutImgs: r[2], gallery: r[3],
-          instructors: r[4], settings: r[5] && r[5][0]
+          settings: r[4] && r[4][0]
         }
       });
     });
@@ -760,16 +741,12 @@ class Component extends DCLogic {
     const tira = aboutImgs.filter((x) => x.slot === 'tira')
       .map((x) => ({ src: x.image_url || '', alt: x.alt || '' }));
 
-    const instructors = (con(db.instructors) || []).map((r) => ({
-      name: r.name || '', bio: r.bio || '', teaches: r.teaches || '', img: r.image_url || ''
-    }));
-
     const settings = db.settings || {};
     const portada = settings.cover_image_url || HERO_PHOTOS[0];
     const destacadas = gallery.filter((g) => g.featured);
 
     return {
-      services, gallery, aboutBlocks, retrato, tira, instructors, settings,
+      services, gallery, aboutBlocks, retrato, tira, settings,
       heroPhotos: [portada].concat(destacadas.map((g) => g.full)),
       heroThumbs: [portada].concat(destacadas.map((g) => g.mini))
     };
@@ -993,10 +970,24 @@ class Component extends DCLogic {
   }
 
   componentDidUpdate() {
-    if (this._lastPage !== this.state.page) {
-      this._lastPage = this.state.page;
+    if (this._lastPage === this.state.page) return;
+    this._lastPage = this.state.page;
+
+    // Si se llego tocando un servicio de la portada, se baja hasta su
+    // descripcion en vez de abrir la pagina desde arriba.
+    const destino = this.state.irA;
+    if (destino === null || this.state.page !== 'servicios') {
       window.scrollTo(0, 0);
+      return;
     }
+    this.setState({ irA: null });
+    requestAnimationFrame(() => {
+      const card = document.querySelector('[data-servicio="' + destino + '"]');
+      if (!card) return window.scrollTo(0, 0);
+      const alto = this.state.desktop ? 69 : 63;
+      const y = window.scrollY + card.getBoundingClientRect().top - alto - 16;
+      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    });
   }
 
   go(id) {
@@ -1089,8 +1080,22 @@ class Component extends DCLogic {
         desc: x.desc,
         price: x.price,
         status: x.price,
+        i: i,
         hover: () => this.setState({ hover: i }),
-        go: this.go('servicios'),
+        go: () => {
+          if (this.state.page === 'servicios') {
+            const card = document.querySelector('[data-servicio="' + i + '"]');
+            if (card) {
+              const alto = this.state.desktop ? 69 : 63;
+              return window.scrollTo({
+                top: Math.max(0, window.scrollY + card.getBoundingClientRect().top - alto - 16),
+                behavior: 'smooth'
+              });
+            }
+          }
+          this.setState({ irA: i });
+          this.go('servicios')();
+        },
         color: s.hover === i ? '#B96F62' : '#483936',
         cols: s.desktop ? (i % 2 === 0 ? 'minmax(0,0.85fr) minmax(0,1.15fr)' : 'minmax(0,1.15fr) minmax(0,0.85fr)') : 'minmax(0,1fr)',
         order: s.desktop && i % 2 === 1 ? 2 : 0,
@@ -1139,14 +1144,6 @@ class Component extends DCLogic {
       aboutPortrait: C.retrato.image_url || '',
       aboutPortraitAlt: C.retrato.alt || '',
       aboutStrip: C.tira,
-      hasInstructors: C.instructors.length > 0,
-      instructorCols: s.phone ? 'minmax(0,1fr)' : 'repeat(auto-fit,minmax(min(240px,100%),1fr))',
-      instructors: C.instructors.map((x) => ({
-        name: x.name,
-        bio: x.bio,
-        teaches: x.teaches,
-        bg: x.img ? 'url(' + x.img + ')' : 'none'
-      })),
       igLink: ig,
       fbLink: fb,
       faqs: FAQS.map((x, i) => ({

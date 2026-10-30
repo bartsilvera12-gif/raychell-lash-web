@@ -52,7 +52,6 @@ sin tocar el código.
 | Servicios | Agregar, editar, ordenar y borrar servicios, con foto, detalle, nombre y precio |
 | Sobre Reychell | Los bloques de texto y las fotos (la principal y la tira del final) |
 | Galería | Agregar fotos, marcar cuáles son destacadas para el carrusel del inicio |
-| Instructores | Agregar instructores con foto, descripción y qué enseñan |
 | Configuración | Foto de portada, WhatsApp, ubicación, horarios y redes sociales |
 
 El WhatsApp que se carga en Configuración es el que usan el botón flotante, los
