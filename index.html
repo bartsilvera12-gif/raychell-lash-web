@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reychell Lash | Belleza en cada mirada</title>
+<meta name="description" content="Reychell Lash — belleza de la mirada y servicios de pestañas en San Lorenzo, Paraguay. Trabajos reales, atención al detalle y un resultado pensado para vos.">
+<meta name="theme-color" content="#FFF8F3">
+<meta name="robots" content="index, follow">
+<meta property="og:site_name" content="Reychell Lash">
+<meta property="og:title" content="Reychell Lash | Belleza en cada mirada">
+<meta property="og:description" content="Un espacio dedicado a realzar tu mirada con atención al detalle.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_PY">
+<meta property="og:image" content="assets/portada-lg.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reychell Lash | Belleza en cada mirada">
+<meta name="twitter:description" content="Un espacio dedicado a realzar tu mirada con atención al detalle.">
+<meta name="twitter:image" content="assets/portada-lg.jpg">
+<link rel="icon" href="assets/reychell-logo-circular.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/reychell-logo-circular.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #FFF8F3; overflow-x: hidden; }
+  img { max-width: 100%; }
+  * { box-sizing: border-box; }
+  body { -webkit-font-smoothing: antialiased; }
+  a { color: #483936; text-decoration: none; }
+  a:hover { color: #B96F62; }
+  button { font-family: inherit; cursor: pointer; }
+  input, textarea, select { font-family: inherit; }
+  ::selection { background: #E9BBAF; color: #483936; }
+  @keyframes gz-rise { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: none } }
+  @keyframes gz-fade { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes gz-mask { from { clip-path: inset(0 0 100% 0) } to { clip-path: inset(0 0 0 0) } }
+  @keyframes gz-maskr { from { clip-path: inset(0 100% 0 0) } to { clip-path: inset(0 0 0 0) } }
+  @keyframes gz-open { 0%,88%,95%,100% { opacity: 1 } 88.5%,94.5% { opacity: 0 } }
+  @keyframes gz-closed { 0%,88%,95%,100% { opacity: 0 } 88.5%,94.5% { opacity: 1 } }
+  @keyframes gz-lid { 0%,86%,100% { transform: scaleY(1) } 90.5% { transform: scaleY(0.78) } 94.5% { transform: scaleY(1) } }
+  @keyframes gz-blink { 0%,86%,100% { transform: scaleY(1) } 91% { transform: scaleY(0.07) } 95.5% { transform: scaleY(1) } }
+  @keyframes gz-lash { 0%,86%,100% { transform: translateY(0) scaleY(1) } 91% { transform: translateY(24px) scaleY(0.72) } 95.5% { transform: translateY(0) scaleY(1) } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important } }
+</style>
+<!-- React 18.3.1 (UMD) servido localmente: el runtime lo detecta y no descarga nada de un CDN externo -->
+<script src="vendor/react.production.min.js"></script>
+<script src="vendor/react-dom.production.min.js"></script>
+<script src="support.js"></script>
+</head>
+<body>
+<noscript>
+  <div style="font-family:system-ui,sans-serif;color:#483936;background:#FFF8F3;padding:40px 24px;text-align:center;line-height:1.7">
+    <h1 style="font-weight:400">Reychell Lash</h1>
+    <p>Para ver el sitio completo necesitás activar JavaScript.</p>
+    <p>Escribinos por <a href="https://wa.me/595984053323">WhatsApp (0984 053 323)</a> o por
+       <a href="https://www.instagram.com/reychell_lash/">Instagram</a>.</p>
+  </div>
+</noscript>
+<x-dc>
+<div style="font-family:'Poppins',system-ui,sans-serif;color:#483936;background:#FFF8F3;min-height:100vh;overflow-x:hidden">
+
+  <header style="position:fixed;top:0;left:0;right:0;z-index:90;background:rgba(255,248,243,0.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(72,57,54,0.06);animation:gz-fade .8s ease both">
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <div style="max-width:1560px;margin:0 auto;padding:12px clamp(24px,3.5vw,56px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:26px">
+        <nav style="display:flex;gap:clamp(16px,2.2vw,34px)">
+          <sc-for list="{{ navLeft }}" as="n" hint-placeholder-count="3">
+            <button onClick="{{ n.go }}" style="background:none;border:0;padding:4px 0;font-size:10.5px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;color:{{ n.color }};border-bottom:1px solid {{ n.line }}">{{ n.label }}</button>
+          </sc-for>
+        </nav>
+        <button onClick="{{ goHome }}" style="background:none;border:0;padding:0;display:flex;align-items:center;gap:12px">
+          <img src="assets/reychell-logo-circular.png" alt="Logo de Reychell Lash" style="width:40px;height:40px;object-fit:contain;border-radius:50%">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:19px;letter-spacing:.18em;text-transform:uppercase;color:#483936;white-space:nowrap">Reychell Lash</span>
+        </button>
+        <nav style="display:flex;justify-content:flex-end;align-items:center;gap:clamp(16px,2.2vw,34px)">
+          <sc-for list="{{ navRight }}" as="n" hint-placeholder-count="2">
+            <button onClick="{{ n.go }}" style="background:none;border:0;padding:4px 0;font-size:10.5px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;color:{{ n.color }};border-bottom:1px solid {{ n.line }}">{{ n.label }}</button>
+          </sc-for>
+          <button onClick="{{ goReservas }}" style="padding:10px 21px;border-radius:999px;border:1px solid rgba(72,57,54,0.35);background:transparent;color:rgba(72,57,54,0.72);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:background .35s ease,color .35s ease,border-color .35s ease" style-hover="background:#483936;color:#FFF8F3">Agendar cita</button>
+        </nav>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:9px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px">
+        <button onClick="{{ goHome }}" style="background:none;border:0;padding:0;display:flex;align-items:center;gap:9px">
+          <img src="assets/reychell-logo-circular.png" alt="Logo de Reychell Lash" style="width:36px;height:36px;object-fit:contain;border-radius:50%">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:17px;letter-spacing:.12em;text-transform:uppercase">Reychell Lash</span>
+        </button>
+        <button onClick="{{ toggleMenu }}" aria-label="Abrir menú" style="background:none;border:0;padding:10px 2px;display:flex;flex-direction:column;gap:6px">
+          <span style="display:block;width:24px;height:1px;background:#483936"></span>
+          <span style="display:block;width:24px;height:1px;background:#483936"></span>
+        </button>
+      </div>
+    </sc-if>
+  </header>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:130;background:#FFF8F3;padding:16px 22px 28px;display:flex;flex-direction:column;animation:gz-fade .3s ease both">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <img src="assets/reychell-logo-circular.png" alt="Logo de Reychell Lash" style="width:40px;height:40px;object-fit:contain;border-radius:50%">
+        <button onClick="{{ toggleMenu }}" aria-label="Cerrar menú" style="background:none;border:0;font-size:24px;line-height:1;color:#483936;padding:8px">×</button>
+      </div>
+      <nav style="margin-top:34px;display:flex;flex-direction:column">
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7">
+          <button onClick="{{ n.go }}" style="text-align:left;background:none;border:0;border-bottom:1px solid rgba(72,57,54,0.1);padding:17px 0;font-family:'Cormorant Garamond',serif;font-size:31px;letter-spacing:.01em;color:{{ n.color }}">{{ n.label }}</button>
+        </sc-for>
+      </nav>
+      <button onClick="{{ goReservas }}" style="margin-top:28px;padding:18px;border:0;background:#483936;color:#FFF8F3;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase">Agendar cita</button>
+      <p style="margin-top:auto;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#B96F62">Belleza en cada mirada</p>
+    </div>
+  </sc-if>
+
+  <main style="padding-top:{{ headerPad }}">
+
+    <!-- ════ INICIO ════ -->
+    <sc-if value="{{ isInicio }}" hint-placeholder-val="{{ true }}">
+
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <section style="position:relative;background:#FFF8F3;min-height:calc(100vh - 69px);padding:clamp(24px,3vw,46px) clamp(24px,3.5vw,56px) clamp(40px,5vw,72px);overflow:hidden">
+          <div style="position:relative;max-width:1560px;margin:0 auto;height:100%;min-height:calc(100vh - 162px);display:grid;grid-template-columns:{{ heroCols }};gap:clamp(20px,2.4vw,44px);align-items:stretch">
+
+            <div style="position:relative;z-index:3;display:flex;flex-direction:column;justify-content:space-between;padding-top:clamp(10px,2vw,30px);padding-right:clamp(4px,1vw,14px)">
+              <div>
+                <p style="margin:0;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#B96F62;animation:gz-rise .8s ease .1s both">Reychell Lash</p>
+                <p style="margin:12px 0 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(19px,1.6vw,25px);color:#483936;animation:gz-rise .8s ease .18s both">Belleza en cada mirada.</p>
+                <h1 style="margin:clamp(18px,2.6vw,38px) 0 0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(56px,7.4vw,132px);line-height:0.84;letter-spacing:-0.025em;color:#483936;white-space:nowrap;position:relative;z-index:4;width:max-content;margin-right:clamp(-300px,-21vw,-110px);padding-right:0.22em;text-shadow:0 0 18px #FFF8F3,0 0 42px rgba(255,248,243,0.95),0 0 90px rgba(255,248,243,0.8);animation:gz-rise 1s cubic-bezier(.22,.61,.36,1) .3s both">Tu mirada.</h1>
+              </div>
+              <div style="max-width:340px;animation:gz-rise .9s ease 1.1s both">
+                <p style="margin:0;font-size:15px;font-weight:300;line-height:1.75;color:#6B544F;text-wrap:pretty">Atención al detalle y un resultado pensado para vos.</p>
+                <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px">
+                  <button onClick="{{ goReservas }}" style="padding:16px 30px;border-radius:999px;border:0;background:#483936;color:#FFF8F3;font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;transition:background .35s ease" style-hover="background:#B96F62">Agendar mi cita</button>
+                  <button onClick="{{ goGaleria }}" style="padding:16px 30px;border-radius:999px;border:1px solid rgba(72,57,54,0.3);background:transparent;color:rgba(72,57,54,0.8);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;transition:border-color .35s ease,color .35s ease" style-hover="border-color:#B96F62;color:#B96F62">Explorar trabajos</button>
+                </div>
+              </div>
+            </div>
+
+            <div style="position:relative;z-index:2;min-height:clamp(420px,56vw,760px);align-self:stretch">
+              <div style="position:absolute;inset:0;overflow:hidden;animation:gz-mask .65s cubic-bezier(.4,0,.2,1) both">
+                <div key="{{ heroKey }}" role="img" aria-label="Trabajo de extensión de pestañas realizado por Reychell Lash" style="width:100%;height:100%;background-image:{{ heroBg }};background-size:cover;background-position:center;animation:gz-fade .55s ease both"></div>
+              </div>
+            </div>
+
+            <div style="position:relative;z-index:3;display:{{ heroAside }};flex-direction:column;justify-content:space-between;align-items:flex-end;padding-top:clamp(40px,7vw,120px)">
+              <div style="width:clamp(130px,11vw,190px);animation:gz-maskr .7s cubic-bezier(.4,0,.2,1) .95s both">
+                <img src="assets/foto-2-md.jpg" loading="lazy" decoding="async" alt="Detalle de pestañas en primer plano" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block">
+              </div>
+              <h2 style="margin:0 0 0 clamp(-300px,-22vw,-110px);font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(40px,5.4vw,96px);line-height:0.84;letter-spacing:-0.02em;text-align:right;color:#483936;position:relative;z-index:4;width:max-content;padding-left:0.22em;text-shadow:0 0 18px #FFF8F3,0 0 42px rgba(255,248,243,0.95),0 0 90px rgba(255,248,243,0.8);animation:gz-rise 1s cubic-bezier(.22,.61,.36,1) .62s both">En primer<br>plano.</h2>
+            </div>
+          </div>
+
+          <div style="position:relative;max-width:1560px;margin:clamp(22px,3vw,40px) auto 0;display:flex;align-items:center;gap:18px;animation:gz-rise .9s ease 1.25s both">
+            <span style="font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:#9E554D;white-space:nowrap">Trabajos</span>
+            <div style="flex:1;height:1px;background:rgba(72,57,54,0.12)"></div>
+            <div style="display:flex;gap:10px">
+              <sc-for list="{{ heroThumbs }}" as="t" hint-placeholder-count="4">
+                <button onClick="{{ t.select }}" aria-label="Ver trabajo" style="width:clamp(54px,4.4vw,70px);aspect-ratio:1/1;padding:0;border:0;overflow:hidden;outline:1px solid {{ t.ring }};outline-offset:3px;opacity:{{ t.opacity }};transition:opacity .4s ease,outline-color .4s ease"><span style="display:block;width:100%;height:100%;background-image:{{ t.bg }};background-size:cover;background-position:center"></span></button>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+      </sc-if>
+
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <section style="background:#FFF8F3;padding-bottom:40px">
+          <div style="position:relative;width:100%;aspect-ratio:3/4;max-height:62vh;overflow:hidden;animation:gz-mask .65s cubic-bezier(.4,0,.2,1) both">
+            <div key="{{ heroKey }}" role="img" aria-label="Trabajo de extensión de pestañas realizado por Reychell Lash" style="width:100%;height:100%;background-image:{{ heroBg }};background-size:cover;background-position:50% 62%;animation:gz-fade .55s ease both"></div>
+            <p style="position:absolute;top:18px;left:18px;margin:0;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#483936;background:rgba(255,248,243,0.9);padding:7px 11px">Belleza en cada mirada</p>
+          </div>
+          <div style="margin-top:14px;padding:0 18px;position:relative;z-index:2">
+            <h1 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(52px,16vw,74px);line-height:0.86;letter-spacing:-0.02em;color:#483936;animation:gz-rise .9s ease .25s both">Tu mirada.<br><span style="padding-left:0.18em">En primer plano.</span></h1>
+            <p style="margin:22px 0 0;font-size:15px;font-weight:300;line-height:1.75;color:#6B544F">Atención al detalle y un resultado pensado para vos.</p>
+            <div style="margin-top:22px;display:flex;flex-direction:column;gap:10px">
+              <button onClick="{{ goReservas }}" style="padding:17px;border-radius:999px;border:0;background:#483936;color:#FFF8F3;font-size:12px;letter-spacing:.16em;text-transform:uppercase">Agendar mi cita</button>
+              <button onClick="{{ goGaleria }}" style="padding:17px;border-radius:999px;border:1px solid rgba(72,57,54,0.3);background:transparent;color:rgba(72,57,54,0.8);font-size:12px;letter-spacing:.16em;text-transform:uppercase">Explorar trabajos</button>
+            </div>
+            <div style="margin-top:28px;display:flex;gap:10px;overflow-x:auto;padding-bottom:4px">
+              <sc-for list="{{ heroThumbs }}" as="t" hint-placeholder-count="4">
+                <button onClick="{{ t.select }}" aria-label="Ver trabajo" style="flex:none;width:76px;aspect-ratio:1/1;padding:0;border:0;overflow:hidden;outline:1px solid {{ t.ring }};outline-offset:3px;opacity:{{ t.opacity }}"><span style="display:block;width:100%;height:100%;background-image:{{ t.bg }};background-size:cover;background-position:center"></span></button>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+      </sc-if>
+
+      <section style="background:#FFFFFF;border-top:1px solid rgba(72,57,54,0.08)">
+        <div style="max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));align-items:stretch">
+          <div style="padding:clamp(44px,6vw,96px) clamp(22px,4vw,56px);display:flex;flex-direction:column;justify-content:center">
+            <p style="margin:0;font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:#B96F62">La firma de Reychell</p>
+            <h2 style="margin:20px 0 0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(36px,4.6vw,76px);line-height:0.94;letter-spacing:-0.02em;color:#483936;text-wrap:pretty">La diferencia está en los <em style="font-style:italic;color:#B96F62">detalles</em>.</h2>
+            <p style="margin:24px 0 0;max-width:430px;font-size:16px;font-weight:300;line-height:1.8;color:#6B544F">Cada mirada tiene su propia expresión. La atención al detalle hace la diferencia.</p>
+            <div style="margin-top:clamp(28px,3.5vw,44px);display:flex;flex-direction:column;max-width:430px">
+              <sc-for list="{{ signature }}" as="v" hint-placeholder-count="3">
+                <div style="border-top:1px solid rgba(72,57,54,0.14);padding:16px 0;display:flex;align-items:baseline;gap:18px">
+                  <span style="flex:none;width:112px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#9E554D">{{ v.label }}</span>
+                  <span style="font-size:14.5px;font-weight:300;line-height:1.7;color:#6B544F">{{ v.text }}</span>
+                </div>
+              </sc-for>
+              <div style="border-top:1px solid rgba(72,57,54,0.14)"></div>
+            </div>
+          </div>
+          <div style="position:relative;min-height:clamp(380px,46vw,680px)">
+            <img src="assets/foto-7-lg.jpg" loading="lazy" decoding="async" alt="Extensiones de pestañas en plano cerrado" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;animation:gz-mask .9s cubic-bezier(.4,0,.2,1) both">
+          </div>
+        </div>
+      </section>
+
+      <section style="background:#FFF8F3;border-top:1px solid rgba(72,57,54,0.06)">
+        <div style="max-width:1340px;margin:0 auto;padding:clamp(48px,6.5vw,96px) clamp(22px,4vw,56px) clamp(18px,2vw,28px);display:flex;flex-direction:column;align-items:center;gap:22px">
+          <div style="position:relative;width:min(460px,84%);aspect-ratio:1420/457">
+            <img src="assets/ojos-abiertos.svg" alt="Ilustración de una mirada con pestañas" style="position:absolute;top:0;left:0;width:100%;height:auto;animation:gz-open 3.4s steps(1,end) 1.2s infinite">
+            <img src="assets/ojos-cerrados-sm.png" loading="lazy" decoding="async" alt="" aria-hidden="true" style="position:absolute;left:0;top:3.28%;width:96.83%;height:91.68%;opacity:0;animation:gz-closed 3.4s steps(1,end) 1.2s infinite">
+          </div>
+          <p style="margin:0;font-size:10.5px;letter-spacing:.36em;text-transform:uppercase;color:#9E554D;text-align:center">Belleza en cada mirada</p>
+        </div>
+      </section>
+
+      <section style="background:#FFF8F3">
+        <div style="max-width:1340px;margin:0 auto;padding:0 clamp(22px,4vw,56px) clamp(56px,8vw,120px);text-align:center">
+          <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(52px,8vw,124px);line-height:0.9;letter-spacing:-0.01em;color:#483936">servicios</h2>
+          <div style="margin-top:clamp(34px,4.5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:clamp(14px,2vw,26px)">
+            <sc-for list="{{ serviceSlots }}" as="s" hint-placeholder-count="4">
+              <button onClick="{{ s.go }}" style="background:none;border:0;padding:0;text-align:center;display:flex;flex-direction:column;gap:16px">
+                <span style="display:block;width:100%;aspect-ratio:4/5;background-image:{{ s.bg }};background-size:cover;background-position:{{ s.pos }};transition:opacity .4s ease" style-hover="opacity:.86"></span>
+                <span style="display:block;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#483936;line-height:1.6">{{ s.name }}</span>
+                <span style="display:block;margin-top:-10px;font-family:'Cormorant Garamond',serif;font-size:19px;letter-spacing:.01em;color:#483936">{{ s.status }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <p style="margin:clamp(30px,4vw,48px) auto 0;max-width:520px;font-size:14.5px;font-weight:300;line-height:1.8;color:#6B544F">También disponibles retoques, diseños especiales (wispy, Kim Kardashian, fox eyes) y extras como retiro de pestañas y limpieza facial.</p>
+          <button onClick="{{ goServicios }}" style="margin-top:26px;background:none;border:0;padding:0 0 4px;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:#B96F62;border-bottom:1px solid rgba(185,111,98,0.5)">Ver detalle completo</button>
+        </div>
+      </section>
+
+      <section style="background:#FFFFFF;border-top:1px solid rgba(72,57,54,0.08)">
+        <div style="max-width:1340px;margin:0 auto;padding:clamp(56px,8vw,120px) clamp(22px,4vw,56px)">
+          <h2 style="margin:0;max-width:720px;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(34px,4.6vw,70px);line-height:0.96;letter-spacing:-0.02em;text-wrap:pretty">Miradas reales. Detalles que hablan.</h2>
+          <div style="margin-top:clamp(28px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:14px">
+            <img src="assets/foto-1-lg.jpg" loading="lazy" decoding="async" alt="Extensiones de pestañas, mirada completa" style="grid-column:span 2;width:100%;aspect-ratio:16/11;object-fit:cover;display:block">
+            <img src="assets/foto-4-md.jpg" loading="lazy" decoding="async" alt="Volumen en detalle" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block">
+            <img src="assets/foto-6-md.jpg" loading="lazy" decoding="async" alt="Aplicación pelo a pelo" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+            <img src="assets/foto-2-md.jpg" loading="lazy" decoding="async" alt="Abanicos de volumen en primer plano" style="grid-column:span 2;width:100%;aspect-ratio:21/9;object-fit:cover;display:block">
+          </div>
+          <button onClick="{{ goGaleria }}" style="margin-top:32px;background:none;border:0;padding:0 0 4px;font-size:12.5px;letter-spacing:.15em;text-transform:uppercase;color:#483936;border-bottom:1px solid rgba(72,57,54,0.4)">Ver todos los trabajos</button>
+        </div>
+      </section>
+
+      <section style="background:#F7E2DB">
+        <div style="max-width:1340px;margin:0 auto;padding:clamp(56px,8vw,120px) clamp(22px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:clamp(28px,4vw,64px);align-items:center">
+          <img src="assets/foto-3-md.jpg" loading="lazy" decoding="async" alt="Reychell trabajando en una sesión de pestañas" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block">
+          <div>
+            <p style="margin:0;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#9E554D">Sobre Reychell</p>
+            <h2 style="margin:18px 0 0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(32px,4.4vw,64px);line-height:0.98;letter-spacing:-0.02em;text-wrap:pretty">Detrás de cada mirada, hay dedicación.</h2>
+            <p style="margin:24px 0 0;max-width:440px;font-size:15.5px;font-weight:300;line-height:1.8;color:#6B544F">Sesión a sesión, cada diseño se adapta a la mirada que tiene adelante: técnica precisa, materiales de calidad y el tiempo que cada clienta necesita.</p>
+            <button onClick="{{ goSobre }}" style="margin-top:28px;background:none;border:0;padding:0 0 4px;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#483936;border-bottom:1px solid rgba(72,57,54,0.4)">Conocé a Reychell</button>
+          </div>
+        </div>
+      </section>
+
+      <section style="position:relative;background:#E9BBAF;color:#483936;overflow:hidden">
+        <div style="max-width:1340px;margin:0 auto;padding:clamp(60px,9vw,140px) clamp(22px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:clamp(28px,4vw,64px);align-items:center">
+          <div>
+            <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,5.4vw,84px);line-height:0.94;letter-spacing:-0.02em;color:#483936;text-wrap:pretty">Tu próxima cita empieza acá.</h2>
+            <button onClick="{{ goReservas }}" style="margin-top:34px;padding:17px 32px;border-radius:999px;border:1px solid rgba(72,57,54,0.45);background:transparent;color:#483936;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;transition:background .35s ease,color .35s ease" style-hover="background:#483936;color:#FFF8F3">Quiero agendar</button>
+          </div>
+          <img src="assets/foto-5-md.jpg" loading="lazy" decoding="async" alt="Sesión de pestañas en el estudio" style="width:100%;aspect-ratio:5/4;object-fit:cover;display:block">
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ════ SERVICIOS ════ -->
+    <sc-if value="{{ isServicios }}" hint-placeholder-val="{{ false }}">
+      <section style="background:#FFF8F3">
+        <div style="max-width:1340px;margin:0 auto;padding:clamp(44px,6vw,96px) clamp(22px,4vw,56px) clamp(32px,4vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:clamp(24px,3vw,56px);align-items:end">
+          <h1 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(42px,6.4vw,112px);line-height:0.9;letter-spacing:-0.025em;text-wrap:pretty;animation:gz-rise .9s ease both">Cada mirada tiene su <em style="font-style:italic;color:#B96F62">estilo</em>.</h1>
+          <img src="assets/foto-6-md.jpg" loading="lazy" decoding="async" alt="Aplicación de extensiones de pestañas" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;animation:gz-mask .8s cubic-bezier(.4,0,.2,1) .2s both">
+        </div>
+      </section>
+      <section style="background:#FFFFFF;border-top:1px solid rgba(72,57,54,0.08)">
+        <div style="max-width:1200px;margin:0 auto;padding:clamp(40px,5vw,80px) clamp(22px,4vw,56px)">
+          <p style="margin:0;max-width:620px;font-size:15.5px;font-weight:300;line-height:1.8;color:#6B544F">Elegí el efecto que mejor acompañe tu mirada. Los precios corresponden al catálogo vigente; la duración de cada sesión se confirma al agendar.</p>
+          <div style="margin-top:clamp(36px,5vw,72px);display:flex;flex-direction:column">
+            <sc-for list="{{ serviceSlots }}" as="s" hint-placeholder-count="4">
+              <article style="border-top:1px solid rgba(72,57,54,0.14);padding:clamp(26px,3.6vw,52px) 0;display:grid;grid-template-columns:{{ s.cols }};gap:clamp(22px,3vw,48px);align-items:start">
+                <span role="img" aria-label="{{ s.name }}" style="display:block;width:100%;aspect-ratio:{{ s.ratio }};background-image:{{ s.bg }};background-size:cover;background-position:{{ s.pos }};order:{{ s.order }}"></span>
+                <div>
+                  <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(28px,3.4vw,48px);line-height:1;letter-spacing:-0.015em">{{ s.name }}</h2>
+                  <p style="margin:18px 0 0;max-width:520px;font-size:15px;font-weight:300;line-height:1.8;color:#6B544F">{{ s.desc }}</p>
+                  <dl style="margin:26px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(140px,100%),1fr));gap:16px 24px">
+                    <div>
+                      <dt style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#9E554D">Precio</dt>
+                      <dd style="margin:7px 0 0;font-family:'Cormorant Garamond',serif;font-size:24px;color:#483936">{{ s.price }}</dd>
+                    </div>
+                    <div>
+                      <dt style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#9E554D">Duración</dt>
+                      <dd style="margin:7px 0 0;font-size:14px;font-weight:300;color:#9E554D">Por confirmar</dd>
+                    </div>
+                  </dl>
+                  <p style="margin:22px 0 0;max-width:520px;padding-top:16px;border-top:1px solid rgba(72,57,54,0.12);font-size:13px;font-weight:300;line-height:1.75;color:#9E554D">Solicitamos puntualidad y avisar con anticipación si necesitás cancelar o cambiar tu turno. Las señas, los retrasos y las cancelaciones se manejarán según las condiciones comunicadas al reservar.</p>
+                  <a href="{{ s.wa }}" target="_blank" rel="noopener" style="display:inline-block;margin-top:24px;padding:0 0 4px;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#483936;border-bottom:1px solid rgba(72,57,54,0.4)">Consultar por WhatsApp</a>
+                </div>
+              </article>
+            </sc-for>
+            <div style="border-top:1px solid rgba(72,57,54,0.14)"></div>
+          </div>
+          <div style="margin-top:clamp(44px,6vw,88px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:clamp(28px,4vw,56px)">
+            <sc-for list="{{ priceGroups }}" as="g" hint-placeholder-count="3">
+              <div>
+                <p style="margin:0;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:#9E554D">{{ g.title }}</p>
+                <div style="margin-top:18px;display:flex;flex-direction:column">
+                  <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
+                    <div style="border-top:1px solid rgba(72,57,54,0.12);padding:14px 0;display:flex;align-items:baseline;justify-content:space-between;gap:16px">
+                      <span style="flex:1 1 auto;min-width:0;font-size:14.5px;font-weight:300;color:#483936">{{ it.label }}</span>
+                      <span style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#483936;white-space:nowrap">{{ it.price }}</span>
+                    </div>
+                  </sc-for>
+                  <div style="border-top:1px solid rgba(72,57,54,0.12)"></div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ════ GALERÍA ════ -->
+    <sc-if value="{{ isGaleria }}" hint-placeholder-val="{{ false }}">
+      <section style="background:#FFF8F3">
+        <div style="max-width:1560px;margin:0 auto;padding:clamp(44px,6vw,92px) clamp(22px,3.5vw,56px) clamp(56px,7vw,110px)">
+          <h1 style="margin:0;max-width:980px;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(40px,6vw,104px);line-height:0.9;letter-spacing:-0.025em;text-wrap:pretty;animation:gz-rise .9s ease both">Miradas reales. <em style="font-style:italic;color:#B96F62">Detalles</em> que hablan.</h1>
+          <div style="margin-top:28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+            <p style="margin:0;max-width:520px;font-size:15px;font-weight:300;line-height:1.75;color:#6B544F">Archivo de trabajos reales, sin filtros. Tocá una imagen para ampliarla.</p>
+          </div>
+          <div style="margin-top:clamp(28px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:14px">
+            <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="9">
+              <button onClick="{{ g.open }}" aria-label="Ampliar fotografía" style="position:relative;padding:0;border:0;overflow:hidden;background:#FBEDE8;grid-column:{{ g.span }};aspect-ratio:{{ g.ratio }};animation:gz-mask .8s cubic-bezier(.4,0,.2,1) both">
+                <span role="img" aria-label="{{ g.label }}" style="display:block;width:100%;height:100%;background-image:{{ g.bg }};background-size:cover;background-position:center;transition:transform .7s cubic-bezier(.2,.7,.3,1)" style-hover="transform:scale(1.04)"></span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ════ SOBRE REYCHELL ════ -->
+    <sc-if value="{{ isSobre }}" hint-placeholder-val="{{ false }}">
+      <section style="background:#FFFFFF">
+        <div style="max-width:1200px;margin:0 auto;padding:clamp(44px,6vw,100px) clamp(22px,4vw,56px) clamp(40px,5vw,80px)">
+          <h1 style="margin:0;max-width:900px;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(40px,6vw,104px);line-height:0.9;letter-spacing:-0.025em;text-wrap:pretty;animation:gz-rise .9s ease both">La persona detrás de cada <em style="font-style:italic;color:#B96F62">detalle</em>.</h1>
+        </div>
+      </section>
+      <section style="background:#FFFFFF">
+        <div style="max-width:1200px;margin:0 auto;padding:0 clamp(22px,4vw,56px) clamp(56px,8vw,120px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(270px,100%),1fr));gap:clamp(28px,4vw,72px);align-items:start">
+          <img src="assets/foto-3-md.jpg" loading="lazy" decoding="async" alt="Reychell durante una sesión de extensiones" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block;animation:gz-mask .9s cubic-bezier(.4,0,.2,1) .15s both">
+          <div style="padding-top:clamp(0px,3vw,48px)">
+            <p style="margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(21px,2.4vw,32px);line-height:1.35;color:#483936">Belleza en cada mirada.</p>
+            <div style="margin-top:32px;display:flex;flex-direction:column;gap:30px">
+              <sc-for list="{{ aboutSlots }}" as="a" hint-placeholder-count="4">
+                <div style="border-top:1px solid rgba(72,57,54,0.14);padding-top:18px">
+                  <p style="margin:0;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#9E554D">{{ a.label }}</p>
+                  <p style="margin:12px 0 0;max-width:460px;font-size:15.5px;font-weight:300;line-height:1.8;color:#6B544F">{{ a.text }}</p>
+                </div>
+              </sc-for>
+            </div>
+            <button onClick="{{ goReservas }}" style="margin-top:36px;align-self:flex-start;min-height:48px;padding:16px 28px;border:1px solid #483936;background:transparent;color:#483936;font-size:12px;letter-spacing:.15em;text-transform:uppercase;white-space:nowrap;transition:background .35s ease,color .35s ease" style-hover="background:#483936;color:#FFFFFF">Agendar mi cita</button>
+          </div>
+        </div>
+      </section>
+      <section style="background:#F7E2DB">
+        <div style="max-width:1340px;margin:0 auto;padding:clamp(40px,5vw,80px) clamp(22px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:14px">
+          <img src="assets/foto-5-md.jpg" loading="lazy" decoding="async" alt="El espacio de trabajo durante una sesión" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+          <img src="assets/foto-6-md.jpg" loading="lazy" decoding="async" alt="Aplicación pelo a pelo con pinzas" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+          <img src="assets/foto-2-md.jpg" loading="lazy" decoding="async" alt="Resultado de un set de volumen" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ════ RESERVAS ════ -->
+    <sc-if value="{{ isReservas }}" hint-placeholder-val="{{ false }}">
+      <section style="background:#FFF8F3">
+        <div style="max-width:1200px;margin:0 auto;padding:clamp(44px,6vw,96px) clamp(22px,4vw,56px) clamp(56px,8vw,120px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:clamp(30px,4vw,80px);align-items:start">
+          <div>
+            <h1 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(40px,5.6vw,96px);line-height:0.9;letter-spacing:-0.025em;text-wrap:pretty;animation:gz-rise .9s ease both">Hacé un espacio para <em style="font-style:italic;color:#B96F62">vos</em>.</h1>
+            <p style="margin:28px 0 0;max-width:420px;font-size:15.5px;font-weight:300;line-height:1.8;color:#6B544F">Completá tus datos y te respondo para coordinar. La fecha que elijas es una preferencia: la cita queda confirmada cuando te escribo.</p>
+            <div style="margin-top:34px;border-top:1px solid rgba(72,57,54,0.14);padding-top:22px;display:flex;flex-direction:column;gap:14px">
+              <a href="https://www.instagram.com/reychell_lash/" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid rgba(72,57,54,0.12);padding-bottom:14px">Escribir por Instagram <span>↗</span></a>
+              <sc-if value="{{ hasWhatsapp }}" hint-placeholder-val="{{ false }}">
+                <a href="{{ waLink }}" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid rgba(72,57,54,0.12);padding-bottom:14px">Escribir por WhatsApp <span>↗</span></a>
+              </sc-if>
+              <sc-if value="{{ noWhatsapp }}" hint-placeholder-val="{{ true }}">
+                <p style="margin:0;font-size:12.5px;font-weight:300;line-height:1.7;color:#9E554D">WhatsApp: pendiente de confirmación. Al cargar el número en los ajustes, el acceso directo aparece acá y en el pie de página.</p>
+              </sc-if>
+            </div>
+            <div style="margin-top:30px;border-top:1px solid rgba(72,57,54,0.14);padding-top:22px">
+              <p style="margin:0;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#9E554D">Reservas y cancelaciones</p>
+              <p style="margin:12px 0 0;max-width:430px;font-size:14.5px;font-weight:300;line-height:1.8;color:#6B544F">Solicitamos puntualidad y avisar con anticipación si necesitás cancelar o cambiar tu turno. Las señas, los retrasos y las cancelaciones se manejarán según las condiciones comunicadas al reservar.</p>
+            </div>
+          </div>
+          <form onSubmit="{{ submit }}" style="background:#FFFFFF;border:1px solid rgba(72,57,54,0.12);padding:clamp(24px,3.4vw,44px);display:flex;flex-direction:column;gap:20px">
+            <p style="margin:0;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#9E554D">Solicitud de cita</p>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#9E554D">Servicio</span>
+              <div style="position:relative">
+                <button type="button" onClick="{{ toggleSrv }}" style="width:100%;padding:13px 2px;border:0;border-bottom:1px solid rgba(72,57,54,0.3);background:transparent;font-size:15px;color:#483936;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:14px">
+                  <span>{{ srvValue }}</span>
+                  <span style="font-size:11px;color:#9E554D">{{ srvArrow }}</span>
+                </button>
+                <sc-if value="{{ srvOpen }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:20;max-height:260px;overflow-y:auto;background:#FFF8F3;border:1px solid rgba(72,57,54,0.16);box-shadow:0 18px 40px rgba(72,57,54,0.14);animation:gz-fade .22s ease both">
+                    <sc-for list="{{ srvOptions }}" as="o" hint-placeholder-count="10">
+                      <button type="button" onClick="{{ o.pick }}" style="width:100%;text-align:left;padding:13px 16px;border:0;border-bottom:1px solid rgba(72,57,54,0.08);background:{{ o.bg }};font-size:14.5px;font-weight:300;color:#483936;transition:background .2s ease" style-hover="background:#F7E2DB">{{ o.label }}</button>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <input type="hidden" name="servicio" value="{{ srvValue }}">
+              </div>
+            </div>
+            <label style="display:flex;flex-direction:column;gap:8px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#9E554D">Nombre
+              <input name="nombre" required placeholder="Tu nombre" style="padding:13px 2px;border:0;border-bottom:1px solid rgba(72,57,54,0.3);background:transparent;font-size:15px;color:#483936;letter-spacing:0;text-transform:none">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:8px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#9E554D">Fecha deseada
+              <input name="fecha" type="date" style="padding:13px 2px;border:0;border-bottom:1px solid rgba(72,57,54,0.3);background:transparent;font-size:15px;color:#483936;letter-spacing:0;text-transform:none">
+            </label>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#9E554D">Horario de preferencia</span>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ horOptions }}" as="h" hint-placeholder-count="4">
+                  <button type="button" onClick="{{ h.pick }}" style="padding:10px 18px;border-radius:999px;border:1px solid {{ h.border }};background:{{ h.bg }};color:{{ h.color }};font-size:13px;font-weight:300;transition:all .25s ease">{{ h.label }}</button>
+                </sc-for>
+              </div>
+              <input type="hidden" name="horario" value="{{ horValue }}">
+            </div>
+            <button type="submit" style="margin-top:8px;padding:17px;border-radius:999px;border:0;background:#483936;color:#FFF8F3;font-size:12px;letter-spacing:.16em;text-transform:uppercase;transition:background .35s ease" style-hover="background:#B96F62">Enviar por WhatsApp</button>
+            <p style="margin:0;font-size:12px;font-weight:300;line-height:1.7;color:#9E554D">{{ formNote }}</p>
+          </form>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ════ PREGUNTAS FRECUENTES ════ -->
+    <sc-if value="{{ isFaq }}" hint-placeholder-val="{{ false }}">
+      <section style="background:#FFFFFF">
+        <div style="max-width:1000px;margin:0 auto;padding:clamp(44px,6vw,96px) clamp(22px,4vw,56px) clamp(56px,8vw,120px)">
+          <h1 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(40px,5.6vw,92px);line-height:0.92;letter-spacing:-0.025em;animation:gz-rise .9s ease both">Preguntas frecuentes</h1>
+          <p style="margin:26px 0 0;max-width:560px;font-size:15px;font-weight:300;line-height:1.8;color:#6B544F">Todo lo que conviene saber antes y después de tu cita. Si te queda una duda, escribime por Instagram.</p>
+          <div style="margin-top:clamp(32px,4vw,64px)">
+            <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="7">
+              <div style="border-top:1px solid rgba(72,57,54,0.14)">
+                <button onClick="{{ f.toggle }}" style="width:100%;background:none;border:0;padding:clamp(20px,2.4vw,28px) 0;display:flex;align-items:baseline;justify-content:space-between;gap:20px;text-align:left">
+                  <span style="flex:1 1 auto;min-width:0;font-family:'Cormorant Garamond',serif;font-size:clamp(21px,2.3vw,30px);line-height:1.15;color:#483936">{{ f.q }}</span>
+                  <span style="flex:none;font-size:16px;color:#B96F62;line-height:1">{{ f.sign }}</span>
+                </button>
+                <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+                  <p style="margin:0;padding:0 0 clamp(22px,2.6vw,30px);max-width:620px;font-size:15px;font-weight:300;line-height:1.8;color:#6B544F;animation:gz-fade .35s ease both">{{ f.a }}</p>
+                </sc-if>
+              </div>
+            </sc-for>
+            <div style="border-top:1px solid rgba(72,57,54,0.14)"></div>
+          </div>
+          <div style="margin-top:clamp(44px,6vw,88px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:clamp(28px,4vw,56px)">
+            <sc-for list="{{ priceGroups }}" as="g" hint-placeholder-count="3">
+              <div>
+                <p style="margin:0;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:#9E554D">{{ g.title }}</p>
+                <div style="margin-top:18px;display:flex;flex-direction:column">
+                  <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
+                    <div style="border-top:1px solid rgba(72,57,54,0.12);padding:14px 0;display:flex;align-items:baseline;justify-content:space-between;gap:16px">
+                      <span style="flex:1 1 auto;min-width:0;font-size:14.5px;font-weight:300;color:#483936">{{ it.label }}</span>
+                      <span style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#483936;white-space:nowrap">{{ it.price }}</span>
+                    </div>
+                  </sc-for>
+                  <div style="border-top:1px solid rgba(72,57,54,0.12)"></div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ════ CONTACTO ════ -->
+    <sc-if value="{{ isContacto }}" hint-placeholder-val="{{ false }}">
+      <section style="background:#FFF8F3">
+        <div style="max-width:1200px;margin:0 auto;padding:clamp(44px,6vw,100px) clamp(22px,4vw,56px) clamp(56px,8vw,120px)">
+          <h1 style="margin:0;max-width:900px;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(40px,6vw,104px);line-height:0.9;letter-spacing:-0.025em;text-wrap:pretty;animation:gz-rise .9s ease both">¿Hablamos de tu próxima <em style="font-style:italic;color:#B96F62">cita</em>?</h1>
+          <div style="margin-top:clamp(36px,5vw,80px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:clamp(24px,3vw,56px)">
+            <div>
+              <p style="margin:0;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#9E554D">Redes</p>
+              <div style="margin-top:18px;display:flex;flex-direction:column">
+                <a href="https://www.instagram.com/reychell_lash/" target="_blank" rel="noopener" style="border-top:1px solid rgba(72,57,54,0.14);padding:16px 0;display:flex;align-items:baseline;justify-content:space-between;gap:14px;font-family:'Cormorant Garamond',serif;font-size:24px">Instagram <span style="font-size:14px">↗</span></a>
+                <a href="https://www.facebook.com/profile.php?id=61596141145825" target="_blank" rel="noopener" style="border-top:1px solid rgba(72,57,54,0.14);border-bottom:1px solid rgba(72,57,54,0.14);padding:16px 0;display:flex;align-items:baseline;justify-content:space-between;gap:14px;font-family:'Cormorant Garamond',serif;font-size:24px">Facebook <span style="font-size:14px">↗</span></a>
+              </div>
+            </div>
+            <div>
+              <p style="margin:0;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#9E554D">Datos</p>
+              <div style="margin-top:18px;display:flex;flex-direction:column;gap:16px">
+                <sc-for list="{{ pendingData }}" as="d" hint-placeholder-count="3">
+                  <div style="border-top:1px solid rgba(72,57,54,0.14);padding-top:14px">
+                    <p style="margin:0;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#483936">{{ d.label }}</p>
+                    <p style="margin:7px 0 0;font-size:13.5px;font-weight:300;line-height:1.7;color:#9E554D">{{ d.note }}</p>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <p style="margin:0;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#9E554D">Reservar</p>
+              <p style="margin:18px 0 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,2.4vw,30px);line-height:1.3;color:#483936">Dejá tu solicitud y coordinamos día y horario.</p>
+              <button onClick="{{ goReservas }}" style="margin-top:24px;align-self:flex-start;min-height:48px;padding:16px 28px;border:1px solid #483936;background:transparent;color:#483936;font-size:12px;letter-spacing:.15em;text-transform:uppercase;white-space:nowrap;transition:background .35s ease,color .35s ease" style-hover="background:#483936;color:#FFF8F3">Ir a reservas</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+  </main>
+
+  <footer style="background:#483936;color:#FFF8F3">
+    <div style="max-width:1400px;margin:0 auto;padding:clamp(48px,6vw,84px) clamp(22px,3.5vw,56px) clamp(28px,3vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:clamp(36px,5vw,80px);align-items:start">
+      <div>
+        <img src="assets/reychell-logo-circular.png" alt="Logo de Reychell Lash" style="width:76px;height:76px;object-fit:contain;border-radius:50%">
+        <p style="margin:22px 0 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.4;color:#E9BBAF">Belleza en cada mirada.</p>
+      </div>
+      <div>
+        <p style="margin:0;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#B96F62">Páginas</p>
+        <div style="margin-top:22px;display:flex;flex-direction:column;align-items:flex-start;gap:14px">
+          <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7">
+            <button onClick="{{ n.go }}" style="background:none;border:0;padding:0;font-size:14px;font-weight:300;letter-spacing:.02em;color:#E2CCC5;transition:color .3s ease" style-hover="color:#FFF8F3">{{ n.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <p style="margin:0;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#B96F62">Contacto</p>
+        <div style="margin-top:22px;display:flex;flex-direction:column;align-items:flex-start;gap:14px;font-size:14px;font-weight:300">
+          <a href="https://www.instagram.com/reychell_lash/" target="_blank" rel="noopener" style="color:#E2CCC5">Instagram</a>
+          <a href="https://www.facebook.com/profile.php?id=61596141145825" target="_blank" rel="noopener" style="color:#E2CCC5">Facebook</a>
+          <sc-if value="{{ hasWhatsapp }}" hint-placeholder-val="{{ false }}">
+            <a href="{{ waLink }}" target="_blank" rel="noopener" style="color:#E2CCC5">WhatsApp</a>
+          </sc-if>
+        </div>
+        <button onClick="{{ goReservas }}" style="margin-top:28px;padding:13px 24px;border-radius:999px;border:1px solid rgba(255,248,243,0.4);background:transparent;color:#FFF8F3;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;align-self:flex-start;transition:background .35s ease,color .35s ease" style-hover="background:#FFF8F3;color:#483936">Agendar cita</button>
+      </div>
+    </div>
+    <div style="max-width:1400px;margin:0 auto;padding:22px clamp(22px,3.5vw,56px) 30px;border-top:1px solid rgba(255,248,243,0.14);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 28px">
+      <p style="margin:0;font-size:10.5px;letter-spacing:.16em;color:#AD948E">© 2026 Reychell Lash</p>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px">
+        <sc-for list="{{ legalNav }}" as="n" hint-placeholder-count="2">
+          <button onClick="{{ n.go }}" style="background:none;border:0;padding:0;font-size:12px;font-weight:300;color:#C9ADA6;transition:color .3s ease" style-hover="color:#FFF8F3">{{ n.label }}</button>
+        </sc-for>
+        <a href="https://neura.com.py" target="_blank" rel="noopener" style="font-size:12px;font-weight:300;color:#C9ADA6">Desarrollado por <span style="letter-spacing:.08em">Neura</span></a>
+      </div>
+    </div>
+  </footer>
+
+  <sc-if value="{{ showBubble }}" hint-placeholder-val="{{ false }}">
+    <a href="{{ waLink }}" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp" style="position:fixed;right:clamp(16px,2.5vw,28px);bottom:clamp(16px,2.5vw,28px);z-index:85;width:58px;height:58px;border-radius:50%;background:#483936;color:#FFF8F3;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 34px rgba(72,57,54,0.34);animation:gz-fade .35s ease both;transition:background .3s ease,transform .3s ease" style-hover="background:#B96F62;color:#FFF8F3;transform:translateY(-2px)">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.03c-1.52 0-3-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 012.41 5.83c0 4.54-3.7 8.25-8.13 8.25zm4.52-6.17c-.25-.13-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.25-.64.8-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.02 2.57.12.17 1.76 2.68 4.26 3.76.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.22-.17-.47-.3z"></path></svg>
+    </a>
+  </sc-if>
+
+  <sc-if value="{{ lightboxOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:140;background:rgba(40,30,28,0.94);display:flex;flex-direction:column;animation:gz-fade .3s ease both">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;color:#FFF8F3">
+        <span style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#E2CCC5">{{ lightboxCount }}</span>
+        <button onClick="{{ closeLightbox }}" aria-label="Cerrar" style="background:none;border:0;color:#FFF8F3;font-size:24px;line-height:1;padding:4px 8px">×</button>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:clamp(10px,2vw,28px);padding:0 16px 20px">
+        <button onClick="{{ prevPhoto }}" aria-label="Anterior" style="flex:none;width:46px;height:46px;border:1px solid rgba(255,248,243,0.35);background:transparent;color:#FFF8F3;font-size:16px">‹</button>
+        <figure style="margin:0;display:flex;flex-direction:column;align-items:center;gap:14px;animation:gz-fade .35s ease both">
+          <span role="img" aria-label="{{ lightboxLabel }}" style="display:block;height:72vh;width:min(860px,86vw);background-image:{{ lightboxBg }};background-size:contain;background-position:center;background-repeat:no-repeat"></span>
+          <figcaption style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#E9BBAF">{{ lightboxLabel }}</figcaption>
+        </figure>
+        <button onClick="{{ nextPhoto }}" aria-label="Siguiente" style="flex:none;width:46px;height:46px;border:1px solid rgba(255,248,243,0.35);background:transparent;color:#FFF8F3;font-size:16px">›</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440},&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;}}">
+const PAGES = [
+  ['inicio', 'Inicio', '#/'],
+  ['servicios', 'Servicios', '#/servicios'],
+  ['galeria', 'Galería', '#/galeria'],
+  ['sobre', 'Sobre Reychell', '#/sobre-reychell'],
+  ['reservas', 'Reservar cita', '#/reservas'],
+  ['faq', 'Preguntas', '#/preguntas-frecuentes'],
+  ['contacto', 'Contacto', '#/contacto'],
+  ['cancelaciones', 'Política de cancelaciones', '#/politica-de-cancelaciones'],
+  ['privacidad', 'Política de privacidad', '#/politica-de-privacidad']
+];
+
+const LEGAL = {
+  cancelaciones: {
+    title: 'Política de cancelaciones',
+    intro: 'Para que cada clienta reciba la atención y el tiempo que merece, trabajo con turnos individuales. Estas son las condiciones acordadas al reservar.',
+    blocks: [
+      ['Puntualidad', 'Te pido llegar en el horario acordado. Pasados 15 minutos de demora, la sesión puede acortarse o reprogramarse según la agenda del día.'],
+      ['Avisos y reprogramaciones', 'Si necesitás cancelar o cambiar tu turno, avisame con la mayor anticipación posible por WhatsApp o Instagram. Así puedo ofrecer ese espacio a otra clienta.'],
+      ['Señas', 'Cuando se solicite una seña para reservar, su condición de devolución o acreditación se comunica al momento de agendar.'],
+      ['Ausencias sin aviso', 'La falta de aviso puede implicar que el próximo turno requiera seña previa para confirmarse.']
+    ]
+  },
+  privacidad: {
+    title: 'Política de privacidad',
+    intro: 'Los datos que compartís conmigo se usan únicamente para coordinar tu cita y acompañarte en el cuidado de tus pestañas.',
+    blocks: [
+      ['Qué datos recibo', 'Nombre, servicio de interés, fecha y horario de preferencia, y el medio por el que te contactás (WhatsApp, Instagram o Facebook).'],
+      ['Para qué los uso', 'Exclusivamente para responder tu consulta, agendar tu turno y recordarte tu cita o retoque. No se usan con fines publicitarios sin tu consentimiento.'],
+      ['Con quién se comparten', 'Con nadie. No vendo ni cedo tus datos a terceros.'],
+      ['Fotografías', 'Las fotos de trabajos se publican únicamente con autorización previa de la clienta. Podés pedir que no se publique ninguna imagen tuya, o solicitar que se retire en cualquier momento.'],
+      ['Tus derechos', 'Podés pedirme en cualquier momento que actualice o elimine tus datos escribiéndome por WhatsApp o Instagram.']
+    ]
+  }
+};
+
+const HERO_PHOTOS = ['assets/portada-lg.jpg', 'assets/foto-1-lg.jpg', 'assets/foto-7-lg.jpg', 'assets/foto-4-lg.jpg', 'assets/foto-6-lg.jpg'];
+const HERO_THUMBS = ['assets/portada-sm.jpg', 'assets/foto-1-sm.jpg', 'assets/foto-7-sm.jpg', 'assets/foto-4-sm.jpg', 'assets/foto-6-sm.jpg'];
+
+const SERVICE_SLOTS = [
+  { name: 'Efecto natural', price: 'Gs. 100.000', img: 'assets/srv-natural-md.jpg', desc: 'Realza tu mirada con un acabado natural y elegante. Ideal para el día a día.' },
+  { name: 'Efecto clásico', price: 'Gs. 120.000', img: 'assets/srv-clasico-md.jpg', pos: '72% 62%', desc: 'Más longitud y definición. Un look sutil pero impactante.' },
+  { name: 'Efecto híbrido', price: 'Gs. 130.000', img: 'assets/srv-hibrido-md.jpg', desc: 'La combinación perfecta entre lo natural y el volumen.' },
+  { name: 'Efecto volumen', price: 'Gs. 150.000', img: 'assets/srv-volumen-md.jpg', desc: 'Máxima densidad y profundidad en tu mirada.' },
+  { name: 'Efecto mega volumen', price: 'Gs. 170.000', img: 'assets/foto-7-md.jpg', desc: 'Para una mirada más intensa y espectacular.' }
+];
+
+const PRICE_GROUPS = [
+  { title: 'Retoque', items: [['15 días', 'Gs. 60.000'], ['21 días', 'Gs. 80.000'], ['30 días', 'Gs. 100.000']] },
+  { title: 'Diseños especiales', items: [['Efecto wispy', 'Gs. 180.000'], ['Kim Kardashian', 'Gs. 180.000'], ['Fox eyes', 'Gs. 180.000']] },
+  { title: 'Extras', items: [['Retiro de pestañas', 'Gs. 40.000'], ['Limpieza facial + pestañas', 'Gs. 120.000']] }
+];
+
+const GALLERY = [
+  { src: 'assets/foto-1-md.jpg', label: 'Volumen · mirada completa', ratio: '1/1', span: 'span 1' },
+  { src: 'assets/foto-7-md.jpg', label: 'Efecto natural · plano cerrado', ratio: '3/4', span: 'span 1' },
+  { src: 'assets/foto-2-md.jpg', label: 'Abanicos de volumen', ratio: '16/11', span: 'span 2' },
+  { src: 'assets/foto-4-md.jpg', label: 'Efecto clásico · detalle', ratio: '3/4', span: 'span 1' },
+  { src: 'assets/foto-6-md.jpg', label: 'Aplicación pelo a pelo', ratio: '3/4', span: 'span 1' },
+  { src: 'assets/foto-3-md.jpg', label: 'Sesión en el estudio', ratio: '3/4', span: 'span 1' },
+  { src: 'assets/foto-5-md.jpg', label: 'Cuidado durante la sesión', ratio: '3/4', span: 'span 1' }
+];
+
+const ABOUT_SLOTS = [
+  { label: 'Su historia', text: 'Espacio reservado para que Reychell cuente, con sus palabras, cómo llegó a dedicarse a la belleza de la mirada.' },
+  { label: 'Su manera de trabajar', text: 'Cada cita empieza eligiendo el efecto —natural, clásico, híbrido, volumen o mega volumen— según la forma de tus ojos y el cuidado que puedas darles.' },
+  { label: 'Su formación', text: 'Reservado para la formación confirmada por Reychell. No se publica nada sin su validación.' },
+  { label: 'Su enfoque de atención', text: 'Espacio para explicar cómo acompaña a cada clienta antes, durante y después del servicio.' }
+];
+
+const FAQS = [
+  { q: 'Reservas y cancelaciones', a: 'Solicitamos puntualidad y avisar con anticipación si necesitás cancelar o cambiar tu turno. Las señas, los retrasos y las cancelaciones se manejarán según las condiciones comunicadas al reservar.' },
+  { q: 'Preparación antes de la cita', a: 'Vení sin maquillaje en los ojos, sin restos de máscara ni productos oleosos, y con las pestañas limpias y secas.' },
+  { q: 'Cuidados posteriores', a: 'Las primeras horas evitá el contacto con agua y vapor, cepillá tus pestañas a diario y usá productos libres de aceite.' },
+  { q: 'Duración del tratamiento', a: 'La duración de cada sesión depende del efecto elegido y se confirma al momento de agendar.' },
+  { q: 'Retoques', a: 'Hay retoques de 15, 21 y 30 días. Cuanto antes lo agendes, menos trabajo requiere y más se mantiene el diseño original.' },
+  { q: 'Medios de contacto', a: 'Podés escribir por Instagram o Facebook para consultar disponibilidad y coordinar tu turno.' }
+];
+
+class Component extends DCLogic {
+  state = { page: 'inicio', atFooter: false, srv: '', hor: '', srvOpen: false, menu: false, wide: window.innerWidth >= 1280, desktop: window.innerWidth >= 980, hero: 0, hover: 0, faq: -1, lb: -1, sent: false };
+
+  componentDidMount() {
+    this._lastPage = this.state.page;
+    this._sync = () => this.setState({ desktop: window.innerWidth >= 980, wide: window.innerWidth >= 1280 });
+    this._sync();
+    window.addEventListener('resize', this._sync);
+    [120, 320, 700].forEach((t) => setTimeout(this._sync, t));
+
+    this._route = () => {
+      const h = window.location.hash || '#/';
+      const found = PAGES.find((p) => p[2] === h);
+      this.setState({ page: found ? found[0] : 'inicio', menu: false });
+    };
+    window.addEventListener('hashchange', this._route);
+    if (window.location.hash) this._route();
+
+    this._keys = (e) => {
+      if (this.state.lb < 0) return;
+      if (e.key === 'Escape') this.setState({ lb: -1 });
+      if (e.key === 'ArrowRight') this.setState((s) => ({ lb: (s.lb + 1) % GALLERY.length }));
+      if (e.key === 'ArrowLeft') this.setState((s) => ({ lb: (s.lb - 1 + GALLERY.length) % GALLERY.length }));
+    };
+    window.addEventListener('keydown', this._keys);
+
+    this._scroll = () => {
+      const foot = document.querySelector('footer');
+      if (!foot) return;
+      const near = foot.getBoundingClientRect().top < window.innerHeight - 40;
+      if (near !== this.state.atFooter) this.setState({ atFooter: near });
+    };
+    window.addEventListener('scroll', this._scroll, { passive: true });
+    this._scroll();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._sync);
+    window.removeEventListener('hashchange', this._route);
+    window.removeEventListener('keydown', this._keys);
+    window.removeEventListener('scroll', this._scroll);
+  }
+
+  componentDidUpdate() {
+    if (this._lastPage !== this.state.page) {
+      this._lastPage = this.state.page;
+      window.scrollTo(0, 0);
+    }
+  }
+
+  go(id) {
+    return () => {
+      const entry = PAGES.find((p) => p[0] === id);
+      if (entry && window.location.hash !== entry[2]) window.location.hash = entry[2];
+      this.setState({ page: id, menu: false });
+    };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const prop = String(this.props.whatsapp ?? '').replace(/[^0-9]/g, '');
+    const phoneRaw = prop.length >= 8 ? prop : '595984053323';
+    const hasWa = phoneRaw.length >= 8;
+    const link = (id) => ({
+      label: PAGES.find((p) => p[0] === id)[1],
+      go: this.go(id),
+      color: s.page === id ? 'rgba(185,111,98,0.95)' : 'rgba(72,57,54,0.6)',
+      line: s.page === id ? 'rgba(185,111,98,0.6)' : 'transparent'
+    });
+
+    return {
+      headerPad: s.desktop ? '69px' : '63px',
+      isDesktop: s.desktop,
+      isMobile: !s.desktop,
+      menuOpen: s.menu,
+      toggleMenu: () => this.setState({ menu: !s.menu }),
+      nav: PAGES.filter((p) => p[0] !== 'cancelaciones' && p[0] !== 'privacidad').map((p) => link(p[0])),
+      legalNav: ['cancelaciones', 'privacidad'].map(link),
+      isLegal: s.page === 'cancelaciones' || s.page === 'privacidad',
+      legalTitle: LEGAL[s.page] ? LEGAL[s.page].title : '',
+      legalIntro: LEGAL[s.page] ? LEGAL[s.page].intro : '',
+      legalBlocks: LEGAL[s.page] ? LEGAL[s.page].blocks.map((b) => ({ label: b[0], text: b[1] })) : [],
+      navLeft: ['inicio', 'servicios', 'galeria'].map(link),
+      navRight: ['sobre', 'contacto'].map(link),
+      goHome: this.go('inicio'),
+      goServicios: this.go('servicios'),
+      goGaleria: this.go('galeria'),
+      goSobre: this.go('sobre'),
+      goReservas: this.go('reservas'),
+      isInicio: s.page === 'inicio',
+      isServicios: s.page === 'servicios',
+      isGaleria: s.page === 'galeria',
+      isSobre: s.page === 'sobre',
+      isReservas: s.page === 'reservas',
+      isFaq: s.page === 'faq',
+      isContacto: s.page === 'contacto',
+
+      signature: [
+        { label: 'Delicadeza', text: 'Ritmo tranquilo y manos suaves durante toda la sesión.' },
+        { label: 'Detalle', text: 'Cada pestaña aislada y colocada con precisión.' },
+        { label: 'Atención', text: 'Una clienta por turno, sin apuros.' }
+      ],
+      heroKey: 'hero-' + s.hero,
+      heroBg: 'url(' + HERO_PHOTOS[s.hero] + ')',
+      heroCols: 'minmax(0,1fr) minmax(0,1.25fr) minmax(0,0.9fr)',
+      heroAside: 'flex',
+      heroThumbs: HERO_THUMBS.slice(1).map((src, i0) => ((i) => ({
+        bg: 'url(' + src + ')',
+        select: () => this.setState({ hero: i }),
+        ring: s.hero === i ? '#B96F62' : 'transparent',
+        opacity: s.hero === i ? 1 : 0.55
+      }))(i0 + 1)),
+
+      serviceCols: s.desktop ? 'minmax(0,1.35fr) minmax(0,0.8fr)' : 'minmax(0,1fr)',
+      hoverKey: 'hv-' + s.hover,
+      hoverPhoto: SERVICE_SLOTS[s.hover].img,
+      serviceSlots: SERVICE_SLOTS.map((x, i) => ({
+        name: x.name,
+        img: x.img,
+        bg: 'url(' + x.img + ')',
+        pos: x.pos || 'center',
+        wa: hasWa ? 'https://wa.me/' + phoneRaw + '?text=' + encodeURIComponent('¡Hola Reychell! Me interesa el ' + x.name + ' (' + x.price + '). ¿Tenés disponibilidad?') : 'https://www.instagram.com/reychell_lash/',
+        desc: x.desc,
+        price: x.price,
+        status: x.price,
+        hover: () => this.setState({ hover: i }),
+        go: this.go('servicios'),
+        color: s.hover === i ? '#B96F62' : '#483936',
+        cols: s.desktop ? (i % 2 === 0 ? 'minmax(0,0.85fr) minmax(0,1.15fr)' : 'minmax(0,1.15fr) minmax(0,0.85fr)') : 'minmax(0,1fr)',
+        order: s.desktop && i % 2 === 1 ? 2 : 0,
+        ratio: i % 2 === 0 ? '4/5' : '5/4'
+      })),
+      srvOpen: s.srvOpen,
+      srvArrow: s.srvOpen ? '▲' : '▼',
+      srvValue: s.srv || 'Consulta general',
+      srvOptions: ['Consulta general'].concat(SERVICE_SLOTS.map((x) => x.name), ['Retoque', 'Diseño especial', 'Retiro de pestañas', 'Limpieza facial + pestañas']).map((n) => ({
+        label: n,
+        bg: (s.srv || 'Consulta general') === n ? '#F7E2DB' : 'transparent',
+        pick: () => this.setState({ srv: n, srvOpen: false })
+      })),
+      horValue: s.hor || 'Me adapto',
+      horOptions: ['Mañana', 'Mediodía', 'Tarde', 'Me adapto'].map((n) => ({
+        label: n,
+        pick: () => this.setState({ hor: n }),
+        bg: (s.hor || 'Me adapto') === n ? '#483936' : 'transparent',
+        color: (s.hor || 'Me adapto') === n ? '#FFF8F3' : '#6B544F',
+        border: (s.hor || 'Me adapto') === n ? '#483936' : 'rgba(72,57,54,0.28)'
+      })),
+      toggleSrv: () => this.setState({ srvOpen: !s.srvOpen }),
+      serviceNames: SERVICE_SLOTS.map((x) => x.name).concat(['Retoque', 'Diseño especial', 'Retiro de pestañas', 'Limpieza facial + pestañas']),
+      priceGroups: PRICE_GROUPS.map((g) => ({ title: g.title, items: g.items.map((it) => ({ label: it[0], price: it[1] })) })),
+
+      gallery: GALLERY.map((g, i) => ({
+        label: g.label,
+        src: g.src,
+        bg: 'url(' + g.src + ')',
+        ratio: g.ratio,
+        span: s.desktop ? g.span : 'span 1',
+        open: () => this.setState({ lb: i })
+      })),
+      lightboxOpen: s.lb >= 0,
+      lightboxLabel: s.lb >= 0 ? GALLERY[s.lb].label : '',
+      lightboxBg: s.lb >= 0 ? 'url(' + GALLERY[s.lb].src.replace('-md.jpg', '-lg.jpg') + ')' : 'none',
+      lightboxRatio: s.lb >= 0 ? GALLERY[s.lb].ratio : '3/4',
+      lightboxCount: s.lb >= 0 ? (s.lb + 1) + ' / ' + GALLERY.length : '',
+      closeLightbox: () => this.setState({ lb: -1 }),
+      nextPhoto: () => this.setState((st) => ({ lb: (st.lb + 1) % GALLERY.length })),
+      prevPhoto: () => this.setState((st) => ({ lb: (st.lb - 1 + GALLERY.length) % GALLERY.length })),
+
+      aboutSlots: ABOUT_SLOTS,
+      faqs: FAQS.map((x, i) => ({
+        q: x.q,
+        a: x.a,
+        open: s.faq === i,
+        sign: s.faq === i ? '—' : '+',
+        toggle: () => this.setState({ faq: s.faq === i ? -1 : i })
+      })),
+
+      pendingData: [
+        { label: 'WhatsApp', note: '0984 053 323' },
+        { label: 'Dirección', note: 'San Lorenzo, Paraguay · dirección exacta al confirmar tu cita.' },
+        { label: 'Horarios', note: 'Pendiente de confirmación.' }
+      ],
+      showBubble: hasWa && !s.atFooter && s.lb < 0 && !s.menu,
+      hasWhatsapp: hasWa,
+      noWhatsapp: !hasWa,
+      waLink: hasWa ? 'https://wa.me/' + phoneRaw : '',
+      sent: s.sent,
+      formNote: s.sent
+        ? 'Se abrió WhatsApp con tu solicitud lista para enviar. Te respondo para confirmar día y horario.'
+        : 'Al enviar se abre WhatsApp con tus datos listos. La cita queda confirmada cuando te respondo.',
+      submit: (e) => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        const texto = '¡Hola Reychell! Quisiera agendar una cita.\n\nServicio: ' + (s.srv || 'Consulta general')
+          + '\nNombre: ' + (fd.get('nombre') || '')
+          + '\nFecha deseada: ' + (fd.get('fecha') || 'a coordinar')
+          + '\nHorario: ' + (s.hor || 'Me adapto');
+        this.setState({ sent: true });
+        if (hasWa) window.open('https://wa.me/' + phoneRaw + '?text=' + encodeURIComponent(texto), '_blank', 'noopener');
+      }
+    };
+  }
+}
+
+</script>
+</body>
+</html>
