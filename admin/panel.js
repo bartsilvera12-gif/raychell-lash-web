@@ -332,15 +332,25 @@
       type: 'button', class: 'boton', text: 'Agregar ' + g.etiqueta,
       onclick: function () {
         agregar.disabled = true;
+        // La fila nueva entra primera, debajo del boton, y las que ya estaban
+        // corren un lugar. Asi no hay que bajar hasta el final para cargarla.
         var nueva = JSON.parse(JSON.stringify(g.nuevo));
-        nueva.position = filas.length;
+        nueva.position = 0;
         sb.from(g.tabla).insert(nueva).select().then(function (r) {
-          agregar.disabled = false;
-          if (r.error) return avisar('error', explicar(r.error));
-          avisar('ok', 'Se agregó. Completá los datos y guardá.');
-          // Se abre y se baja hasta la ficha nueva, que queda al final de la
-          // lista y con el boton arriba podria no verse.
-          recargar(r.data && r.data[0] && r.data[0].id);
+          if (r.error) {
+            agregar.disabled = false;
+            return avisar('error', explicar(r.error));
+          }
+          var nuevoId = r.data && r.data[0] && r.data[0].id;
+          Promise.all(filas.map(function (f, i) {
+            return sb.from(g.tabla).update({ position: i + 1 }).eq('id', f.id);
+          })).then(function (rs) {
+            agregar.disabled = false;
+            var err = rs.filter(function (x) { return x.error; })[0];
+            if (err) return avisar('error', explicar(err.error));
+            avisar('ok', 'Se agregó. Completá los datos y guardá.');
+            recargar(nuevoId);
+          });
         });
       }
     });
@@ -387,10 +397,7 @@
         .map(function (c) { return fila[c.k]; }).join(' ')
     ].join(' '));
 
-    if (destacada && fila.id === destacada) {
-      ficha.open = true;
-      setTimeout(function () { ficha.scrollIntoView({ block: 'center' }); }, 60);
-    }
+    if (destacada && fila.id === destacada) ficha.open = true;
     var foto = g.foto ? g.foto(fila) : null;
 
     var resumen = el('summary', {}, [
