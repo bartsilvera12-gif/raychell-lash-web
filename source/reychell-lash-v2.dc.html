@@ -504,14 +504,14 @@
   </main>
 
   <footer style="background:#483936;color:#FFF8F3">
-    <div style="max-width:1400px;margin:0 auto;padding:clamp(48px,6vw,84px) clamp(22px,3.5vw,56px) clamp(28px,3vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:clamp(36px,5vw,80px);align-items:start">
+    <div style="max-width:1400px;margin:0 auto;padding:clamp(30px,3.4vw,48px) clamp(22px,3.5vw,56px) clamp(18px,2vw,26px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:clamp(22px,2.6vw,44px);align-items:start">
       <div>
-        <img src="assets/reychell-logo-circular.png" alt="Logo de Reychell Lash" style="width:76px;height:76px;object-fit:contain;border-radius:50%">
-        <p style="margin:22px 0 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.4;color:#E9BBAF">Belleza en cada mirada.</p>
+        <img src="assets/reychell-logo-circular.png" alt="Logo de Reychell Lash" style="width:54px;height:54px;object-fit:contain;border-radius:50%">
+        <p style="margin:14px 0 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;line-height:1.35;color:#E9BBAF">Belleza en cada mirada.</p>
       </div>
       <div>
         <p style="margin:0;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#B96F62">Páginas</p>
-        <div style="margin-top:22px;display:flex;flex-direction:column;align-items:flex-start;gap:14px">
+        <div style="margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(128px,100%),1fr));gap:9px 20px;justify-items:start">
           <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7">
             <button onClick="{{ n.go }}" style="background:none;border:0;padding:0;font-size:14px;font-weight:300;letter-spacing:.02em;color:#E2CCC5;transition:color .3s ease" style-hover="color:#FFF8F3">{{ n.label }}</button>
           </sc-for>
@@ -519,17 +519,17 @@
       </div>
       <div>
         <p style="margin:0;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#B96F62">Contacto</p>
-        <div style="margin-top:22px;display:flex;flex-direction:column;align-items:flex-start;gap:14px;font-size:14px;font-weight:300">
+        <div style="margin-top:14px;display:flex;flex-direction:column;align-items:flex-start;gap:9px;font-size:14px;font-weight:300">
           <a href="{{ igLink }}" target="_blank" rel="noopener" style="color:#E2CCC5">Instagram</a>
           <a href="{{ fbLink }}" target="_blank" rel="noopener" style="color:#E2CCC5">Facebook</a>
           <sc-if value="{{ hasWhatsapp }}" hint-placeholder-val="{{ false }}">
             <a href="{{ waLink }}" target="_blank" rel="noopener" style="color:#E2CCC5">WhatsApp</a>
           </sc-if>
         </div>
-        <button onClick="{{ goReservas }}" style="margin-top:28px;padding:13px 24px;border-radius:999px;border:1px solid rgba(255,248,243,0.4);background:transparent;color:#FFF8F3;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;align-self:flex-start;transition:background .35s ease,color .35s ease" style-hover="background:#FFF8F3;color:#483936">Agendar cita</button>
+        <button onClick="{{ goReservas }}" style="margin-top:18px;padding:11px 20px;border-radius:999px;border:1px solid rgba(255,248,243,0.4);background:transparent;color:#FFF8F3;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;align-self:flex-start;transition:background .35s ease,color .35s ease" style-hover="background:#FFF8F3;color:#483936">Agendar cita</button>
       </div>
     </div>
-    <div style="max-width:1400px;margin:0 auto;padding:22px clamp(22px,3.5vw,56px) 30px;border-top:1px solid rgba(255,248,243,0.14);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 28px">
+    <div style="max-width:1400px;margin:0 auto;padding:14px clamp(22px,3.5vw,56px) 18px;border-top:1px solid rgba(255,248,243,0.14);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px">
       <p style="margin:0;font-size:10.5px;letter-spacing:.16em;color:#AD948E">© 2026 Reychell Lash</p>
       <div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px">
         <sc-for list="{{ legalNav }}" as="n" hint-placeholder-count="2">
